@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+/* ********************************************************** */
+.HomeBody{
+  background-image: url("css/concepto-lectura-enfoque-suave-mujer-joven-que-relaja-libro-cafe-cozy-house_34048-399.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
