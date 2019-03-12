@@ -1,166 +1,145 @@
 <?php
 
-namespace application;
+namespace App;
 
-require_once __DIR__ . "../vendor/autoload.php";
-
-use MongoDB\Driver\Manager;
-use MongoDB\Driver\Command;
-use MongoDB\Driver\BulkWrite;
+use MongoException;
+use MongoDB\BSON\ObjectId as ObjectID;
+use MongoDB\Driver\BulkWrite as MongoBulkWrite;
 use MongoDB\Driver\Exception;
-use MongoDB\Driver\WriteConcern;
-use MongoDB\Driver\Query;
+use MongoDB\Driver\Manager as MongoManager;
+use MongoDB\Driver\Query as MongoQuery;
 
 class Room
 {
-    private static $DATABASE_PATH = 'mongodb://localhost:27017';
-    private static $DATABASE_NAME = 'OnlineCafeDatabase';
-    private static $COLLECTION_NAME = 'Room';
-    private static $connectionManager;
-    private static $bulkOperationManager;
-    private static $operationResult;
-    private static $writeConcern;
-    private static $queryManager;
+    private $DATABASE_PATH = '';
+    private $DATABASE_NAME = '';
+    private $COLLECTION_NAME = '';
+    private $connectionManager = '';
 
     public function __construct()
     {
-        self::$connectionManager = new MongoDB\Driver\Manager(self::$DATABASE_PATH);
-        self::$bulkOperationManager = new MongoDB\Driver\BulkWrite;
-        self::$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+        $this->DATABASE_PATH = 'mongodb://localhost:27017';
+        $this->DATABASE_NAME = 'OnlineCafeDatabase';
+        $this->COLLECTION_NAME = 'Room';
+        $this->connectionManager = new MongoManager('mongodb://localhost:27017');
     }
 
-    // set schema validation on collection
-    public static function setSchemaValidation()
-    {
-
-    }
-
-    // create Room collection
-    public static function createRoomCollection()
-    {
-    }
-
-    // drop Room collection
-    public static function dropRoomCollection()
-    {
-    }
-
-    // get all categories
-    public static function getAllRooms()
+    // insert Room document
+    public function insertOneRoom($RoomName)
     {
         try {
-                self::$queryManager = new MongoDB\Driver\Query();
-                self::$operationResult = self::$connectionManager->executeQuery(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
-                return self::$operationResult;
-        } catch (MongoDB\Driver\Exception\Exception $exception) {
+            if (isset($RoomName) && !empty($RoomName)) {
+                $bulkWriteInsert = new MongoBulkWrite();
+                $inserted_id = $bulkWriteInsert->insert(['RoomName' => $RoomName]);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteInsert);
+
+                return var_dump($inserted_id);
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
             return $exception->getMessage();
         }
     }
 
-    // get one Room
-    public static function getOneRoom($roomName)
+    // delete Room document
+    public function deleteOneRoom($RoomId)
     {
         try {
-            if (isset($roomName) && !empty($roomName)) {
-                $filter = ["roomName" => $roomName];
+            if (isset($RoomId) && !empty($RoomId)) {
+                $filter = ['_id' => new ObjectID($RoomId)];
+                $bulkWriteDeleted = new MongoBulkWrite();
                 $options = ['limit' => 1];
-                self::$queryManager = new MongoDB\Driver\Query($filter, $options);
-                self::$operationResult = self::$connectionManager->executeQuery(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
-                return self::$operationResult;
+                $bulkWriteDeleted->delete($filter, $options);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteDeleted);
+
+                return $response->isAcknowledged();
             } else {
                 return false;
             }
-        } catch (MongoDB\Driver\Exception\Exception $exception) {
+        } catch (MongoException $exception) {
             return $exception->getMessage();
         }
     }
 
-    // insert categories group documents
-    public static function insertCategoriesDocuments($multiRoomNameArray)
+    // delete multiple by Room Name
+    public function deleteAllRoom($RoomName, $limit)
     {
         try {
-            if (isset($multiRoomNameArray) && !empty($multiRoomNameArray) && sizeof($multiRoomNameArray) > 0) {
-                foreach ($multiRoomNameArray as $RoomName) {
-                    self::$bulkOperationManager->insert(["roomName" => $RoomName]);
-                }
-                self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
-                var_dump(self::$operationResult);
-                return true;
-            } else {
-                return false;
-            }
-        } catch (MongoDB\Driver\Exception\BulkWriteException $exception) {
-            return $exception;
-        }
-    }
+            if (isset($RoomName) && !empty($RoomName) && isset($limit) && !empty($limit)) {
+                $filter = ['RoomName' => $RoomName];
+                $bulkWriteDeleted = new MongoBulkWrite();
+                $options = ['limit' => $limit];
+                $bulkWriteDeleted->delete($filter, $options);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteDeleted);
 
-    // insert one Room
-    public static function insertRoomDocument($RoomName)
-    {
-        try {
-            if (isset($RoomName) && !empty($RoomName)) {
-                self::$bulkOperationManager->insert(["roomName" => $RoomName]);
-                self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
-                var_dump(self::$operationResult);
-                return true;
+                return $response->isAcknowledged();
             } else {
                 return false;
             }
-        } catch (MongoDB\Driver\BulkWriteException $exception) {
+        } catch (MongoException $exception) {
             return $exception->getMessage();
         }
     }
 
-    // delete Room documents
-    public static function deleteRoomDocuments($RoomName, $isAll)
+    // update Room document or
+    public function updateOneRoom($oldRoomName, $newRoomName, $multi)
     {
         try {
-            if (isset($RoomName) && !empty($RoomName)) {
-                $filter = ['roomName' => $RoomName];
-                if ($isAll == false) {
-                    $options = ['limit' => 1];
-                    self::$bulkOperationManager->delete($filter, $options);
-                } else {
-                    self::$bulkOperationManager->delete($filter);
-                }
-                self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
+            if (isset($oldRoomName) && !empty($oldRoomName) && isset($newRoomName) && !empty($newRoomName)) {
+                $filter = ['RoomName' => $oldRoomName];
+                $documentUpdated = ['$set' => ['RoomName' => $newRoomName]];
+                $options = ['multi' => $multi, 'upsert' => $multi];
+                $bulkWriteUpdated = new MongoBulkWrite();
+                $bulkWriteUpdated->update($filter, $documentUpdated, $options);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteUpdated);
+
+                return $response->isAcknowledged();
             } else {
                 return false;
             }
-        } catch (MongoDB\Driver\BulkWriteException $exception) {
+        } catch (MongoException $exception) {
             return $exception->getMessage();
         }
     }
 
-    // update one Room
-    public static function updateOneRoom($old_RoomName, $new_RoomName, $isAll)
+    // getOne Room by RoomID
+    public function getOneRoom($RoomId, $limit)
     {
         try {
-            if (isset($old_RoomName) && !empty($old_RoomName) && isset($new_RoomName)
-                && !empty($new_RoomName) && $old_RoomName != $new_RoomName) {
-                $options = ['multi' => $isAll, 'upsert' => false];
-                $filter = ['roomName' => $old_RoomName];
-                $update = ['$set' => ['roomName' => $new_RoomName]];
-                self::$bulkOperationManager->update($filter, $update, $options);
-                self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
+            if (isset($RoomId) && !empty($RoomId) && isset($limit) && !empty($limit)) {
+                $filter = ['_id' => new ObjectID($RoomId)];
+                $options = ['limit' => $limit];
+                $QueryManager = new MongoQuery($filter, $options);
+                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $QueryManager);
+
+                return json_encode($responseCursor->toArray());
             } else {
                 return false;
             }
-        } catch (MongoDB\Driver\BulkWriteException $exception) {
+        } catch (MongoException $exception) {
             return $exception->getMessage();
+        } catch (Exception\Exception $e) {
+        }
+    }
+
+    // getMulti Room by Name
+    public function getMultiRoom($RoomName, $limit)
+    {
+        try {
+            if (isset($RoomName) && !empty($RoomName) && isset($limit) && !empty($limit)) {
+                $filter = ['RoomName' => $RoomName];
+                $options = ['limit' => $limit];
+                $QueryManager = new MongoQuery($filter, $options);
+                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $QueryManager);
+
+                return json_encode($responseCursor->toArray());
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
+            return $exception->getMessage();
+        } catch (Exception\Exception $e) {
         }
     }
 }
-
-///// todos
-/// todo: setSchemaCollection : ()
-/// todo: createCollection : ()
-/// todo: dropCollection : ()
-/////
-/// Build Room - New
-/// Build Room - New
-/// Build Room - Legacy
-/// Build Room - Legacy
-/// Test Classes
-/// But a Schema - Validation
-
