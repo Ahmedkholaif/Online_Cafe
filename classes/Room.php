@@ -11,11 +11,11 @@ use MongoDB\Driver\Exception;
 use MongoDB\Driver\WriteConcern;
 use MongoDB\Driver\Query;
 
-class Category
+class Room
 {
     private static $DATABASE_PATH = 'mongodb://localhost:27017';
     private static $DATABASE_NAME = 'OnlineCafeDatabase';
-    private static $COLLECTION_NAME = 'Category';
+    private static $COLLECTION_NAME = 'Room';
     private static $connectionManager;
     private static $bulkOperationManager;
     private static $operationResult;
@@ -35,18 +35,18 @@ class Category
 
     }
 
-    // create category collection
-    public static function createCategoryCollection()
+    // create Room collection
+    public static function createRoomCollection()
     {
     }
 
-    // drop category collection
-    public static function dropCategoryCollection()
+    // drop Room collection
+    public static function dropRoomCollection()
     {
     }
 
     // get all categories
-    public static function getAllCategories()
+    public static function getAllRooms()
     {
         try {
                 self::$queryManager = new MongoDB\Driver\Query();
@@ -57,12 +57,12 @@ class Category
         }
     }
 
-    // get one category
-    public static function getOneCategory($categoryName)
+    // get one Room
+    public static function getOneRoom($roomName)
     {
         try {
-            if (isset($categoryName) && !empty($categoryName)) {
-                $filter = ["categoryName" => $categoryName];
+            if (isset($roomName) && !empty($roomName)) {
+                $filter = ["roomName" => $roomName];
                 $options = ['limit' => 1];
                 self::$queryManager = new MongoDB\Driver\Query($filter, $options);
                 self::$operationResult = self::$connectionManager->executeQuery(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
@@ -76,12 +76,12 @@ class Category
     }
 
     // insert categories group documents
-    public static function insertCategoriesDocuments($multiCategoryNameArray)
+    public static function insertCategoriesDocuments($multiRoomNameArray)
     {
         try {
-            if (isset($multiCategoryNameArray) && !empty($multiCategoryNameArray) && sizeof($multiCategoryNameArray) > 0) {
-                foreach ($multiCategoryNameArray as $categoryName) {
-                    self::$bulkOperationManager->insert(["categoryName" => $categoryName]);
+            if (isset($multiRoomNameArray) && !empty($multiRoomNameArray) && sizeof($multiRoomNameArray) > 0) {
+                foreach ($multiRoomNameArray as $RoomName) {
+                    self::$bulkOperationManager->insert(["roomName" => $RoomName]);
                 }
                 self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
                 var_dump(self::$operationResult);
@@ -94,12 +94,12 @@ class Category
         }
     }
 
-    // insert one category
-    public static function insertCategoryDocument($categoryName)
+    // insert one Room
+    public static function insertRoomDocument($RoomName)
     {
         try {
-            if (isset($categoryName) && !empty($categoryName)) {
-                self::$bulkOperationManager->insert(["categoryName" => $categoryName]);
+            if (isset($RoomName) && !empty($RoomName)) {
+                self::$bulkOperationManager->insert(["roomName" => $RoomName]);
                 self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
                 var_dump(self::$operationResult);
                 return true;
@@ -111,12 +111,12 @@ class Category
         }
     }
 
-    // delete category documents
-    public static function deleteCategoryDocuments($categoryName, $isAll)
+    // delete Room documents
+    public static function deleteRoomDocuments($RoomName, $isAll)
     {
         try {
-            if (isset($categoryName) && !empty($categoryName)) {
-                $filter = ['categoryName' => $categoryName];
+            if (isset($RoomName) && !empty($RoomName)) {
+                $filter = ['roomName' => $RoomName];
                 if ($isAll == false) {
                     $options = ['limit' => 1];
                     self::$bulkOperationManager->delete($filter, $options);
@@ -132,15 +132,15 @@ class Category
         }
     }
 
-    // update one category
-    public static function updateOneCategory($old_categoryName, $new_categoryName, $isAll)
+    // update one Room
+    public static function updateOneRoom($old_RoomName, $new_RoomName, $isAll)
     {
         try {
-            if (isset($old_categoryName) && !empty($old_categoryName) && isset($new_categoryName)
-                && !empty($new_categoryName) && $old_categoryName != $new_categoryName) {
+            if (isset($old_RoomName) && !empty($old_RoomName) && isset($new_RoomName)
+                && !empty($new_RoomName) && $old_RoomName != $new_RoomName) {
                 $options = ['multi' => $isAll, 'upsert' => false];
-                $filter = ['categoryName' => $old_categoryName];
-                $update = ['$set' => ['categoryName' => $new_categoryName]];
+                $filter = ['roomName' => $old_RoomName];
+                $update = ['$set' => ['roomName' => $new_RoomName]];
                 self::$bulkOperationManager->update($filter, $update, $options);
                 self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
             } else {
@@ -157,9 +157,9 @@ class Category
 /// todo: createCollection : ()
 /// todo: dropCollection : ()
 /////
-/// Build Category - New
 /// Build Room - New
-/// Build Category - Legacy
+/// Build Room - New
+/// Build Room - Legacy
 /// Build Room - Legacy
 /// Test Classes
 /// But a Schema - Validation
