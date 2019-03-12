@@ -1,166 +1,145 @@
 <?php
 
-namespace application;
+namespace App;
 
-require_once __DIR__ . "../vendor/autoload.php";
-
-use MongoDB\Driver\Manager;
-use MongoDB\Driver\Command;
-use MongoDB\Driver\BulkWrite;
+use MongoException;
+use MongoDB\BSON\ObjectId as ObjectID;
+use MongoDB\Driver\BulkWrite as MongoBulkWrite;
 use MongoDB\Driver\Exception;
-use MongoDB\Driver\WriteConcern;
-use MongoDB\Driver\Query;
+use MongoDB\Driver\Manager as MongoManager;
+use MongoDB\Driver\Query as MongoQuery;
 
 class Category
 {
-    private static $DATABASE_PATH = 'mongodb://localhost:27017';
-    private static $DATABASE_NAME = 'OnlineCafeDatabase';
-    private static $COLLECTION_NAME = 'Category';
-    private static $connectionManager;
-    private static $bulkOperationManager;
-    private static $operationResult;
-    private static $writeConcern;
-    private static $queryManager;
+    private $DATABASE_PATH = '';
+    private $DATABASE_NAME = '';
+    private $COLLECTION_NAME = '';
+    private $connectionManager = '';
 
     public function __construct()
     {
-        self::$connectionManager = new MongoDB\Driver\Manager(self::$DATABASE_PATH);
-        self::$bulkOperationManager = new MongoDB\Driver\BulkWrite;
-        self::$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+        $this->DATABASE_PATH = 'mongodb://localhost:27017';
+        $this->DATABASE_NAME = 'OnlineCafeDatabase';
+        $this->COLLECTION_NAME = 'Category';
+        $this->connectionManager = new MongoManager('mongodb://localhost:27017');
     }
 
-    // set schema validation on collection
-    public static function setSchemaValidation()
-    {
-
-    }
-
-    // create category collection
-    public static function createCategoryCollection()
-    {
-    }
-
-    // drop category collection
-    public static function dropCategoryCollection()
-    {
-    }
-
-    // get all categories
-    public static function getAllCategories()
+    // insert category document
+    public function insertOneCategory($categoryName)
     {
         try {
-                self::$queryManager = new MongoDB\Driver\Query();
-                self::$operationResult = self::$connectionManager->executeQuery(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
-                return self::$operationResult;
-        } catch (MongoDB\Driver\Exception\Exception $exception) {
+            if (isset($categoryName) && !empty($categoryName)) {
+                $bulkWriteInsert = new MongoBulkWrite();
+                $inserted_id = $bulkWriteInsert->insert(['categoryName' => $categoryName]);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteInsert);
+
+                return var_dump($inserted_id);
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
             return $exception->getMessage();
         }
     }
 
-    // get one category
-    public static function getOneCategory($categoryName)
+    // delete category document
+    public function deleteOneCategory($categoryId)
     {
         try {
-            if (isset($categoryName) && !empty($categoryName)) {
-                $filter = ["categoryName" => $categoryName];
+            if (isset($categoryId) && !empty($categoryId)) {
+                $filter = ['_id' => new ObjectID($categoryId)];
+                $bulkWriteDeleted = new MongoBulkWrite();
                 $options = ['limit' => 1];
-                self::$queryManager = new MongoDB\Driver\Query($filter, $options);
-                self::$operationResult = self::$connectionManager->executeQuery(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
-                return self::$operationResult;
+                $bulkWriteDeleted->delete($filter, $options);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteDeleted);
+
+                return $response->isAcknowledged();
             } else {
                 return false;
             }
-        } catch (MongoDB\Driver\Exception\Exception $exception) {
+        } catch (MongoException $exception) {
             return $exception->getMessage();
         }
     }
 
-    // insert categories group documents
-    public static function insertCategoriesDocuments($multiCategoryNameArray)
+    // delete multiple by category Name
+    public function deleteAllCategory($categoryName, $limit)
     {
         try {
-            if (isset($multiCategoryNameArray) && !empty($multiCategoryNameArray) && sizeof($multiCategoryNameArray) > 0) {
-                foreach ($multiCategoryNameArray as $categoryName) {
-                    self::$bulkOperationManager->insert(["categoryName" => $categoryName]);
-                }
-                self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
-                var_dump(self::$operationResult);
-                return true;
-            } else {
-                return false;
-            }
-        } catch (MongoDB\Driver\Exception\BulkWriteException $exception) {
-            return $exception;
-        }
-    }
-
-    // insert one category
-    public static function insertCategoryDocument($categoryName)
-    {
-        try {
-            if (isset($categoryName) && !empty($categoryName)) {
-                self::$bulkOperationManager->insert(["categoryName" => $categoryName]);
-                self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
-                var_dump(self::$operationResult);
-                return true;
-            } else {
-                return false;
-            }
-        } catch (MongoDB\Driver\BulkWriteException $exception) {
-            return $exception->getMessage();
-        }
-    }
-
-    // delete category documents
-    public static function deleteCategoryDocuments($categoryName, $isAll)
-    {
-        try {
-            if (isset($categoryName) && !empty($categoryName)) {
+            if (isset($categoryName) && !empty($categoryName) && isset($limit) && !empty($limit)) {
                 $filter = ['categoryName' => $categoryName];
-                if ($isAll == false) {
-                    $options = ['limit' => 1];
-                    self::$bulkOperationManager->delete($filter, $options);
-                } else {
-                    self::$bulkOperationManager->delete($filter);
-                }
-                self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
+                $bulkWriteDeleted = new MongoBulkWrite();
+                $options = ['limit' => $limit];
+                $bulkWriteDeleted->delete($filter, $options);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteDeleted);
+
+                return $response->isAcknowledged();
             } else {
                 return false;
             }
-        } catch (MongoDB\Driver\BulkWriteException $exception) {
+        } catch (MongoException $exception) {
             return $exception->getMessage();
         }
     }
 
-    // update one category
-    public static function updateOneCategory($old_categoryName, $new_categoryName, $isAll)
+    // update category document or
+    public function updateOneCategory($oldCategoryName, $newCategoryName, $multi)
     {
         try {
-            if (isset($old_categoryName) && !empty($old_categoryName) && isset($new_categoryName)
-                && !empty($new_categoryName) && $old_categoryName != $new_categoryName) {
-                $options = ['multi' => $isAll, 'upsert' => false];
-                $filter = ['categoryName' => $old_categoryName];
-                $update = ['$set' => ['categoryName' => $new_categoryName]];
-                self::$bulkOperationManager->update($filter, $update, $options);
-                self::$operationResult = self::$connectionManager->executeBulkWrite(self::$DATABASE_NAME . '.' . self::$COLLECTION_NAME, self::$bulkOperationManager, self::$writeConcern);
+            if (isset($oldCategoryName) && !empty($oldCategoryName) && isset($newCategoryName) && !empty($newCategoryName)) {
+                $filter = ['categoryName' => $oldCategoryName];
+                $documentUpdated = ['$set' => ['categoryName' => $newCategoryName]];
+                $options = ['multi' => $multi, 'upsert' => $multi];
+                $bulkWriteUpdated = new MongoBulkWrite();
+                $bulkWriteUpdated->update($filter, $documentUpdated, $options);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteUpdated);
+
+                return $response->isAcknowledged();
             } else {
                 return false;
             }
-        } catch (MongoDB\Driver\BulkWriteException $exception) {
+        } catch (MongoException $exception) {
             return $exception->getMessage();
+        }
+    }
+
+    // getOne Category by categoryID
+    public function getOneCategory($categoryId, $limit)
+    {
+        try {
+            if (isset($categoryId) && !empty($categoryId) && isset($limit) && !empty($limit)) {
+                $filter = ['_id' => new ObjectID($categoryId)];
+                $options = ['limit' => $limit];
+                $QueryManager = new MongoQuery($filter, $options);
+                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $QueryManager);
+
+                return json_encode($responseCursor->toArray());
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
+            return $exception->getMessage();
+        } catch (Exception\Exception $e) {
+        }
+    }
+
+    // getMulti Category by Name
+    public function getMultiCategory($categoryName, $limit)
+    {
+        try {
+            if (isset($categoryName) && !empty($categoryName) && isset($limit) && !empty($limit)) {
+                $filter = ['categoryName' => $categoryName];
+                $options = ['limit' => $limit];
+                $QueryManager = new MongoQuery($filter, $options);
+                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $QueryManager);
+
+                return json_encode($responseCursor->toArray());
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
+            return $exception->getMessage();
+        } catch (Exception\Exception $e) {
         }
     }
 }
-
-///// todos
-/// todo: setSchemaCollection : ()
-/// todo: createCollection : ()
-/// todo: dropCollection : ()
-/////
-/// Build Category - New
-/// Build Room - New
-/// Build Category - Legacy
-/// Build Room - Legacy
-/// Test Classes
-/// But a Schema - Validation
-
