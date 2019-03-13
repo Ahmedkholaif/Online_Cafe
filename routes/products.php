@@ -4,7 +4,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 // Get All products
-
 $app->get('/api/products', function (Request $req, Response $res) {
     echo 'products';
     // $res->getBody()->write('Hello there');
