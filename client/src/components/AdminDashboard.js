@@ -154,9 +154,10 @@ export default class Example extends React.Component {
                     userFullName :'Ahmed',
                     notes:'no notes',
                     orderTotal:323,
-                    orderStatus:'on progress', 
-                    dateStamp: '2019-3-7 10:30 AM',
-                    roomId:232,
+                    orderStatus:'Processing', 
+                    dateStamp: '2010-10-10',
+                    phone:'83848484',
+                    roomId:'staff',
                     orderBody:[{
                         productName:'tea',
                         price:30,
@@ -165,23 +166,63 @@ export default class Example extends React.Component {
                         productName:'Juice',
                         price:30,
                         quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
                     }
-                    ]
+                
+                ]
                 },
                 {
                     id:'2',
                     userFullName :'jghghg',
                     notes:'no notes',
                     orderTotal:323,
-                    orderStatus:'process', 
-                    dateStamp:'2019-3-7 10:30 AM',
-                    roomId:232,
+                    orderStatus:'Processing', 
+                    dateStamp:'2010-10-10',
+                    phone:'32332',
+                    roomId:'staff',
                     orderBody:[{
                         productName:'tea',
                         price:30,
                         quantity:5,
                     },{
                         productName:'Juice',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
                         price:30,
                         quantity:5,
                     }
