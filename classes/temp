@@ -1,0 +1,13 @@
+order ={
+        id:'',
+        userFullName :'',
+        notes:'',
+        orderTotal:'',
+        orderStatus:'',
+        dateStamp:'',
+        roomId:'',
+        orderBody:[{
+            productName:'',
+            price:'',
+            quantity:'',
+        }]
