@@ -2,19 +2,15 @@
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-require ('vendor/autoload.php');
 
+require('vendor/autoload.php');
+require('modals/User.php');
 
-$application = new \Slim\App();
+try {
+    $application = new \Slim\App();
 
-//users routes
-require_once './routes/users.php';
-//products routes
-require_once './routes/products.php';
-//orders routes
-require_once './routes/orders.php';
-//categories routes
-require_once './routes/categories.php';
+    $application->run();
 
-// running the application
-$application->run();
+} catch (Exception $exception) {
+    echo $exception->getMessage();
+}

@@ -3,25 +3,40 @@
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-// Get All products
-$app->get('/api/products', function (Request $req, Response $res) {
+require('../modals/Products.php');
 
+$application = new \Slim\App();
+
+
+// Get All products
+$application->get('/api/products', function (Request $request, Response $response, $arguement) {
+    $productObject = new \App\Products();
+    $products = $productObject->getAllProduct();
+    return $this->response->withJson($products);
 });
 
 
 //Create new product
-$app->post('/api/products', function (Request $req, Response $res) {
-
+$application->post('/api/products', function (Request $request, Response $response, $arguement) {
+    $productData = $request->getParsedBody();
+    $productObject = new \App\Products();
+    $result = $productObject->insertOneProduct($productData);
+    return $this->response->withJson($result);
 });
 
 
 // update product
-$app->put('/api/products/{name}', function (Request $req, Response $res) {
-
+$application->put('/api/products/[{id}]', function (Request $request, Response $response, $argument) {
+    $productId = $argument['id'];
+    $productObject = new \App\Products();
+    $productData = $request->getParsedBody();
+    return $this->response->withJson($productObject->updateOneProduct($productId, $productData, false));
 });
 
 
 // delete product
-$app->delete('/api/products/{name}', function (Request $req, Response $res) {
-
+$application->delete('/api/products/[{id}]', function (Request $request, Response $response, $argument) {
+    $productID = $argument['id'];
+    $productObject = new \App\Products();
+    return $this->response->withJson($productObject->deleteOneProduct($productID, 1));
 });
