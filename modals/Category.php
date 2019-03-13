@@ -82,11 +82,11 @@ class Category
     }
 
     // update category document or
-    public function updateOneCategory($oldCategoryName, $newCategoryName, $multi)
+    public function updateOneCategory($categoryId, $newCategoryName, $multi)
     {
         try {
-            if (isset($oldCategoryName) && !empty($oldCategoryName) && isset($newCategoryName) && !empty($newCategoryName)) {
-                $filter = ['categoryName' => $oldCategoryName];
+            if (isset($categoryId) && !empty($categoryId) && isset($newCategoryName) && !empty($newCategoryName)) {
+                $filter = ['_id' => $categoryId];
                 $documentUpdated = ['$set' => ['categoryName' => $newCategoryName]];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
@@ -121,7 +121,7 @@ class Category
     }
 
     // getMulti Category by Name
-    public function getAllCategory($categoryName, $limit)
+    public function getAllCategory()
     {
         try {
             $QueryManager = new MongoQuery([]);

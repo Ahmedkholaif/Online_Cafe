@@ -8,8 +8,6 @@
         "phpunit/phpunit": "^8.0",
         "ext-json":"^1.6",
         "jenssegers/mongodb": "^3.5",
-        "alcaeus/mongo-php-adapter": "^1.1",
-        "ext-mongodb": "^1.5"
-        
+        "alcaeus/mongo-php-adapter": "^1.1"
     }
 }

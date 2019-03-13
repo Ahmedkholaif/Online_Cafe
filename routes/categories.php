@@ -1,43 +1,40 @@
 <?php
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 
-$app->get('/api/categories', function (Request $req, Response $res) {
-   
-    $categories = array(0 => ['categoryName' => 'database1', 'id' => '1'],
-                    1 => ['categoryName' => 'database2', 'id' => '2'],
-                    2 => ['categoryName' => 'database3', 'id' => '3']
-                );
-    echo json_encode($categories);
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+
+require('../modals/Category.php');
+
+$application = new \Slim\App();
+
+// get all categories
+$application->get('/api/categories', function (Request $request, Response $response) {
+    $categoryObject = new \App\Category();
+    $categories = $categoryObject->getAllCategory();
+    return $this->response->withJson($categories);
 });
 
 //Create new category
-$app->post('/api/categories', function (Request $req, Response $res) {
-    $body = json_decode($req->getBody());
-
-    // $body = json_encode($body);
-    $categoryName = $body->categoryName;
-
-    $categoryName = json_encode($categoryName);
-    // header('{"msg":"Success"}');
-    // echo '{'.$body.'}';
-    var_dump( $req );
-    // echo $req
-    echo ' [{"category":'.$categoryName.'}]';
+$application->post('/api/categories', function (Request $request, Response $response) {
+    $categoryObject = new \App\Category();
+    $categoryData = $request->getParsedBody();
+    $result = $categoryObject->insertOneCategory($categoryData);
+    return $this->response->withJson($result);
 });
+
 // update category
-$app->put('/api/categories/{name}', function (Request $req, Response $res) {
-    
-    $name = $req->getAttribute('name');
-    var_dump( $req );
-    echo '[{"name":'.$name.'}]';
-    
+$application->put('/api/categories/[{id}]', function (Request $request, Response $response, $arguments) {
+    $categoryObject = new \App\Category();
+    $updatedId = $arguments['id'];
+    $categoryData = $request->getParsedBody();
+    $result = $categoryObject->updateOneCategory($updatedId, $categoryData, false);
+    return $this->response->withJson($result);
 });
-// delete category
-$app->delete('/api/categories/{name}', function (Request $req, Response $res) {
 
-    $name = $req->getAttribute('name');
-    var_dump( $req );
-    echo '[{"name":'.$name.'}]';
+// delete category
+$application->delete('/api/categories/[{id}]', function (Request $request, Response $response, $arguments) {
+    $categoryObject = new \App\Category();
+    $result = $categoryObject->deleteOneCategory($arguments['id']);
+    return $this->response->withJson();
 });
