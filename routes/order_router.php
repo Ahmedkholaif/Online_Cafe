@@ -2,11 +2,7 @@
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-
-require('../modals/Order.php');
-
-
-$application = new \Slim\App();
+require __DIR__.'/../modals/Order.php';
 
 // Get All Users
 $application->get('/api/orders', function ($request, $response) {

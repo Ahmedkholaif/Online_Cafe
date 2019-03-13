@@ -2,11 +2,8 @@
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+require __DIR__.'/../modals/User.php';
 
-require('../modals/User.php');
-
-
-$application = new \Slim\App();
 
 // Get All Users
 $application->get('/api/users', function ($request, $response) {
@@ -15,7 +12,7 @@ $application->get('/api/users', function ($request, $response) {
     return $this->response->withJson($users);
 });
 
-//Create new user
+//Create new \App\User
 $application->post('/api/users', function (Request $request, Response $response) {
     $userData = $request->getParsedBody();
     $userObject = new \App\User();
@@ -34,6 +31,6 @@ $application->put('/api/users/[{id}]', function (Request $request, Response $res
 // delete user
 $application->delete('/api/users/[{id}]', function (Request $request, Response $response, $arguments) {
     $userID = $arguments['id'];
-    $userObject = new \App\User();
+    $userObject = new User();
     return $this->response->withJson($userObject->deleteOneUser($userID, 1));
 });

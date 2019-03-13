@@ -1,12 +1,8 @@
 <?php
 
-
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-
-require('../modals/Category.php');
-
-$application = new \Slim\App();
+require __DIR__.'/../modals/Category.php';
 
 // get all categories
 $application->get('/api/categories', function (Request $request, Response $response) {
@@ -15,7 +11,7 @@ $application->get('/api/categories', function (Request $request, Response $respo
     return $this->response->withJson($categories);
 });
 
-//Create new category
+//Create new \App\Category
 $application->post('/api/categories', function (Request $request, Response $response) {
     $categoryObject = new \App\Category();
     $categoryData = $request->getParsedBody();
@@ -36,5 +32,5 @@ $application->put('/api/categories/[{id}]', function (Request $request, Response
 $application->delete('/api/categories/[{id}]', function (Request $request, Response $response, $arguments) {
     $categoryObject = new \App\Category();
     $result = $categoryObject->deleteOneCategory($arguments['id']);
-    return $this->response->withJson();
+    return $this->response->withJson($result);
 });

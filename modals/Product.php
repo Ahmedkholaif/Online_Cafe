@@ -11,7 +11,7 @@ use \MongoDB\Driver\Query as MongoQuery;
 use \MongoDB\Driver\Exception;
 use MongoException;
 
-class Products
+class Product
 {
     private $DATABASE_PATH = '';
     private $DATABASE_NAME = '';
@@ -20,10 +20,12 @@ class Products
 
     public function __construct()
     {
-        $this->DATABASE_PATH = 'mongodb://localhost:27017';
+        $this->DATABASE_PATH='mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
+        coderm-shard-00-01-om0sg.gcp.mongodb.net:27017,
+        coderm-shard-00-02-om0sg.gcp.mongodb.net:27017/OnlineCafeDatabase?ssl=true&replicaSet=CoderM-shard-0&authSource=admin&retryWrites=true';
         $this->DATABASE_NAME = 'OnlineCafeDatabase';
         $this->COLLECTION_NAME = 'Product';
-        $this->connectionManager = new MongoManager('mongodb://localhost:27017');
+        $this->connectionManager = new MongoManager($this->DATABASE_PATH);
     }
     
     // insertOne/Multi Product

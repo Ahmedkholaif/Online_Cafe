@@ -2,19 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66d3b7f1-630d-411f-b60c-d902c7df9297" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/order_router.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/room_router.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Online_Cafe.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Online_Cafe.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.phar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modals/temp" beforeDir="false" afterPath="$PROJECT_DIR$/modals/temp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/category_router.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/products.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/products.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/user_router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modals/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/modals/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modals/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/modals/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modals/Products.php" beforeDir="false" afterPath="$PROJECT_DIR$/modals/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modals/Room.php" beforeDir="false" afterPath="$PROJECT_DIR$/modals/Room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modals/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/modals/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/notes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/category_router.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/category_router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/order_router.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/order_router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/orders.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/products.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/products_router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/room_router.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/room_router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/user_router.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/user_router.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,10 +30,58 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/user_router.php">
+        <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="21" column="34" lean-forward="true" selection-end-line="39" />
+            <state relative-caret-position="185">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
+              <folding>
+                <element signature="e#7#62#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/order_router.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+              <folding>
+                <element signature="e#7#62#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/products_router.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="287">
+              <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+              <folding>
+                <element signature="e#7#62#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/room_router.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="287">
+              <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
+              <folding>
+                <element signature="e#8#63#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/category_router.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
               <folding>
                 <element signature="e#7#62#0#PHP" expanded="true" />
               </folding>
@@ -40,13 +90,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/routes/order_router.php">
+        <entry file="file://$PROJECT_DIR$/routes/user_router.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
-              <folding>
-                <element signature="e#7#62#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="51">
+              <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -61,6 +108,12 @@
       <find>$app-&gt;</find>
       <find>$req, Response $res</find>
       <find>$user</find>
+      <find>new \App\</find>
+      <find>new Category</find>
+      <find>new Product</find>
+      <find>new Order</find>
+      <find>new Room</find>
+      <find>new User</find>
     </findStrings>
     <replaceStrings>
       <replace>$request</replace>
@@ -69,6 +122,12 @@
       <replace>$application-&gt;</replace>
       <replace>$request, Response $response, $arguement</replace>
       <replace>$product</replace>
+      <replace>new</replace>
+      <replace>new \App\Category</replace>
+      <replace>new \App\Product</replace>
+      <replace>new \App\Order</replace>
+      <replace>new \App\Room</replace>
+      <replace>new \App\User</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -79,15 +138,22 @@
       <list>
         <option value="$PROJECT_DIR$/routes/users.php" />
         <option value="$PROJECT_DIR$/routes/orders.php" />
-        <option value="$PROJECT_DIR$/modals/Category.php" />
         <option value="$PROJECT_DIR$/routes/categories.php" />
         <option value="$PROJECT_DIR$/modals/temp" />
         <option value="$PROJECT_DIR$/composer.json" />
+        <option value="$PROJECT_DIR$/routes/products.php" />
+        <option value="$PROJECT_DIR$/modals/Category.php" />
+        <option value="$PROJECT_DIR$/notes.txt" />
+        <option value="$PROJECT_DIR$/.htaccess" />
+        <option value="$PROJECT_DIR$/modals/Order.php" />
+        <option value="$PROJECT_DIR$/modals/Product.php" />
+        <option value="$PROJECT_DIR$/modals/Room.php" />
+        <option value="$PROJECT_DIR$/modals/User.php" />
         <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/routes/room_router.php" />
         <option value="$PROJECT_DIR$/routes/category_router.php" />
         <option value="$PROJECT_DIR$/routes/user_router.php" />
-        <option value="$PROJECT_DIR$/routes/products.php" />
+        <option value="$PROJECT_DIR$/routes/products_router.php" />
+        <option value="$PROJECT_DIR$/routes/room_router.php" />
         <option value="$PROJECT_DIR$/routes/order_router.php" />
       </list>
     </option>
@@ -162,6 +228,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -169,21 +236,10 @@
               <item name="Online_Cafe" type="b2602c69:ProjectViewProjectNode" />
               <item name="Online_Cafe" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Online_Cafe" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Online_Cafe" type="462c0819:PsiDirectoryNode" />
-              <item name="modals" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Online_Cafe" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Online_Cafe" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -217,12 +273,13 @@
       <workItem from="1552462491378" duration="8961000" />
       <workItem from="1552474796586" duration="1761000" />
       <workItem from="1552482283350" duration="648000" />
-      <workItem from="1552483451436" duration="2092000" />
+      <workItem from="1552483451436" duration="10995000" />
+      <workItem from="1552498372953" duration="4631000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13462000" />
+    <option name="totallyTimeSpent" value="26996000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -235,7 +292,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18030304" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -250,7 +306,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32991454" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49924242" weight="0.36886632" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49924242" weight="0.36717427" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007576" side_tool="true" weight="0.41196582" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -263,34 +319,11 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/notes.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor />
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modals/Room.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/composer.lock">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modals/temp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="20" column="43" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -301,78 +334,101 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/room_router.php">
+    <entry file="file://$PROJECT_DIR$/modals/temp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="38" column="39" lean-forward="true" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
-          <folding>
-            <element signature="e#8#63#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="157">
+          <caret line="20" column="43" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/orders.php">
+    <entry file="file://$PROJECT_DIR$/routes/orders_router.php" />
+    <entry file="file://$PROJECT_DIR$/composer.lock">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="17">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#7#62#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="4">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modals/Category.php">
+    <entry file="file://$PROJECT_DIR$/notes.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-561">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.htaccess">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modals/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1187">
-          <caret line="137" column="8" lean-forward="true" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
+        <state relative-caret-position="340">
+          <caret line="26" column="72" selection-start-line="26" selection-start-column="72" selection-end-line="26" selection-end-column="72" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/category_router.php">
+    <entry file="file://$PROJECT_DIR$/modals/Room.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="37" column="65" selection-start-line="37" selection-start-column="65" selection-end-line="37" selection-end-column="65" />
+        <state relative-caret-position="340">
+          <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modals/Product.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="27" column="72" selection-start-line="27" selection-start-column="72" selection-end-line="27" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modals/Order.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="27" column="74" selection-start-line="27" selection-start-column="74" selection-end-line="27" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modals/Category.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="24" selection-start-line="21" selection-start-column="8" selection-end-line="24" />
           <folding>
-            <element signature="e#8#63#0#PHP" expanded="true" />
+            <element signature="e#23#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/products.php">
+    <entry file="file://$PROJECT_DIR$/vendor/autoload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="e#7#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modals/Products.php">
+    <entry file="file://$PROJECT_DIR$/routes/category_router.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="127" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/user_router.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="21" column="34" lean-forward="true" selection-end-line="39" />
+        <state relative-caret-position="119">
+          <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
           <folding>
             <element signature="e#7#62#0#PHP" expanded="true" />
           </folding>
@@ -381,11 +437,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/order_router.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
           <folding>
             <element signature="e#7#62#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/products_router.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="e#7#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/room_router.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
+          <folding>
+            <element signature="e#8#63#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/user_router.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
         </state>
       </provider>
     </entry>

@@ -3,10 +3,7 @@
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-
-require('../modals/Room.php');
-
-$application = new \Slim\App();
+require __DIR__.'/../modals/Room.php';
 
 // get all rooms
 $application->get('/api/rooms', function (Request $request, Response $response) {
@@ -15,7 +12,7 @@ $application->get('/api/rooms', function (Request $request, Response $response) 
     return $this->response->withJson($rooms);
 });
 
-//Create new room
+//Create new \App\Room
 $application->post('/api/rooms', function (Request $request, Response $response) {
     $roomObject = new \App\Room();
     $roomData = $request->getParsedBody();
@@ -36,5 +33,5 @@ $application->put('/api/rooms/[{id}]', function (Request $request, Response $res
 $application->delete('/api/rooms/[{id}]', function (Request $request, Response $response, $arguments) {
     $roomObject = new \App\Room();
     $result = $roomObject->deleteOneRoom($arguments['id']);
-    return $this->response->withJson();
+    return $this->response->withJson($result);
 });

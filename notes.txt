@@ -6,3 +6,14 @@ from OnlineCafe directory "your git dir_path"
  $service httpd start
  $php -S localhost:3005 index.php
  $npm run start --prefix client
+
+
+
+// Complete Routers
+// Database Schema
+// Session
+// Password - User
+// Email Sender
+// Login
+// Test
+// Deploy
