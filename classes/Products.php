@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use \MongoDB\BSON\ObjectId as ObjectID;
 use function \MongoDB\BSON\toPHP as toPHP;
 use \MongoDB\Driver\Manager as MongoManager;
@@ -10,7 +11,7 @@ use \MongoDB\Driver\Query as MongoQuery;
 use \MongoDB\Driver\Exception;
 use MongoException;
 
-class Room
+class Products
 {
     private $DATABASE_PATH = '';
     private $DATABASE_NAME = '';
@@ -21,19 +22,24 @@ class Room
     {
         $this->DATABASE_PATH = 'mongodb://localhost:27017';
         $this->DATABASE_NAME = 'OnlineCafeDatabase';
-        $this->COLLECTION_NAME = 'Room';
+        $this->COLLECTION_NAME = 'Product';
         $this->connectionManager = new MongoManager('mongodb://localhost:27017');
     }
-
-    // insert Room document
-    public function insertOneRoom($RoomName)
-    {
+    
+    // insertOne/Multi Product
+    public function insertOneProduct($productArray){
         try {
-            if (isset($RoomName) && !empty($RoomName)) {
+            if (isset($productArray) && !empty($productArray)) {
                 $bulkWriteInsert = new MongoBulkWrite;
-                $inserted_id = $bulkWriteInsert->insert(["RoomName" => $RoomName]);
+                $inserted_id = $bulkWriteInsert->insert([
+                    "productName" => $productArray["productName"],
+                    "price" => $productArray["price"],
+                    "categoryName" => $productArray["categoryName"],
+                    "image" => $productArray["image"],
+                    "isAvailable" => $productArray["isAvailable"]
+                ]);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
-                return var_dump($inserted_id);
+                return json_encode($inserted_id);
             } else {
                 return false;
             }
@@ -42,52 +48,19 @@ class Room
         }
     }
 
-    // delete Room document
-    public function deleteOneRoom($RoomId)
+    // update One/Multi Product
+    public function updateOneProduct($productId, $productArray, $multi)
     {
         try {
-            if (isset($RoomId) && !empty($RoomId)) {
-                $filter = ['_id' => new ObjectID($RoomId)];
-                $bulkWriteDeleted = new MongoBulkWrite;
-                $options = ['limit' => 1];
-                $bulkWriteDeleted->delete($filter, $options);
-                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
-                return $response->isAcknowledged();
-            } else {
-                return false;
-            }
-        } catch (MongoException $exception) {
-            return $exception->getMessage();
-        }
-    }
-
-    // delete multiple by Room Name
-    public function deleteAllRoom($RoomName, $limit)
-    {
-
-        try {
-            if (isset($RoomName) && !empty($RoomName) && isset($limit) && !empty($limit)) {
-                $filter = ['RoomName' => $RoomName];
-                $bulkWriteDeleted = new MongoBulkWrite;
-                $options = ['limit' => $limit];
-                $bulkWriteDeleted->delete($filter, $options);
-                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
-                return $response->isAcknowledged();
-            } else {
-                return false;
-            }
-        } catch (MongoException $exception) {
-            return $exception->getMessage();
-        }
-    }
-
-    // update Room document or
-    public function updateOneRoom($oldRoomName, $newRoomName, $multi)
-    {
-        try {
-            if (isset($oldRoomName) && !empty($oldRoomName) && isset($newRoomName) && !empty($newRoomName)) {
-                $filter = ['RoomName' => $oldRoomName];
-                $documentUpdated = ['$set' => ['RoomName' => $newRoomName]];
+            if (isset($productId) && !empty($productId) && isset($productArray) && !empty($productArray)) {
+                $filter = ["_id" => $productId];
+                $documentUpdated = ['$set' => [
+                    "productName" => $productArray["productName"],
+                    "price" => $productArray["price"],
+                    "categoryName" => $productArray["categoryName"],
+                    "image" => $productArray["image"],
+                    "isAvailable" => $productArray["isAvailable"]
+                ]];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
@@ -99,14 +72,35 @@ class Room
         } catch (MongoException $exception) {
             return $exception->getMessage();
         }
-    }
 
-    // getOne Room by RoomID
-    public function getOneRoom($RoomId, $limit)
+    }
+    
+    // delete One/Multi Product
+    public function deleteOneProduct($productId, $limit)
     {
         try {
-            if (isset($RoomId) && !empty($RoomId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($RoomId)];
+            if (isset($productId) && !empty($productId) && isset($limit) && !empty($limit)) {
+                $filter = ['_id' => $productId];
+                $bulkWriteDeleted = new MongoBulkWrite;
+                $options = ['limit' => $limit];
+                $bulkWriteDeleted->delete($filter, $options);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
+                return $response->isAcknowledged();
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
+            return $exception->getMessage();
+        }
+
+    }
+    
+    // get One  Product
+    public function getOneProduct($productId, $limit)
+    {
+        try {
+            if (isset($productId) && !empty($productId) && isset($limit) && !empty($limit)) {
+                $filter = ['_id' => new ObjectID($productId)];
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
@@ -120,8 +114,8 @@ class Room
         }
     }
 
-    // getMulti Room by Name
-    public function getAllRoom()
+    // get All products
+    public function getAllProduct()
     {
         try {
             $QueryManager = new MongoQuery([]);
@@ -129,8 +123,6 @@ class Room
             return json_encode($responseCursor->toArray());
         } catch (MongoException $exception) {
             return $exception->getMessage();
-        } catch (Exception\Exception $e) {
         }
-
     }
 }

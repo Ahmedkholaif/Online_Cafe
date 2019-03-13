@@ -1,7 +1,7 @@
 <?php
 
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 // require '../classes/Category.php';
 
@@ -10,8 +10,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 // $Cat = new Category();
 
 // var_dump($Cat);
-require '../config/db.php';
-
+// require '../config/db.php';
+require '../classes/Category.php';
 // $Cat = $onlineCafedb->
 // var_dump($Cat);
 
@@ -23,12 +23,13 @@ $Cat->insert(array(
 ));
 
 $app->get('/api/categories', function (Request $req, Response $res) {
-    echo 'categories';
-
-    $categories = array(0 => ['categoryName' => 'database1', 'id' => '1'],
-                    1 => ['categoryName' => 'database2', 'id' => '2'],
-                    2 => ['categoryName' => 'database3', 'id' => '3'],
-                );
+    // echo 'categories';
+    $cat = new \App\Category();
+    var_dump($cat->insertOneCategory('hghgghghg'));
+    // $categories = array(0 => ['categoryName' => 'database1', 'id' => '1'],
+    //                 1 => ['categoryName' => 'database2', 'id' => '2'],
+    //                 2 => ['categoryName' => 'database3', 'id' => '3'],
+    //             );
     // print_r($categories);
     // $categories = json_encode($categories);
     // print_r($categories);

@@ -2,12 +2,13 @@
 
 namespace App;
 
+use \MongoDB\BSON\ObjectId as ObjectID;
+use function \MongoDB\BSON\toPHP as toPHP;
+use \MongoDB\Driver\Manager as MongoManager;
+use \MongoDB\Driver\BulkWrite as MongoBulkWrite;
+use \MongoDB\Driver\Query as MongoQuery;
+use \MongoDB\Driver\Exception;
 use MongoException;
-use MongoDB\BSON\ObjectId as ObjectID;
-use MongoDB\Driver\BulkWrite as MongoBulkWrite;
-use MongoDB\Driver\Exception;
-use MongoDB\Driver\Manager as MongoManager;
-use MongoDB\Driver\Query as MongoQuery;
 
 class Category
 {
@@ -29,10 +30,9 @@ class Category
     {
         try {
             if (isset($categoryName) && !empty($categoryName)) {
-                $bulkWriteInsert = new MongoBulkWrite();
-                $inserted_id = $bulkWriteInsert->insert(['categoryName' => $categoryName]);
-                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteInsert);
-
+                $bulkWriteInsert = new MongoBulkWrite;
+                $inserted_id = $bulkWriteInsert->insert(["categoryName" => $categoryName]);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
                 return var_dump($inserted_id);
             } else {
                 return false;
@@ -48,11 +48,10 @@ class Category
         try {
             if (isset($categoryId) && !empty($categoryId)) {
                 $filter = ['_id' => new ObjectID($categoryId)];
-                $bulkWriteDeleted = new MongoBulkWrite();
+                $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => 1];
                 $bulkWriteDeleted->delete($filter, $options);
-                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteDeleted);
-
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
                 return $response->isAcknowledged();
             } else {
                 return false;
@@ -65,14 +64,14 @@ class Category
     // delete multiple by category Name
     public function deleteAllCategory($categoryName, $limit)
     {
+
         try {
             if (isset($categoryName) && !empty($categoryName) && isset($limit) && !empty($limit)) {
                 $filter = ['categoryName' => $categoryName];
-                $bulkWriteDeleted = new MongoBulkWrite();
+                $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
-                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteDeleted);
-
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
                 return $response->isAcknowledged();
             } else {
                 return false;
@@ -90,10 +89,9 @@ class Category
                 $filter = ['categoryName' => $oldCategoryName];
                 $documentUpdated = ['$set' => ['categoryName' => $newCategoryName]];
                 $options = ['multi' => $multi, 'upsert' => $multi];
-                $bulkWriteUpdated = new MongoBulkWrite();
+                $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
-                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $bulkWriteUpdated);
-
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteUpdated);
                 return $response->isAcknowledged();
             } else {
                 return false;
@@ -111,8 +109,7 @@ class Category
                 $filter = ['_id' => new ObjectID($categoryId)];
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
-                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $QueryManager);
-
+                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
                 return json_encode($responseCursor->toArray());
             } else {
                 return false;
@@ -124,19 +121,12 @@ class Category
     }
 
     // getMulti Category by Name
-    public function getMultiCategory($categoryName, $limit)
+    public function getAllCategory($categoryName, $limit)
     {
         try {
-            if (isset($categoryName) && !empty($categoryName) && isset($limit) && !empty($limit)) {
-                $filter = ['categoryName' => $categoryName];
-                $options = ['limit' => $limit];
-                $QueryManager = new MongoQuery($filter, $options);
-                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME.'.'.$this->COLLECTION_NAME, $QueryManager);
-
-                return json_encode($responseCursor->toArray());
-            } else {
-                return false;
-            }
+            $QueryManager = new MongoQuery([]);
+            $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
+            return json_encode($responseCursor->toArray());
         } catch (MongoException $exception) {
             return $exception->getMessage();
         } catch (Exception\Exception $e) {

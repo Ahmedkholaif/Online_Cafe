@@ -10,7 +10,7 @@ use \MongoDB\Driver\Query as MongoQuery;
 use \MongoDB\Driver\Exception;
 use MongoException;
 
-class Room
+class User
 {
     private $DATABASE_PATH = '';
     private $DATABASE_NAME = '';
@@ -21,19 +21,27 @@ class Room
     {
         $this->DATABASE_PATH = 'mongodb://localhost:27017';
         $this->DATABASE_NAME = 'OnlineCafeDatabase';
-        $this->COLLECTION_NAME = 'Room';
+        $this->COLLECTION_NAME = 'User';
         $this->connectionManager = new MongoManager('mongodb://localhost:27017');
     }
 
-    // insert Room document
-    public function insertOneRoom($RoomName)
+    // insert One User
+    public function insertOneUser($userArray)
     {
         try {
-            if (isset($RoomName) && !empty($RoomName)) {
+            if (isset($userArray) && !empty($userArray)) {
                 $bulkWriteInsert = new MongoBulkWrite;
-                $inserted_id = $bulkWriteInsert->insert(["RoomName" => $RoomName]);
+                $inserted_id = $bulkWriteInsert->insert([
+                    "fullName" => $userArray["fullName"],
+                    "email" => $userArray["email"],
+                    "password" => $userArray["password"],
+                    "image" => $userArray["image"],
+                    "defaultRoom" => $userArray["defaultRoom"],
+                    "phone" => $userArray["phone"],
+                    "isAdmin" => $userArray["isAdmin"]
+                ]);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
-                return var_dump($inserted_id);
+                return json_encode($inserted_id);
             } else {
                 return false;
             }
@@ -42,52 +50,21 @@ class Room
         }
     }
 
-    // delete Room document
-    public function deleteOneRoom($RoomId)
+    // update One/Multi User
+    public function updateOneUser($userId, $userArray, $multi)
     {
         try {
-            if (isset($RoomId) && !empty($RoomId)) {
-                $filter = ['_id' => new ObjectID($RoomId)];
-                $bulkWriteDeleted = new MongoBulkWrite;
-                $options = ['limit' => 1];
-                $bulkWriteDeleted->delete($filter, $options);
-                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
-                return $response->isAcknowledged();
-            } else {
-                return false;
-            }
-        } catch (MongoException $exception) {
-            return $exception->getMessage();
-        }
-    }
-
-    // delete multiple by Room Name
-    public function deleteAllRoom($RoomName, $limit)
-    {
-
-        try {
-            if (isset($RoomName) && !empty($RoomName) && isset($limit) && !empty($limit)) {
-                $filter = ['RoomName' => $RoomName];
-                $bulkWriteDeleted = new MongoBulkWrite;
-                $options = ['limit' => $limit];
-                $bulkWriteDeleted->delete($filter, $options);
-                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
-                return $response->isAcknowledged();
-            } else {
-                return false;
-            }
-        } catch (MongoException $exception) {
-            return $exception->getMessage();
-        }
-    }
-
-    // update Room document or
-    public function updateOneRoom($oldRoomName, $newRoomName, $multi)
-    {
-        try {
-            if (isset($oldRoomName) && !empty($oldRoomName) && isset($newRoomName) && !empty($newRoomName)) {
-                $filter = ['RoomName' => $oldRoomName];
-                $documentUpdated = ['$set' => ['RoomName' => $newRoomName]];
+            if (isset($userId) && !empty($userId) && isset($userArray) && !empty($userArray)) {
+                $filter = ["_id" => $userId];
+                $documentUpdated = ['$set' => [
+                    "fullName" => $userArray["fullName"],
+                    "email" => $userArray["email"],
+                    "password" => $userArray["password"],
+                    "image" => $userArray["image"],
+                    "defaultRoom" => $userArray["defaultRoom"],
+                    "phone" => $userArray["phone"],
+                    "isAdmin" => $userArray["isAdmin"]
+                ]];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
@@ -99,14 +76,35 @@ class Room
         } catch (MongoException $exception) {
             return $exception->getMessage();
         }
+
     }
 
-    // getOne Room by RoomID
-    public function getOneRoom($RoomId, $limit)
+    // delete One/Multi User
+    public function deleteOneUser($userId, $limit)
     {
         try {
-            if (isset($RoomId) && !empty($RoomId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($RoomId)];
+            if (isset($userId) && !empty($userId) && isset($limit) && !empty($limit)) {
+                $filter = ['_id' => $userId];
+                $bulkWriteDeleted = new MongoBulkWrite;
+                $options = ['limit' => $limit];
+                $bulkWriteDeleted->delete($filter, $options);
+                $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
+                return $response->isAcknowledged();
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
+            return $exception->getMessage();
+        }
+
+    }
+
+    // getOne User
+    public function getOneUser($userId, $limit)
+    {
+        try {
+            if (isset($userId) && !empty($userId) && isset($limit) && !empty($limit)) {
+                $filter = ['_id' => new ObjectID($userId)];
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
@@ -120,8 +118,8 @@ class Room
         }
     }
 
-    // getMulti Room by Name
-    public function getAllRoom()
+    // getAllUsers
+    public function getAllUser()
     {
         try {
             $QueryManager = new MongoQuery([]);
@@ -129,8 +127,12 @@ class Room
             return json_encode($responseCursor->toArray());
         } catch (MongoException $exception) {
             return $exception->getMessage();
-        } catch (Exception\Exception $e) {
         }
-
     }
+
 }
+
+// TODO: UserLogin
+// TODO: UserPassword
+// Todo: UserEmail
+// Todo:
