@@ -6,7 +6,6 @@ import GuestHomePage from './components/GuestHomePage'
 import HomePage from './components/userHomePage'
 
 import Category from './components/CkecksView'
-import books from './components/AllBooksPage'
 
 import './App.css'
 
@@ -21,7 +20,6 @@ class App extends Component {
                     <Route path='/Home' exact component={HomePage}/>
                   
                     <Route path='/Category' exact component={Category}/>
-                    <Route path='/books' exact component={books}/>
                    
                 </div>
             </BrowserRouter>

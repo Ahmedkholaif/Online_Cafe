@@ -1,0 +1,12 @@
+.mainselection  {
+    border: 0;
+    color: black;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 2px 10px;
+    width: 378px;
+    *width: 350px;
+    background:#FFD700;
+    -webkit-appearance: none;
+ }
