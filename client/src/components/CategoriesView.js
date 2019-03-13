@@ -181,13 +181,21 @@ class CategoriesView extends Component {
                                     if(cat.categoryName === this.state.inEdit.categoryName) {
                                         cat.categoryName = this.state.category.categoryName;
                                         setCategories([...categories]);
+                                        axios
+                                        .put(`/api/categories/${cat.categoryName}`)
+                                        .then(response=>{
+                                            console.log(response);
+                                        })
+                                        .catch(err=>{
+                                            console.log(err);
+                                        })
                                     }
                                 });
                                 this.setState({
                                     modal:!this.state.modal
                                 })
-                            }}>Edit
-                                Category</Button>{' '}
+                            }}>
+                            EditCategory</Button>{' '}
                             <Button color="secondary" onClick={() => this.toggle(null)}>Close</Button>
                         </ModalFooter>
                     </Modal>
@@ -208,6 +216,14 @@ class CategoriesView extends Component {
                                         setCategories(
                                             categories.filter(cat => cat.categoryName !== category.categoryName   )
                                         )
+                                        axios
+                                        .delete(`/api/categories/${category.categoryName}`)
+                                        .then(response=>{
+                                            console.log(response.data);
+                                        })
+                                        .catch(err=>{
+                                            console.log(err);
+                                        })
                                     }}>Delete</Button></td>
                                     <td><Button color='success' onClick={() => {
                                         this.setState({

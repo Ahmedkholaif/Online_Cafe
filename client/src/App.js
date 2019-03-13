@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {BrowserRouter,Route} from "react-router-dom";
-import AdminLogin from './components/AdminLogin'
+// import AdminLogin from './components/AdminLogin'
 import AdminDashboard from './components/AdminDashboard'
 import GuestHomePage from './components/GuestHomePage'
 import HomePage from './components/userHomePage'
 
-import Category from './components/categoryBooksPage'
+import Category from './components/CkecksView'
 import books from './components/AllBooksPage'
 
 import './App.css'
@@ -16,7 +16,6 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className='App'>
-                    <Route path="/admin" exact component={AdminLogin}/>
                     <Route path="/admin/dashboard" exact component={AdminDashboard}/>
                     <Route path='/' exact component={GuestHomePage}/>
                     <Route path='/Home' exact component={HomePage}/>

@@ -35,7 +35,7 @@ class AddCategory extends React.Component {
             },conf)
             .then(response => {
                 if(response.status === 200 ) {
-                console.log(response);
+                console.log(response.data);
                 const categoriesProps = this.props.categories;
                 categoriesProps.push({ id:response.data._id , catName: response.data.catName});
                 this.setState({
@@ -97,7 +97,7 @@ class AddCategory extends React.Component {
             }))
             .then(response => {
                 // if(response.status === 200 ) {
-                console.log(response);
+                console.log(response.data);
                 // const categoriesProps = this.props.categories;
                 // categoriesProps.push({ id:response.data._id , catName: response.data.catName});
                 // this.setState({

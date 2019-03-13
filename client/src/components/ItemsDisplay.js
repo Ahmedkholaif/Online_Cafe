@@ -32,16 +32,11 @@ componentWillReceiveProps(nextProps){
                   </Row>
                   <Row className={"item"}>
                     <Col>
-                      <Link to={`/book?${item.productName}`} replace>
-                        {item.productName}
-                      </Link>
                     </Col>
                   </Row>
                   <Row className={"item lastItem"}>
                     <Col>
-                      <Link to={`/author?${item.category}`} replace>
-                        {item.category}
-                      </Link>
+                      
                     </Col>
                   </Row>
                 </Col>

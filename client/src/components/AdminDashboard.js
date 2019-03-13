@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabContent, TabPane, Button, Nav, NavItem, NavLink, Col } from 'reactstrap';
+import { TabContent, TabPane, Button, Nav, NavItem, NavLink, Col,Row } from 'reactstrap';
 import {
     Collapse,
     Navbar,
@@ -14,14 +14,16 @@ import {
 import ItemsDisplay from './ItemsDisplay';
 import classnames from 'classnames';
 import CategoriesView from '../components/CategoriesView'
-import AuthorView from './UsersView'
+import UsersView from './UsersView'
 import ProductsView from './ProductsView'
+import OrdersView from './OrdersView';
 import axios from 'axios';
 import { Redirect , Link} from 'react-router-dom'
-import '../css/AdminLogin.css';
+import '../css/LoginForm.css';
+import '../css/AdminDashboard.css';
 // import "../css/UserHomePage.css";
 import {AdminContext} from './AdminContext';
-
+import ChecksView from './CkecksView'
 
 export default class Example extends React.Component {
 
@@ -37,7 +39,7 @@ export default class Example extends React.Component {
     //     id :'',
     //     fullName:'',
     //     email:'',
-    //     pass:"",
+    //     password:"",
     //     image:'',
     //     defaultRoom:'',
     //     phone:'',
@@ -91,6 +93,16 @@ export default class Example extends React.Component {
         } )
         .catch(err => console.log(err))
 
+        axios
+        .get('/api/products')
+        .then(res =>{
+            console.log(res);
+            this.setProducts(
+                [...this.state.products,...res.data]
+            )
+        } )
+        .catch(err => console.log(err))
+
         this.setCategories([{
             categoryName:"test1"
         },{
@@ -113,7 +125,69 @@ export default class Example extends React.Component {
             categoryName:'cold',
             isAvailable: true,
             image:'link',
-        }])
+        }]);
+        this.setUsers ([
+            {
+                id :'1',
+                fullName:'aaaaaa',
+                email:'aaaaaa',
+                password:"aaaaa",
+                image:'',
+                defaultRoom:'aaaaa',
+                phone:'33333333',
+                isAdmin:true,
+            },
+            {
+                id :'3',
+                fullName:'dddddd',
+                email:'dddddd',
+                password:"dddd",
+                image:'dddd',
+                defaultRoom:'dddddd',
+                phone:'333445555',
+                isAdmin:false,
+            }
+        ]);
+        this.setOrders ([
+            {
+                    id:'1',
+                    userFullName :'Ahmed',
+                    notes:'no notes',
+                    orderTotal:323,
+                    orderStatus:'on progress', 
+                    dateStamp: '2019-3-7 10:30 AM',
+                    roomId:232,
+                    orderBody:[{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'Juice',
+                        price:30,
+                        quantity:5,
+                    }
+                    ]
+                },
+                {
+                    id:'2',
+                    userFullName :'jghghg',
+                    notes:'no notes',
+                    orderTotal:323,
+                    orderStatus:'process', 
+                    dateStamp:'2019-3-7 10:30 AM',
+                    roomId:232,
+                    orderBody:[{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'Juice',
+                        price:30,
+                        quantity:5,
+                    }
+                    ]
+                }
+        ]);
     }
     handleSignout = (event) => {
         event.preventDefault();
@@ -177,25 +251,37 @@ export default class Example extends React.Component {
             < AdminContext.Provider value = 
             {{ categories :this.state.categories ,setCategories :this.setCategories,
                 products : this.state.products , setProducts:this.setProducts,
+                users:this.state.users , setUsers:this.setUsers,
+                orders:this.state.orders , setOredrs:this.setOrders,
             }} >
         
                 <div className='AdminDashboard'>
                     <Nav tabs>
-                        <NavItem>
+                    <NavItem>
                         <NavLink
                             className={classnames({ active: this.state.activeTab === '1' })}
                             onClick={() => {
                                 this.toggle('1');
                             }}
                         >
-                            Home Page 
+                            Home  
+                        </NavLink>
+                    </NavItem>
+                        <NavItem>
+                        <NavLink
+                            className={classnames({ active: this.state.activeTab === '2' })}
+                            onClick={() => {
+                                this.toggle('2');
+                            }}
+                        >
+                            Manual Order 
                         </NavLink>
                     </NavItem>
                         <NavItem>
                             <NavLink
-                                className={classnames({ active: this.state.activeTab === '2' })}
+                                className={classnames({ active: this.state.activeTab === '3' })}
                                 onClick={() => {
-                                    this.toggle('2');
+                                    this.toggle('3');
                                 }}
                             >
                                 Categories
@@ -203,18 +289,18 @@ export default class Example extends React.Component {
                         </NavItem>
                         <NavItem>
                             <NavLink
-                                className={classnames({ active: this.state.activeTab === '3' })}
+                                className={classnames({ active: this.state.activeTab === '4' })}
                                 onClick={() => {
-                                    this.toggle('3');
+                                    this.toggle('4');
                                 }} >
                                 Products
                             </NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink
-                                className={classnames({ active: this.state.activeTab === '4' })}
+                                className={classnames({ active: this.state.activeTab === '5' })}
                                 onClick={() => {
-                                    this.toggle('4');
+                                    this.toggle('5');
                                 }}
                             >
                                 Users
@@ -223,9 +309,9 @@ export default class Example extends React.Component {
                         </NavItem>
                         <NavItem>
                             <NavLink
-                                className={classnames({ active: this.state.activeTab === '5' })}
+                                className={classnames({ active: this.state.activeTab === '6' })}
                                 onClick={() => {
-                                    this.toggle('5');
+                                    this.toggle('6');
                                 }}
                             >
                                 Checks
@@ -252,31 +338,49 @@ export default class Example extends React.Component {
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
+                            <Col sm="12">
+                                <OrdersView />
+                            </Col>
+                        </TabPane>
+                    <TabPane tabId="2">
                         <Col sm="12">
-                                home page
-                                <ItemsDisplay items={this.state.products} />
+                          <Row>
+                                        Manual Order 
+                                <Col sm="4"> Side Bar Order</Col>
+                                <Col sm="8"> 
+                                        Products
+                                    <Row>
+                                        <Col>
+                                        Users Choose
+                                        </Col>
+                                    </Row>
+                                    <Row className="seperator10"></Row>
+                                    <Row>
+                                         <ItemsDisplay items={this.state.products} />
+                                    </Row>
+                                </Col>
+                            </Row> 
                         </Col>
                     </TabPane>
                     
-                    <TabPane tabId="2">
+                    <TabPane tabId="3">
                             <Col sm="12">
                                 <CategoriesView passCategories={this.handlePassCategoriesProps} />
                             </Col>
                         </TabPane>
-                        <TabPane tabId="3">
+                        <TabPane tabId="4">
                             <Col sm="12">
                                 <ProductsView categories={this.state.categories} authors={this.state.authors} />
                             </Col>
                         </TabPane>
-                        <TabPane tabId="4">
+                        <TabPane tabId="5">
                             <Col sm="12">
-                                <AuthorView passAuthors={this.handlePassAuthorsProps} />
+                                <UsersView />
                             </Col>
                         </TabPane>
-                        <TabPane tabId="5">
+                        <TabPane tabId="6">
                         <Col sm="12">
-                        
-                                checks 
+                                <ChecksView/>
                         </Col>
                     </TabPane>
                     </TabContent>

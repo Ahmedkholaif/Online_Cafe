@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Alert, Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import axios from 'axios'
 import {AdminContext} from './AdminContext'
+import '../css/AdminDashboard.css';
 class AddProduct extends Component {
    
 
@@ -19,7 +20,7 @@ class AddProduct extends Component {
         product : {
             id:'',
             productName:'',
-            price:'',
+            price:0,
             categoryName:'',
             isAvailable: "",
             image:'',
@@ -91,15 +92,14 @@ class AddProduct extends Component {
 
     }
 
-    // handleOnChangeCategory = event => {
-    //     this.setState({ book: { ...this.state.book, category: event.target.value } });
-    // }
-    // handleOnChangeAuthor = event => {
-    //     this.setState({ book: { ...this.state.book, author: event.target.value } });
-    // }
-    // handleOnChangeDescription = event => {
-    //     this.setState({ book: { ...this.state.book, description: event.target.value } });
-    // }
+    handleOnChangeBox = (event) => {
+        this.setState({
+           product: {...this.state.product, [event.target.name] : event.target.checked } 
+        },
+        ()=>{ console.log(this.state.product)}
+        )
+
+    }
 
     handleselectedFile = event => {
         this.setState({
@@ -120,30 +120,54 @@ class AddProduct extends Component {
                     className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Add Product</ModalHeader>
                     <ModalBody>
-                        <Input type="text" name="productName" value={this.state.product.productName} onChange={this.handleOnChange}
-                            placeholder='Book Name' />
+                        <Input type="text" name="productName"  onChange={this.handleOnChange}
+                            placeholder='Product Name' />
                         <Input type="select" name="categoryName" id="categorySelect"
-                         onClick={this.handleOnChange} >
+                         
+                        onChange={this.handleOnChange} >
+                        <option > category</option>
                         {
                             categories.map( category =>
                                     <option key={category.id} value={category.categoryName}>{category.categoryName}</option>
                             )
                         }
                         </Input>
-                        <Input type="text" name="price" id="price" onClick={this.handleOnChange} >
-                        </Input>
-                        <Input type="radio" name="isAvailable" id="isavailable" onClick={this.handleOnChange} >
-                        </Input>
-                        
-
+                        <Input type="text" name="price"  onChange={this.handleOnChange} placeholder="Price" />
+                         <br/>
+                        Available <br/>
+                        <Input type="checkbox" id="isAvailable" name="isAvailable"  onChange={this.handleOnChangeBox} />
+                        <hr/>
+                        <Input type="text" name="image"  onChange={this.handleOnChange} placeholder="image" />
                         <Input
                             type="file"
                             name=""
                             onChange={this.handleselectedFile}
-                            placeholder='Product Photo ' />
+                            placeholder='Product Photo ' /> 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Add Product </Button>{' '}
+                        <Button color="primary" onClick={ ()=>{
+                            setProducts([
+                                ...products,this.state.product
+                            ]);
+                            axios
+                            .post('/api/products',JSON.stringify({product : this.state.product}))
+                            .then(response=>{
+                                console.log(response.data);
+                            })
+                            .catch(err=>console.log(err))
+                            this.setState({
+                                modal: ! this.state.modal,
+                                product : {
+                                    id:'',
+                                    productName:'',
+                                    price:0,
+                                    categoryName:'',
+                                    isAvailable: "",
+                                    image:'',
+                                }
+                            });
+                            
+                         }} > Add Product </Button>{' '}
                         <Button color="secondary" onClick={this.toggle}>Close</Button>
                     </ModalFooter>
                 </Modal>
