@@ -34,11 +34,7 @@ export default class Example extends React.Component {
         products:[],
         users: [],
         orders:[],
-        rooms:[{
-            roomName:'123a'
-        },{
-            roomName:'456b'
-        }],
+        rooms:[],
         order : {
             id:'',
             userFullName :'',
@@ -129,18 +125,56 @@ export default class Example extends React.Component {
 
         this.setProducts([{
                 id:'2',
-                productName:'pppp11',
-                price:'111',
+                productName:'caffee',
+                price:'6',
                 categoryName:'hot',
                 isAvailable: true,
                 image:'link',
         },{
             id:'3',
-            productName:'pppp33',
-            price:'111',
+            productName:'7up',
+            price:'12',
             categoryName:'cold',
             isAvailable: true,
             image:'link',
+        },{
+            id:'4',
+            productName:'cheese',
+            price:'29',
+            categoryName:'cold',
+            isAvailable: true,
+            image:'link',
+        },
+        {
+            id:'4',
+            productName:'caffee',
+            price:'6',
+            categoryName:'hot',
+            isAvailable: true,
+            image:'link',
+    },{
+        id:'5',
+        productName:'7up',
+        price:'12',
+        categoryName:'cold',
+        isAvailable: true,
+        image:'link',
+    },{
+        id:'6',
+        productName:'cheese',
+        price:'29',
+        categoryName:'cold',
+        isAvailable: true,
+        image:'link',
+    }
+       
+    
+    
+        ]);
+        this.setRooms([{
+            roomName:'123a'
+        },{
+            roomName:'456b'
         }]);
         this.setUsers ([
             {
@@ -333,6 +367,11 @@ export default class Example extends React.Component {
         })
 
     }
+    setRooms=(rooms)=>
+    {this.setState({
+        rooms,
+
+    })}
     updateTotal=()=>
     { 
        const orderTotal=this.state.order.orderBody.reduce(
@@ -355,7 +394,7 @@ export default class Example extends React.Component {
                 users:this.state.users , setUsers:this.setUsers,
                 orders:this.state.orders , setOredrs:this.setOrders,
                 order:this.state.order,setOneOrder:this.setOneOrder,
-                rooms:this.state.rooms,
+                rooms:this.state.rooms,setRooms:this.setRooms,
                 setOrderBody:this.setOrderBody,
             }} >
         
