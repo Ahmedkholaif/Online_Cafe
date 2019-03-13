@@ -3,7 +3,7 @@ import { Container, Row, Col,Input,Button } from 'reactstrap';
 // import '../css/ManualOrder.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import OrderProducts from './OrderProducts';
-
+import ProductsGallery from './ProductsGallery'
 
 class ManualOrder extends Component{
 
@@ -119,9 +119,8 @@ render()
     </Col>
     <Col xs="8" className="split right" id="lItem" >
     
-       <div className="usersList">
-        </div>
-              <p> </p>
+    <ProductsGallery/>
+              
     </Col>
   </Row>
   <br />
