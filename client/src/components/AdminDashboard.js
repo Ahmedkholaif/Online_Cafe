@@ -34,6 +34,11 @@ export default class Example extends React.Component {
         products:[],
         users: [],
         orders:[],
+        rooms:[{
+            roomName:'123a'
+        },{
+            roomName:'456b'
+        }],
         order : {
             id:'',
             userFullName :'',
@@ -350,6 +355,7 @@ export default class Example extends React.Component {
                 users:this.state.users , setUsers:this.setUsers,
                 orders:this.state.orders , setOredrs:this.setOrders,
                 order:this.state.order,setOneOrder:this.setOneOrder,
+                rooms:this.state.rooms,
                 setOrderBody:this.setOrderBody,
             }} >
         

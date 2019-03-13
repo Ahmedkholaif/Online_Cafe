@@ -23,6 +23,7 @@ total:0,
 
 //  }
 
+
  updateTotal=(total)=>{
    this.setState({total}) 
 
@@ -33,7 +34,7 @@ total:0,
         return (
     
        <AdminContext.Consumer>
-           {({order,setOneOrder,setOrderBody}  )=>{ 
+           {({order,rooms,setOneOrder,setOrderBody}  )=>{ 
 
         const selectedItemsList= order.orderBody;
 
@@ -70,8 +71,25 @@ total:0,
             </div>
             <div >
               Notes:
-            <Input type="textarea" name="text" id="exampleText" className="notes" /> 
+            <Input type="textarea" name="text" id="exampleText" className="notes" onChange={(event)=>{
+              setOneOrder({...order,notes:event.target.value})
+
+              }}/> 
             </div> 
+            <div>
+            <Input type="select" name="rooms" 
+                                id="categorySelect" onClick={(event)=>{
+                                   setOneOrder({...order,roomId:event.target.value})
+
+                                }}>
+                                <option>Room</option>
+                                {
+                                    rooms.map(room =>
+                                            <option key={room.roomName} defaultValue={room.roomName}>{room.roomName}</option>
+                                    )
+                                }
+              </Input>
+            </div>
             <hr />
             <p className="total" > {order.orderTotal}</p>
             <Button className="confirm">Confirm</Button>
