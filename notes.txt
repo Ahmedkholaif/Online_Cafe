@@ -1,0 +1,8 @@
+to connect the backend to react server 
+
+activate
+from OnlineCafe directory "your git dir_path"
+
+ $service httpd start
+ $php -S localhost:3005 index.php
+ $npm run start --prefix client

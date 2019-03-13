@@ -2,9 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66d3b7f1-630d-411f-b60c-d902c7df9297" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/composerJson.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/CkecksView.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/OrdersView.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/req.body.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/css/annie-spratt-746981-unspleeash.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/css/download.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/composer.phar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AddCategory.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AddCategory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AddProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AddProduct.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AddUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AddUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AdminDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AdminDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AdminLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/CategoriesView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/CategoriesView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/GuestHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/GuestHomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ItemsDisplay.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ItemsDisplay.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ProductsView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ProductsView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/UsersView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UsersView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/categoryBooksPage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/css/AdminDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/css/AdminDashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/css/AdminLogin.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/css/LoginForm.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/css/GuestHomePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/css/GuestHomePage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/css/UserHomePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/css/UserHomePage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/categories.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/products.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/products.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/composer.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -112,12 +140,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1552462488601</updated>
-      <workItem from="1552462491378" duration="475000" />
+      <workItem from="1552462491378" duration="636000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="475000" />
+    <option name="totallyTimeSpent" value="636000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -133,12 +161,12 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="Version Control" weight="0.32991454" />
-      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32820514" />
+      <window_info anchor="bottom" id="Terminal" weight="0.51794875" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -174,7 +202,7 @@
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>

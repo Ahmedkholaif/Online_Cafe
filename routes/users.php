@@ -12,11 +12,25 @@ $app->get('/api/users', function ($req, $res) {
 });
 
 //Create new user
-$app->post('/api/users/{name}', function (Request $req, Response $res) {
+$app->post('/api/users', function (Request $req, Response $res) {
+    $body = json_decode($req->getBody());
+
+    // $body = json_encode($body);
+    $user = $body->user;
+
+    // $categoryName = json_encode($categoryName);
+    // header('{"msg":"Success"}');
+    // echo '{'.$body.'}';
+    // var_dump( $req );
+    // echo $req
+    echo json_encode($user);
 });
 // update user
 $app->put('/api/users/{name}', function (Request $req, Response $res) {
 });
 // delete user
 $app->delete('/api/users/{name}', function (Request $req, Response $res) {
+    $email = $req->getAttribute('name'); //
+    // var_dump( $req );
+    echo json_encode($email);
 });

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Row, Col } from 'reactstrap';
 import propTypes from 'prop-types';
-import Login from './loginForm';
-import SignUp from './signUpForm'
+// import Login from './loginForm';
+import Login from './LoginForm';
+// import SignUp from './signUpForm'
+
 import '../css/GuestHomePage.css'
 import axios from 'axios';
 var _ = require('lodash');
@@ -81,18 +83,11 @@ class GuestHomePage extends Component {
   render() {
     return (
       <div id='HomeContent'>
-        <Row>
-          <Col>
-            <Login submit={this.submitLogin} history={this.props.history} isUserAuthenticated={this.isUserAuthenticated}/>
-          </Col>
-        </Row>
+       
         <Row className="seperator10"></Row>
         <Row>
-					<Col xs="4"><SignUp isUserExists={this.isUserExists}
-					history={this.props.history}
-          submit={this.submitRegister}
-          /></Col>
-          <Col xs="4"></Col>
+					<Col xs="4"></Col>
+					<Col xs="4"> <Login /> </Col>
           <Col xs="4"></Col>
         </Row>
       </div>

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {  Button, FormGroup,Input } from 'reactstrap';
 import propTypes from "prop-types";
-import '../css/AdminLogin.css'
+import '../css/LoginForm.css'
 import axios from 'axios';
 
-class AdminLogin extends Component {
+class LoginForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,7 +61,7 @@ class AdminLogin extends Component {
         return (
             <div className='AdminLogin'>
             
-                <h1><mark>Adminstrator Login</mark></h1>
+                <h1> Online Cafe </h1>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <Input required type="email" name="email" id="Email" placeholder="email" onChange={this.handleChange} />
@@ -76,7 +76,7 @@ class AdminLogin extends Component {
     }
 }
 
-AdminLogin.propTypes = {
+LoginForm.propTypes = {
     submit: propTypes.func.isRequired,
     isUserExists: propTypes.func.isRequired,
   
@@ -90,4 +90,4 @@ AdminLogin.propTypes = {
       push: propTypes.func.isRequired
     }).isRequired
   };
-export default AdminLogin;
+export default LoginForm;

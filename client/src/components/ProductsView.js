@@ -19,151 +19,24 @@ state = {
     },
     selectedFile: null,
     loaded: 0,
+    inEdit:{},
 }    
-           
-
-    handleData(data) {
+    toggle=()=> {
         this.setState({
-            books: data
-        });
+            modal: !this.state.modal,
+        }); 
     }
-
-    // componentWillReceiveProps(nextProps) {
-    //     this.setState({
-    //         categories: nextProps.categories,
-    //         authors: nextProps.authors
-    //     })
-    // }
-
-    toggle =(id) =>{
-        // console.log(id);
+    toggle =(product) =>{
         this.setState(prevState => ({
             modal: !prevState.modal,
-            // book: {
-            //     bookName: '',
-            //     author: '',
-            //     category: '',
-            // },
-            IdEdit: 0
+            product,
+            inEdit: product,
         }));
-        if (id !== null) {
-            const books = this.state.books;
-            const book = books.filter(book => {
-                return book._id === id;
-            });
-
-            const bookName = book[0].bookName;
-            const author = book[0].author;
-            const category = book[0].category;
-            const description = book[0].description;
-            this.setState({
-                book: {
-                    bookName,
-                    author,
-                    category,
-                    description,
-                },
-                IdEdit: id,
-            });
-        }
     }
 
-    handleUpdateBook =() =>{
-
-        const bookName = this.state.book.bookName;
-        const author = this.state.book.author;
-        const category = this.state.book.category;
-        const description = this.state.book.description;
-
-        const id = this.state.IdEdit;
-        if (bookName !== '' && id !== 0 && author !== '' && category !== '' && description !== '') {
-            const books = this.state.books;
-            for (let key in books) {
-                if (books[key]._id === id) {
-                    books[key].bookName = bookName;
-                    books[key].author = author;
-                    books[key].category = category;
-                    books[key].description = description;
-                    console.log(books[key]);
-                    // send post
-                    const token = localStorage.token;
-                    if (token) {
-                        const data = new FormData();
-                        data.append(
-                            "file",
-                            this.state.selectedFile,
-                            this.state.selectedFile.name,
-                        );
-                        data.append("body", JSON.stringify(this.state.book));
-
-                        const conf = {
-                            onUploadProgress: ProgressEvent => {
-                                this.setState({
-                                    loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-                                });
-                            },
-                            headers: {
-                                "Content-Type": "application/json",
-                                "x-auth": token
-                            }
-                        };
-
-                        axios.put(`/api/admin/books/${id}`, data, conf)
-                            .then(res => {
-                                console.log(res);
-                                if (res.status === 200) {
-                                    books[key].img = res.data.img;
-
-                                    this.setState({
-                                        books,
-                                        book: {
-                                            bookName: '',
-                                            description: '',
-                                            author: '',
-                                            category: '',
-                                        },
-                                        IdEdit: 0
-                                    });
-                                    console.log(res.data.img);
-
-                                } else {
-                                    console.log("not updated in db");
-                                }
-                            })
-                            .catch(err => {
-                                console.log({ err });
-                                this.setState({ error: 'Error Delete Operation' })
-                            })
-                    }
-                }
-            }
-        }
-    }
 
 
     componentDidMount() {
-
-        // const token = localStorage.token;
-        // if (token) {
-        //     const conf = {
-        //         headers: {
-        //             "x-auth": token,
-        //         }
-        //     }
-        //     axios.get('/api/admin/books', conf)
-        //         .then(response => {
-        //             console.log(response);
-        //             if (response.status === 200) {
-        //                 this.setState(
-        //                     { books: response.data.books }
-        //                 );
-        //             }
-        //             // this.props.passAuthors(response.data);
-        //         }).catch(error => {
-        //             console.log(error);
-        //             this.setState({ error: 'Error reteiriving data' })
-        //         })
-        // }
 
     }
 
@@ -193,28 +66,19 @@ state = {
     }
 
     handleOnChange = (event) => {
-        // const { name, value } = event.target;
 
         this.setState({
-           product: {...this.state.product, [event.target.name] : event.target.value } 
-        },
-        ()=>{ console.log(this.state.product)}
-        )
-
+           inEdit: {...this.state.inEdit, [event.target.name] : event.target.value } 
+        })
+        console.log(this.state.inEdit)
     }
 
-    // handleOnChangeBookName = event => {
-    //     this.setState({ book: { ...this.state.book, bookName: event.target.value } });
-    // }
-    // handleOnChangeCategory = event => {
-    //     this.setState({ book: { ...this.state.book, category: event.target.value } });
-    // }
-    // handleOnChangeAuthor = event => {
-    //     this.setState({ book: { ...this.state.book, author: event.target.value } });
-    // }
-    // handleOnChangeDescription = event => {
-    //     this.setState({ book: { ...this.state.book, description: event.target.value } });
-    // }
+    handleOnChangeBox = (event) => {
+        this.setState({
+            inEdit: {...this.state.inEdit, [event.target.name] : event.target.checked } 
+        });
+        console.log(this.state.inEdit)
+    }
 
     handleselectedFile = event => {
         this.setState({
@@ -228,8 +92,6 @@ state = {
         return (
             <AdminContext.Consumer>
             
-            
-            
             { ({ products ,setProducts,categories }) => (
                 
                 <div>
@@ -238,22 +100,25 @@ state = {
                         className={this.props.className}>
                         <ModalHeader toggle={this.toggle}>Add Product </ModalHeader>
                         <ModalBody>
-                            <Input type="text" value={this.state.product.productName} defaultValue={this.state.product.productName}
-                                onChange={this.handleOnChangeBookName}
-                                placeholder='Category Name' />
+                            <Input type="text" name="productName" defaultValue={this.state.product.productName} 
+                                onChange={this.handleOnChange}
+                                placeholder='Product Name' />
                             <Input type="select" name="categoryName" defaultValue={this.state.product.categoryName}
                                 id="categorySelect" onClick={this.handleOnChange}>
+                                <option  >{this.state.inEdit.categoryName}</option>
                                 {
                                     categories.map(category =>
-                                            <option key={category.id} value={category.categoryName}>{category.catName}</option>
+                                            <option key={category.id} defaultValue={category.categoryName}>{category.categoryName}</option>
                                     )
                                 }
                             </Input>
-                            <Input placeholder='Price' type="text" name="price" id="price" onClick={()=>this.handleOnChange} >
+                            <Input placeholder='Price' type="text" name="price" defaultValue={this.state.product.price} onChange={this.handleOnChange} >
                             </Input>
-                            <Input type="radio" name="isAvailable" id="isavailable" onClick={()=>this.handleOnChange} >
+                            <hr/>
+                            <Input type="checkbox" name="isAvailable" id="isAvailable" checked={this.state.inEdit.isAvailable} onChange={this.handleOnChangeBox} >
                             Available
                             </Input>
+                            <Input type="text" name="image"  onChange={this.handleOnChange} placeholder="image" defaultValue={this.state.product.image} />
                             <Input
                                 type="file"
                                 name=""
@@ -261,8 +126,39 @@ state = {
                                 placeholder='Product Photo ' />
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.handleUpdateBook}> Edit Product</Button>{' '}
-                            <Button color="secondary" onClick={() => this.toggle(null)}>Close</Button>
+                            <Button color="primary" onClick={()=>{
+                                        setProducts(
+                                            products.map(product => product.id === this.state.inEdit.id ?
+                                                    this.state.inEdit :  product 
+                                        ))
+                                        this.setState({
+                                            modal: ! this.state.modal,
+                                            inEdit:{},
+                                            product:{
+                                                id:'',
+                                                productName:'',
+                                                price:0,
+                                                categoryName:'',
+                                                isAvailable: "",
+                                                image:'',
+                                            }
+                                        });
+                                
+                            }}> Edit Product </Button>{' '}
+                            <Button color="secondary" onClick={() => {
+                                this.setState({
+                                    modal : ! this.state.modal,
+                                    inEdit:{},
+                                    product:{
+                                        id:'',
+                                        productName:'',
+                                        price:0,
+                                        categoryName:'',
+                                        isAvailable: "",
+                                        image:'',
+                                    }
+                                })
+                            }}>Close</Button>
                         </ModalFooter>
                     </Modal>
                 
@@ -275,7 +171,7 @@ state = {
                                 <th>Product </th>
                                 <th>Price</th>
                                 <th> Category</th>
-                                <th>#</th>
+                                <th>Available</th>
                                 <th>#</th>
                                 <th>#</th>
                             </tr>
@@ -288,8 +184,16 @@ state = {
                                     <td>{product.productName}</td>
                                     <td>{product.price}</td>
                                     <td>{product.categoryName}</td>
-                                    <td><Button color='danger' onClick={() => this.handleDeleteBook(product)}>Available</Button></td>
-                                    <td><Button color='danger' onClick={() => this.handleDeleteBook(product)}>Delete</Button></td>
+                                    <td><input type="checkbox"  onClick={() => {
+                                       setProducts( products.map(prod => prod.id===product.id?  {...prod,isAvailable:!prod.isAvailable}:prod ))
+
+                                    } } checked={product.isAvailable} /> </td>
+                                    <td><Button color='danger' onClick={() => {
+                                        setProducts( products.filter(prod=> prod.id !== product.id ))
+                                        axios
+                                        .delete(`/api/products/${product.productName}`)
+                                        .then(response=>console.log(response.data))
+                                    }}>Delete</Button></td>
                                     <td><Button color='success' onClick={() => this.toggle(product)}>Edit</Button></td>
                                 </tr>    
                         )}   
