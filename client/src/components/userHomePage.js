@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import "../css/UserHomePage.css";
 import CustomNavbar from "./Navbar";
-import BooksTable from "./BooksTable";
 import CustomPagination from "./pagination";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
@@ -187,7 +186,6 @@ class UserHomePage extends Component {
           <Col xs="9">
             <Row className="rightMenu">
               <Col>
-                <BooksTable books={this.state.books} shelf={this.state.shelf} />
                 <CustomPagination
                   chunk={5}
                   max={this.state.itemsCount}

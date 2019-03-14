@@ -14,4 +14,6 @@ export  const AdminContext = createContext ( {
     categories:[] ,
     setCategories: ()=>{},
 
+    order:{},
+    setOneOrder:()=>{},
 });

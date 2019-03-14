@@ -23,6 +23,7 @@ import '../css/LoginForm.css';
 import '../css/AdminDashboard.css';
 // import "../css/UserHomePage.css";
 import {AdminContext} from './AdminContext';
+import ManualOrder from './ManualOrder';
 import ChecksView from './CkecksView'
 
 export default class Example extends React.Component {
@@ -33,8 +34,19 @@ export default class Example extends React.Component {
         products:[],
         users: [],
         orders:[],
-    };
-
+        rooms:[],
+        order : {
+            id:'',
+            userFullName :'',
+            notes:'',
+            orderTotal:0,
+            orderStatus:"Processing", 
+            dateStamp: '2010-10-10',
+            phone:'',
+            roomId:'',
+            orderBody:[]
+            },
+        }
     // user = {
     //     id :'',
     //     fullName:'',
@@ -113,18 +125,56 @@ export default class Example extends React.Component {
 
         this.setProducts([{
                 id:'2',
-                productName:'pppp11',
-                price:'111',
+                productName:'caffee',
+                price:'6',
                 categoryName:'hot',
                 isAvailable: true,
                 image:'link',
         },{
             id:'3',
-            productName:'pppp33',
-            price:'111',
+            productName:'7up',
+            price:'12',
             categoryName:'cold',
             isAvailable: true,
             image:'link',
+        },{
+            id:'4',
+            productName:'cheese',
+            price:'29',
+            categoryName:'cold',
+            isAvailable: true,
+            image:'link',
+        },
+        {
+            id:'4',
+            productName:'caffee',
+            price:'6',
+            categoryName:'hot',
+            isAvailable: true,
+            image:'link',
+    },{
+        id:'5',
+        productName:'7up',
+        price:'12',
+        categoryName:'cold',
+        isAvailable: true,
+        image:'link',
+    },{
+        id:'6',
+        productName:'cheese',
+        price:'29',
+        categoryName:'cold',
+        isAvailable: true,
+        image:'link',
+    }
+       
+    
+    
+        ]);
+        this.setRooms([{
+            roomName:'123a'
+        },{
+            roomName:'456b'
         }]);
         this.setUsers ([
             {
@@ -376,6 +426,22 @@ export default class Example extends React.Component {
                     }]
                 }
         ]);
+        this.setOneOrder(
+            {...this.state.order,orderBody:[
+               ...this.state.order.orderBody,{
+                productName:'rice',
+                price:'10',
+                quantity:'2',
+            },
+        
+            {
+              productName:'tea',
+              price:'4',
+              quantity:'2',
+            } 
+            ]}
+        );
+
     }
     handleSignout = (event) => {
         event.preventDefault();
@@ -427,12 +493,45 @@ export default class Example extends React.Component {
             orders,
         })
     }
+    setOneOrder=(order)=>{
+        this.setState({
+            order,
+        })
+      console.log(this.state.order)
+    }
+    setOrderBody=(index,quantity)=>
+    { let newOrderBody=this.state.order.orderBody
+       newOrderBody[index].quantity=quantity;
+      this.setState({
+       order:{...this.state.order,orderBody:newOrderBody}
+
+      })
+      this.updateTotal();
+    }
     setProducts = (products)=> {
         this.setState({
             products,
         })
-    }
 
+    }
+    setRooms=(rooms)=>
+    {this.setState({
+        rooms,
+
+    })}
+    updateTotal=()=>
+    { 
+       const orderTotal=this.state.order.orderBody.reduce(
+           (acc,prod)=> (acc + (prod.quantity*prod.price) ),0
+        );
+        console.log(orderTotal);
+        console.log(this.state.order);
+      this.setState({
+    
+        order:{...this.state.order,orderTotal}
+      });
+
+    }
     render() {
 
         return (
@@ -441,6 +540,9 @@ export default class Example extends React.Component {
                 products : this.state.products , setProducts:this.setProducts,
                 users:this.state.users , setUsers:this.setUsers,
                 orders:this.state.orders , setOredrs:this.setOrders,
+                order:this.state.order,setOneOrder:this.setOneOrder,
+                rooms:this.state.rooms,setRooms:this.setRooms,
+                setOrderBody:this.setOrderBody,
             }} >
         
                 <div className='AdminDashboard'>
@@ -532,7 +634,8 @@ export default class Example extends React.Component {
                         </TabPane>
                     <TabPane tabId="2">
                         <Col sm="12">
-                          <Row>
+                        <ManualOrder/>
+                          {/* <Row>
                                         Manual Order 
                                 <Col sm="4"> Side Bar Order</Col>
                                 <Col sm="8"> 
@@ -547,7 +650,7 @@ export default class Example extends React.Component {
                                          <ItemsDisplay items={this.state.products} />
                                     </Row>
                                 </Col>
-                            </Row> 
+                            </Row>  */}
                         </Col>
                     </TabPane>
                     

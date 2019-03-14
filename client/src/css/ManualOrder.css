@@ -1,0 +1,117 @@
+.split {
+  height: 100%;
+ 
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Control the left side */
+.left {
+width: 30%;
+  left: 0;
+  background-color:   	#DCDCDC
+}
+
+/* Control the right side */
+.right {
+    width: 70%;
+  right: 0;
+  background-color:  	white;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.orderProducts{
+  width: 90%;
+  height: 90%;
+  border: 0px solid #000;
+  border-radius: 8px;
+  margin: auto;
+  margin-top: 15px;
+  background-color: white;
+}
+.product{
+ 
+  border: 0px solid #000;
+  border-radius: 8px;
+  margin: auto;
+  margin-top: 15px;
+  background-color:   	#E0FFFF;
+
+}
+.notes
+{ width:300px;
+  height:75px;
+  margin-top: 5px;
+  margin-left: 30px;
+  background-color:  	#FFFACD;
+  border-radius: 8px;
+  
+}
+.usersList{
+ 
+  padding-top: 10px;
+  padding-left: 30px;
+}
+
+.confirm{
+  
+  height:40px;
+  width:100px;
+  
+  border-radius: 5px;
+  background-color:  green;
+  color:black;
+}
+
+/* .homeBody{
+    height: 90vh;
+    width: 100vw;
+}
+.sideMenu{
+    width: 90%;
+    height: 95%;
+    border: 1px solid #000;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.rightMenu{
+    width: 95%;
+    height: 95%;
+    border: 1px solid #000;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 15px;
+} */
+
+
+
+/* .container
+{
+
+background-color: blueviolet;
+flex-direction: column;
+justify-content:space-evenly;
+display: flex; 
+flex-wrap: wrap ;
+
+}
+#rItem{
+    background-color: yellowgreen;
+    width: 30%;
+}
+#lItem{
+    background-color: green;
+    width: 30%;
+} */
