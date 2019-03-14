@@ -2,7 +2,8 @@
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-require __DIR__.'/../modals/User.php';
+
+require __DIR__ . '/../modals/User.php';
 
 
 // Get All Users
@@ -31,6 +32,22 @@ $application->put('/api/users/[{id}]', function (Request $request, Response $res
 // delete user
 $application->delete('/api/users/[{id}]', function (Request $request, Response $response, $arguments) {
     $userID = $arguments['id'];
-    $userObject = new User();
+    $userObject = new \App\User();
     return $this->response->withJson($userObject->deleteOneUser($userID, 1));
 });
+
+// user's login
+$application->post('/api/users/login', function (Request $request, Response $response) {
+    $userData = $request->getParsedBody();
+    $email = $userData['email'];
+    $password = $userData['password'];
+    $userObject = new \App\User();
+    $result = $userObject->getOneUserLogin($email, $password);
+    return $this->response->withJson($result);
+});
+
+// user's logout
+
+// user's forget
+
+// email Class

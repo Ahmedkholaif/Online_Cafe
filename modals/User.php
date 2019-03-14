@@ -19,7 +19,7 @@ class User
 
     public function __construct()
     {
-        $this->DATABASE_PATH='mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
+        $this->DATABASE_PATH = 'mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
         coderm-shard-00-01-om0sg.gcp.mongodb.net:27017,
         coderm-shard-00-02-om0sg.gcp.mongodb.net:27017/OnlineCafeDatabase?ssl=true&replicaSet=CoderM-shard-0&authSource=admin&retryWrites=true';
         $this->DATABASE_NAME = 'OnlineCafeDatabase';
@@ -120,6 +120,25 @@ class User
         }
     }
 
+    // get user for login
+    public function getOneUserLogin($email, $password)
+    {
+        try {
+            if (isset($email) && !empty($email) && isset($password) && !empty($password)) {
+                $filter = ['email' => $email, 'password' => $password];
+                $options = ['limit' => 1];
+                $QueryManager = new MongoQuery($filter, $options);
+                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
+                return json_encode($responseCursor->toArray());
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
+            return $exception->getMessage();
+        } catch (Exception\Exception $e) {
+        }
+    }
+
     // getAllUsers
     public function getAllUser()
     {
@@ -129,12 +148,22 @@ class User
             return json_encode($responseCursor->toArray());
         } catch (MongoException $exception) {
             return $exception->getMessage();
+        } catch (Exception\Exception $e) {
         }
     }
 
 }
 
-// TODO: UserLogin
-// TODO: UserPassword
-// Todo: UserEmail
-// Todo:
+// TODO: User Login
+// TODO: User Password
+// TODO: User Email
+// TODO: User Logout
+// TODO: Session Management
+// TODO: 404 Page
+// TODO: Deploy Back-End Application
+// TODO: Test Application
+// TODO: Schema Validation
+// TODO: SLIM/FRAMEWORK
+// TODO: Order/Delivred/Id
+// TODO: Order/Out/Id
+// TODO: Slim/Authentication
