@@ -36,7 +36,7 @@ class User
                 $inserted_id = $bulkWriteInsert->insert([
                     "fullName" => $userArray["fullName"],
                     "email" => $userArray["email"],
-                    "password" => $userArray["password"],
+                    "password" => password_hash($userArray["password"],PASSWORD_DEFAULT),
                     "image" => $userArray["image"],
                     "defaultRoom" => $userArray["defaultRoom"],
                     "phone" => $userArray["phone"],
@@ -155,6 +155,8 @@ class User
 }
 
 // TODO: User Password
+// TODO: Validation Utilities - Email .....
+
 // TODO: User Email - Class
 
 // TODO: Deploy Back-End Application

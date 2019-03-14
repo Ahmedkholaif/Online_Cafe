@@ -12,3 +12,9 @@ order ={
             quantity:'',
         }]
 
+// Classes
+. Session Management
+. Utils
+. Validation
+. Email
+

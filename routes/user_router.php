@@ -40,14 +40,14 @@ $application->delete('/api/users/[{id}]', function (Request $request, Response $
 $application->post('/api/users/login', function (Request $request, Response $response) {
     $userData = $request->getParsedBody();
     $email = $userData['email'];
-    $password = $userData['password'];
+    $password = password_hash($userData['password'], PASSWORD_DEFAULT);
     $userObject = new \App\User();
     $result = $userObject->getOneUserLogin($email, $password);
     return $this->response->withJson($result);
 });
 
 // user's logout
-$application->get('/api/users/logout',function(Request $request,Response $response){
+$application->get('/api/users/logout', function (Request $request, Response $response) {
 
 });
 // user's forget
