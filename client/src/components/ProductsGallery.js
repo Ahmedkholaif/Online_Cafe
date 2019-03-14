@@ -45,7 +45,18 @@ class ProductsGallery extends Component {
                       <CardBody  >
                         <CardTitle >{product.productName}</CardTitle>
                         <CardText>{product.price}</CardText>
-                        <Button>Add</Button>
+                        
+                        <Button onClick={ (event)=>{  
+                           event.target.disabled = 'disabled';
+                           let newProduct={productName:product.productName,
+                            price:product.price,
+                            quantity:'1'
+                           }
+                           setOneOrder({...order,orderBody:[...order.orderBody,newProduct ]})
+
+                        }}
+                         
+                         >Add</Button>
                       </CardBody>
                     </Card>
                     </div>
