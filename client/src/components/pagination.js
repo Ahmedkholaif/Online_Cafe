@@ -6,11 +6,11 @@ import '../css/UserHomePage.css'
 
 class CustomPagination extends Component {
 
-constructor(props) {
-    super(props);
+// constructor(props) {
+//     super(props);
     
 
-}
+// }
 
 
 /*

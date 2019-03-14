@@ -1,8 +1,9 @@
 import React from 'react';
-import { Alert, Button, Table ,Row,Col,Card,CardBody,Collapse ,ListGroupItem} from "reactstrap";
+import { Alert, Button,Row,Col,Card,CardBody,Collapse } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.css';
+import { Input,Table ,Container,Pagination,PaginationItem,PaginationLink} from "reactstrap";
 import {AdminContext} from './AdminContext';
-class OredersList extends React.Component {
+class UserOrdersList extends React.Component {
   constructor(props) {
     super(props);
     
@@ -22,17 +23,9 @@ class OredersList extends React.Component {
             <>
             {
                 <>
-                    <tr key={order.id}  >
+                    <tr key={order.id} id={orders.indexOf(order)+1} >
                         <td onClick={this.toggle} >  &#9660; {order.dateStamp} </td>
-                        <td>{order.userFullName}</td>
-                        <td>{order.phone}</td>
-                        <td>{order.roomId}</td>
-                        <td>{order.orderStatus}</td>
-                        <td> <Button onClick={()=>{
-                            setOredrs(
-                                orders.map(ord=> (ord.id === order.id && ord.orderStatus === 'Processing')? {...ord,orderStatus:"Out For Delivery"}:ord)
-                            )
-                        }} >Out For Delivery  </Button> </td>
+                        <td> {order.orderTotal}</td>
                     </tr>
                         <tr>
                         <td colSpan="6" className="text-right ">
@@ -58,12 +51,13 @@ class OredersList extends React.Component {
             }
     
             </Row>
-        Order Total :{order.orderTotal} 
+       
         </CardBody>
         </Card>
         </Collapse>
         </td>
         </tr>  
+        
     </>
         }
           </>
@@ -76,4 +70,4 @@ class OredersList extends React.Component {
   }
 }
 
-export default OredersList ;
+export default UserOrdersList ;

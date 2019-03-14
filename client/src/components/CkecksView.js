@@ -1,99 +1,123 @@
 import React, { Component } from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col,Input,Table ,Container,Pagination,PaginationItem,PaginationLink} from "reactstrap";
+import 'bootstrap/dist/css/bootstrap.css';
 import "../css/CategoryBooksName.css";
 import CustomPagination from "./pagination";
 import CustomNavbar from "./Navbar";
 import ItemsDisplay from "./ItemsDisplay";
 import axios from "axios";
+import {AdminContext} from './AdminContext';
+import UserOrders from './UserOrders';
 
 class ChecksView extends Component {
   // constructor(props) {
   //   super(props);
-  //   this.state = {
+    state = {
   //     categoryId: 1,
-  //     categoryName: this.props.location.search.substring(1),
-  //     books: [],
-  //     activePage: 1,
-  //     itemsCount:1,
-  //   };
+      activePage: 1,
+      itemsCount:1,
+    };
 
-  //   const chunk_size = 10;
-  //   const arr = this.state.books;
-  //   this.state.booksUnit = arr
-  //     .map(function(e, i) {
-  //       return i % chunk_size === 0 ? arr.slice(i, i + chunk_size) : null;
-  //     })
-  //     .filter(function(e) {
-  //       return e;
-  //     });
+   
   // }
 
-componentDidMount(){
-  // const token = localStorage.token;
-  // if(token) {
-  //   const conf ={
-  //     params:{
-  //       page:`${this.state.activePage}`
-  //     },
-  //     headers:{
-  //     "x-auth":token,
-  //     }
-  //   }
-  //   axios.get(`/api/users/current/categories/${this.state.categoryName}`,conf
-  //   )
-  //   .then(res =>{
-  //     console.log(res.data)
-  //     this.setState({
-  //       books:res.data.books,
-  //       items:res.data.count
-  //     })
-  //   })
-  //   .catch(err => console.log(err))
-  // }
 
-}
 handelPagination = (pageNum)=>
 {
-  // const token = localStorage.token;
-  // if(token) {
-  //   const conf ={
-  //     params:{
-  //       page:`${pageNum}`,
-  //     },
-  //     headers:{
-  //     "x-auth":token,
-  //     }
-  //   }
-  //   axios.get(`/api/users/current/categories/${this.state.categoryName}`,conf
-  //   )
-  //   .then(res =>{
-  //     console.log(res.data);
-  //     this.setState({
-  //       books:res.data.books,
-  //       activePage: pageNum
-      // })
-  //   })
-  //   .catch(err => console.log(err))
-  // }
-}
+      this.setState({
+        // books:res.data.books,
+        activePage: pageNum
+      })
+  }
+
   render() {
+
+   
     return (
+
+      <AdminContext.Consumer>
+      {({users,orders})=>(
+<>
+        <Container className="col-12 p-2">
       <div>
-        <h2>hh</h2>
-        <Row> Date</Row>
+        <h2> Ckecks Page </h2>
+        <Row> 
+        <Col xs="4">From<Input type="date" /> </Col><Col xs="4">To<Input type="date" /> </Col>
+        </Row>
+        <Row> 
+          <Input className="col-4 mt-2"  type="select" >
+          <option> Users </option>
+          {
+            users.map(user=>(
+              <option value={user.fullName}>{user.fullName}</option>
+            ))
+          }
+          </Input>
+        </Row>
         <Row id="displayedItems">
-          OrdersData
+        
+        <Table className="table-striped mt-5">
+        <thead>
+            <tr>
+                <th> User Name </th>
+                <th>  Total Amount </th>
+                <th>##</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+
+            {
+                Object.keys(users).map((key, index) =>
+                <UserOrders key={index} user={users[key]} />
+                )
+            }
+            
+
+         </tbody>
+         </Table>
+
         </Row>
         <Row className="justify-content-md-center">
             <Col>
-                <CustomPagination chunk={10} max
-                  // this.state.itemsCount
-                 activePage
-                  // this.state.activePage
-                 change={this.handelPagination}/>
+        
+
             </Col>
         </Row>
       </div>
+      
+      </Container>
+      <Row>
+      
+      <Pagination size="lg" aria-label="Page navigation example">
+      <PaginationItem>
+        <PaginationLink first href="1" />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink previous href="4" />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="1">
+          1
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="2">
+          2
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="3">
+          3
+        </PaginationLink>
+      </PaginationItem>
+      </Pagination>
+      </Row>
+      </>
+    
+    )}
+           
+      </AdminContext.Consumer>
     );
   }
 }

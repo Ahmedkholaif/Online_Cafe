@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import axios from "axios";
 import { Alert, Button, Table,Container ,Row,Col,Card,CardBody,Collapse ,ListGroupItem} from "reactstrap";
 import AddProduct from './AddProduct';
-import { Input, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Input, Modal, ModalBody, ModalFooter, ModalHeader,Pagination,PaginationItem,PaginationLink } from "reactstrap";
 import { Redirect } from 'react-router-dom'
 import {AdminContext} from './AdminContext';
-import OrdersList from './OrdersList';
+import UserOrdersList from './UserOrdersList';
 class OrdersView extends Component {
 
 state = {
@@ -55,24 +55,22 @@ state = {
     // };
 
     render() {
+        const orders = this.props.orders ;
         return (
-            <AdminContext.Consumer>
-
-            {
-                 ({ orders ,setOrders,categories }) => (
+          <>
                     <Container >
                     <Table className="table-striped mt-5">
             <thead>
                 <tr>
                     <th> Order Date </th>
-                    <th>  Total  </th>
+                    <th>  Amount  </th>
+                    <th>##</th>
                 </tr>
             </thead>
             <tbody>
-
                 {
                     Object.keys(orders).map((key, index) =>
-                    <OrdersList key={index} order={orders[key]} />
+                    <UserOrdersList key={index} order={orders[key]} />
                 )
                 }
                 
@@ -80,9 +78,8 @@ state = {
              </tbody>
              </Table>
              </Container>
-
-            )}
-            </AdminContext.Consumer>
+    
+      </>
         );
     }
 }

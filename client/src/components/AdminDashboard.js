@@ -129,7 +129,7 @@ export default class Example extends React.Component {
         this.setUsers ([
             {
                 id :'1',
-                fullName:'aaaaaa',
+                fullName:'Medo',
                 email:'aaaaaa',
                 password:"aaaaa",
                 image:'',
@@ -139,13 +139,31 @@ export default class Example extends React.Component {
             },
             {
                 id :'3',
-                fullName:'dddddd',
+                fullName:'Ahmed',
                 email:'dddddd',
                 password:"dddd",
                 image:'dddd',
                 defaultRoom:'dddddd',
                 phone:'333445555',
                 isAdmin:false,
+            },{
+                id :'2',
+                fullName:'Ahmed Kholaif22',
+                email:'aaaaaa',
+                password:"aaaaa",
+                image:'',
+                defaultRoom:'aaaaa',
+                phone:'33333333',
+                isAdmin:true,
+            },{
+                id :'1',
+                fullName:'Ahmed Kholaif',
+                email:'aaaaaa',
+                password:"aaaaa",
+                image:'',
+                defaultRoom:'aaaaa',
+                phone:'33333333',
+                isAdmin:true,
             }
         ]);
         this.setOrders ([
@@ -190,7 +208,7 @@ export default class Example extends React.Component {
                 },
                 {
                     id:'2',
-                    userFullName :'jghghg',
+                    userFullName :'Ahmed',
                     notes:'no notes',
                     orderTotal:323,
                     orderStatus:'Processing', 
@@ -227,6 +245,135 @@ export default class Example extends React.Component {
                         quantity:5,
                     }
                     ]
+                },{
+                    id:'3',
+                    userFullName :'Medo',
+                    notes:'no notes',
+                    orderTotal:323,
+                    orderStatus:'Processing', 
+                    dateStamp: '2010-10-10',
+                    phone:'83848484',
+                    roomId:'staff',
+                    orderBody:[{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'Juice',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    }]
+                },
+                {
+                    id:'4',
+                    userFullName :'Ahmed Kholaif',
+                    notes:'no notes',
+                    orderTotal:323,
+                    orderStatus:'Processing', 
+                    dateStamp: '2010-10-10',
+                    phone:'83848484',
+                    roomId:'staff',
+                    orderBody:[{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'Juice',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    }]
+                },{
+                    id:'5',
+                    userFullName :'Ahmed Kholaif22',
+                    notes:'no notes',
+                    orderTotal:323,
+                    orderStatus:'Processing', 
+                    dateStamp: '2010-10-10',
+                    phone:'83848484',
+                    roomId:'staff',
+                    orderBody:[{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'Juice',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    }]
+                },{
+                    id:'6',
+                    userFullName :'Ahmed Kholaif',
+                    notes:'no notes',
+                    orderTotal:323,
+                    orderStatus:'Processing', 
+                    dateStamp: '2010-10-10',
+                    phone:'83848484',
+                    roomId:'staff',
+                    orderBody:[{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'Juice',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },
+                    {
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    },{
+                        productName:'tea',
+                        price:30,
+                        quantity:5,
+                    }]
                 }
         ]);
     }
@@ -380,7 +527,7 @@ export default class Example extends React.Component {
                     <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
                             <Col sm="12">
-                                <OrdersView />
+                                <OrdersView orders={this.state.orders } />
                             </Col>
                         </TabPane>
                     <TabPane tabId="2">
