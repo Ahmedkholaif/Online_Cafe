@@ -154,16 +154,15 @@ class User
 
 }
 
-// TODO: User Login
 // TODO: User Password
-// TODO: User Email
-// TODO: User Logout
-// TODO: Session Management
-// TODO: 404 Page
+// TODO: User Email - Class
+
 // TODO: Deploy Back-End Application
 // TODO: Test Application
 // TODO: Schema Validation
 // TODO: SLIM/FRAMEWORK
-// TODO: Order/Delivred/Id
-// TODO: Order/Out/Id
+
 // TODO: Slim/Authentication
+// TODO: Slim/Session Management
+// TODO: User Logout
+// TODO: 404 Page

@@ -4,14 +4,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 require __DIR__.'/../modals/Order.php';
 
-// Get All Users
+// Get All Orders
 $application->get('/api/orders', function ($request, $response) {
     $orderObject = new \App\Order();
     $orders = $orderObject->getAllOrders();
     return $this->response->withJson($orders);
 });
 
-//Create new user
+//Create new order
 $application->post('/api/orders', function (Request $request, Response $response) {
     $orderData = $request->getParsedBody();
     $orderObject = new \App\Order();
@@ -19,7 +19,7 @@ $application->post('/api/orders', function (Request $request, Response $response
     return $this->response->withJson($result);
 });
 
-// update user
+// update order
 $application->put('/api/orders/[{id}]', function (Request $request, Response $response, $arguments) {
     $orderId = $arguments['id'];
     $orderObject = new \App\Order();
@@ -27,9 +27,25 @@ $application->put('/api/orders/[{id}]', function (Request $request, Response $re
     return $this->response->withJson($orderObject->updateOneOrder($orderId, $orderData, false));
 });
 
-// delete user
+// delete order
 $application->delete('/api/orders/[{id}]', function (Request $request, Response $response, $arguments) {
     $orderID = $arguments['id'];
     $orderObject = new \App\Order();
     return $this->response->withJson($orderObject->deleteOneOrder($orderID, 1));
+});
+
+// change order status from processing to delivered
+$application->put('/api/orders/delivered/[{id}]', function (Request $request, Response $response, $arguments) {
+    $orderId = $arguments['id'];
+    $orderObject = new \App\Order();
+    $orderData = $request->getParsedBody();
+    return $this->response->withJson($orderObject->updateOneOrder($orderId, $orderData, false));
+});
+
+// change order status from delivered to out
+$application->put('/api/orders/out/[{id}]', function (Request $request, Response $response, $arguments) {
+    $orderId = $arguments['id'];
+    $orderObject = new \App\Order();
+    $orderData = $request->getParsedBody();
+    return $this->response->withJson($orderObject->updateOneOrder($orderId, $orderData, false));
 });

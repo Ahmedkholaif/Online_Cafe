@@ -47,7 +47,9 @@ $application->post('/api/users/login', function (Request $request, Response $res
 });
 
 // user's logout
+$application->get('/api/users/logout',function(Request $request,Response $response){
 
+});
 // user's forget
 
 // email Class
