@@ -42,21 +42,11 @@ class CustomNavbar extends Component {
               </Link>
             </li>
             <li className="menuItem">
-              <Link to="/categories" replace>
-                Categories
+              <Link to="/myorders" replace>
+                My Orders
               </Link>
             </li>
-            <li className="menuItem">
-              <Link to="/books" replace>
-                Books
-              </Link>
-            </li>
-            <li className="menuItem">
-              <Link to="/authors" replace>
-                Authors
-              </Link>
-            </li>
-          </ul>
+            </ul>
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>

@@ -213,17 +213,20 @@ class CategoriesView extends Component {
                                 <tr key={category._id}>
                                     <td>{category.categoryName}</td>
                                     <td><Button color='danger' onClick={() => {
-                                        setCategories(
-                                            categories.filter(cat => cat.categoryName !== category.categoryName   )
-                                        )
-                                        axios
-                                        .delete(`/api/categories/${category.categoryName}`)
-                                        .then(response=>{
-                                            console.log(response.data);
-                                        })
-                                        .catch(err=>{
-                                            console.log(err);
-                                        })
+                                        if( window.confirm('Are You Sure ?')){
+                                            setCategories(
+                                                categories.filter(cat => cat.categoryName !== category.categoryName   )
+                                            )
+                                            axios
+                                            .delete(`/api/categories/${category.categoryName}`)
+                                            .then(response=>{
+                                                console.log(response.data);
+                                            })
+                                            .catch(err=>{
+                                                console.log(err);
+                                            })
+                                        }
+                                        
                                     }}>Delete</Button></td>
                                     <td><Button color='success' onClick={() => {
                                         this.setState({

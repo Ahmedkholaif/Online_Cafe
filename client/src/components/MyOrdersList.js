@@ -1,8 +1,8 @@
 import React from 'react';
 import { Alert, Button, Table ,Row,Col,Card,CardBody,Collapse,CardImg,CardText,CardTitle ,ListGroupItem} from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.css';
-import {AdminContext} from './AdminContext';
-class OredersList extends React.Component {
+import {UserContext} from './UserContext';
+class MyOredersList extends React.Component {
   constructor(props) {
     super(props);
     
@@ -10,9 +10,6 @@ class OredersList extends React.Component {
     this.state = {collapse: false};
   }
    
-  // toggle() {
-  //   this.setState({ collapse: !this.state.collapse  });
-  // }
   toggle=()=> {
     this.props.toggle(this.props.order);
   }
@@ -20,22 +17,28 @@ class OredersList extends React.Component {
   render() {
       const order = this.props.order ;
     return (
-        <AdminContext.Consumer>
-        {({orders,setOredrs})=>(
+        <UserContext.Consumer>
+        {({myOrders,setMyOrders})=>(
             <>
             {
                 <>
                     <tr key={order.id}  >
                         <td onClick={this.toggle} >  &#9660; {order.dateStamp} </td>
-                        <td>{order.userFullName}</td>
-                        <td>{order.phone}</td>
                         <td>{order.roomId}</td>
+                        <td>{order.orderTotal}</td>
                         <td>{order.orderStatus}</td>
+                        
                         <td> <Button onClick={()=>{
-                            setOredrs(
-                                orders.map(ord=> (ord.id === order.id && ord.orderStatus === 'Processing')? {...ord,orderStatus:"Out For Delivery"}:ord)
-                            )
-                        }} >Out For Delivery  </Button> </td>
+                            if(order.orderStatus === 'Processing') {
+                                if(window.confirm('Are You Sure ..?'))
+                                setMyOrders(
+                                    myOrders.filter(ord=> ord.id !== order.id )
+                                )
+                            } else {
+                                window.alert("You Can't Cancel")
+                            }
+                          
+                        }} > Cancel  </Button> </td>
                     </tr>
                         <tr>
                         <td colSpan="6" className="text-right ">
@@ -64,7 +67,6 @@ class OredersList extends React.Component {
             }
     
             </Row>
-        Order Total :{order.orderTotal} 
         </CardBody>
         </Card>
         </Collapse>
@@ -76,10 +78,10 @@ class OredersList extends React.Component {
 
         )}
        
-      </AdminContext.Consumer>
+      </UserContext.Consumer>
     
       );
   }
 }
 
-export default OredersList ;
+export default MyOredersList ;

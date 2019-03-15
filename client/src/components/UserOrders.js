@@ -12,8 +12,14 @@ class UserOrders extends React.Component {
     this.state = {collapse: false};
   }
    
-  toggle() {
-    this.setState({ collapse: !this.state.collapse });
+  toggle(orders) {
+    this.setState({ collapse: this.state.collapse === orders ? null : orders });
+
+  }
+
+  toggle =()=>{
+    this.props.toggle(this.props.user);
+
   }
   
   render() {
@@ -22,7 +28,7 @@ class UserOrders extends React.Component {
         <AdminContext.Consumer>
         {({users,orders})=>(
             <>
-            {
+            { 
                 <>
                     <tr key={user.userFullName}  >
                         <td onClick={this.toggle} >  &#9660; {user.fullName} </td>
@@ -33,11 +39,13 @@ class UserOrders extends React.Component {
                     </tr>
                                     <tr>
                         <td colSpan="6" className="text-right ">
-                <Collapse isOpen={this.state.collapse}>
+                <Collapse isOpen={this.props.isOpen}>
                 <Card>
                     <CardBody>
                         <Row>
-                        <UserOrdersView orders={ orders.filter(order=> order.userFullName === user.fullName) } />
+                        <UserOrdersView 
+                        orders={ orders.filter(order=> order.userFullName === user.fullName) } 
+                         />
             </Row>
        
         </CardBody>

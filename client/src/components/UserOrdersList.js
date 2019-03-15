@@ -1,7 +1,8 @@
 import React from 'react';
-import { Alert, Button,Row,Col,Card,CardBody,Collapse } from "reactstrap";
+import { Alert, Button,Row,Col,Card,Collapse,
+   Input,Table ,Container,Pagination,PaginationItem,
+   PaginationLink ,CardTitle,CardBody,CardImg,CardText} from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.css';
-import { Input,Table ,Container,Pagination,PaginationItem,PaginationLink} from "reactstrap";
 import {AdminContext} from './AdminContext';
 class UserOrdersList extends React.Component {
   constructor(props) {
@@ -10,10 +11,13 @@ class UserOrdersList extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {collapse: false};
   }
-   
-  toggle() {
-    this.setState({ collapse: !this.state.collapse });
+    
+  toggle=()=> {
+    this.props.toggle(this.props.order);
   }
+  // toggle() {
+  //   this.setState({ collapse: !this.state.collapse });
+  // }
   
   render() {
       const order = this.props.order ;
@@ -29,7 +33,7 @@ class UserOrdersList extends React.Component {
                     </tr>
                         <tr>
                         <td colSpan="6" className="text-right ">
-                <Collapse isOpen={this.state.collapse}>
+                <Collapse isOpen={this.props.isOpen}>
                 <Card>
                     <CardBody>
                         <Row>
@@ -37,14 +41,17 @@ class UserOrdersList extends React.Component {
                         order.orderBody.map(product=>
                             <Col xs='3'className="float-left text-center border border-info p-3" > 
                             <Row>
-                            <Col xs='6' >
-                                <Row className="text-center" >{product.productName }</Row>  
-                                <Row className="text-center">{product.price }</Row>  
-                                <Row className="text-center" >{product.quantity }</Row>  
+                            <Col  >
+                            <Card >
+                            <CardImg top width="100%"  src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image " />
+                            <CardBody  >
+                              <CardTitle >{product.productName}</CardTitle>
+                              <CardText>{product.price}</CardText>
+                              <CardText>{product.quantity}</CardText>
+                            </CardBody>
+                            </Card>   
                             </Col>
-                            <Col xs='6' >
-                            image
-                            </Col>
+                           
                             </Row>
                             </Col>
             )

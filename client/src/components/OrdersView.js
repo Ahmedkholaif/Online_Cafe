@@ -17,14 +17,17 @@ state = {
             collapse: !this.state.collapse,
         }); 
     }
-    toggle =(product) =>{
-        this.setState(prevState => ({
-            collapse: !prevState.collapse,
-            product,
-            inEdit: product,
-        }));
-    }
+    // toggle =(product) =>{
+    //     this.setState(prevState => ({
+    //         collapse: !prevState.collapse,
+    //         product,
+    //         inEdit: product,
+    //     }));
+    // }
 
+    toggle=(order)=> {
+        this.setState({ collapse: this.state.collapse === order ? null : order });
+    }
 
 
     componentDidMount() {
@@ -65,14 +68,23 @@ state = {
             <thead>
                 <tr>
                     <th> Order Date </th>
-                    <th>  Total  </th>
+                    <td> Name </td>
+                    <td>Phone</td>
+                    <td>room</td>
+                    <td>Order Status </td>
+                    <td>## </td>
                 </tr>
             </thead>
             <tbody>
 
                 {
                     Object.keys(orders).map((key, index) =>
-                    <OrdersList key={index} order={orders[key]} />
+                    <OrdersList
+                     key={index} 
+                     order={orders[key]}
+                     isOpen={this.state.collapse === orders[key]}
+                    toggle={this.toggle}
+                     />
                 )
                 }
                 

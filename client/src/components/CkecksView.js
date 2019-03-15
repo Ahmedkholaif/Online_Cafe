@@ -30,6 +30,9 @@ handelPagination = (pageNum)=>
       })
   }
 
+  toggle = (user)=>{
+    this.setState({ collapse: this.state.collapse === user ? null : user });
+  }
   render() {
 
    
@@ -42,10 +45,7 @@ handelPagination = (pageNum)=>
       <div>
         <h2> Ckecks Page </h2>
         <Row> 
-        <Col xs="4">From<Input type="date" /> </Col><Col xs="4">To<Input type="date" /> </Col>
-        </Row>
-        <Row> 
-          <Input className="col-4 mt-2"  type="select" >
+        <Input className="col-2 "  type="select" >
           <option> Users </option>
           {
             users.map(user=>(
@@ -53,6 +53,9 @@ handelPagination = (pageNum)=>
             ))
           }
           </Input>
+        From<Input className="col-2 " onChange={(e)=>{
+          console.log(new Date(e.target.value),new Date());
+        }} type="date" /> To  <Input placeholder="To" className="col-2 " type="date" />
         </Row>
         <Row id="displayedItems">
         
@@ -69,7 +72,11 @@ handelPagination = (pageNum)=>
 
             {
                 Object.keys(users).map((key, index) =>
-                <UserOrders key={index} user={users[key]} />
+                <UserOrders key={index} 
+                user={users[key]}
+                isOpen={this.state.collapse === users[key]}
+                toggle={this.toggle}
+                />
                 )
             }
             
