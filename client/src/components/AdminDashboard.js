@@ -426,21 +426,21 @@ export default class Example extends React.Component {
                     }]
                 }
         ]);
-        this.setOneOrder(
-            {...this.state.order,orderBody:[
-               ...this.state.order.orderBody,{
-                productName:'rice',
-                price:'10',
-                quantity:'2',
-            },
+        // this.setOneOrder(
+        //     {...this.state.order,orderBody:[
+        //        ...this.state.order.orderBody,{
+        //         productName:'rice',
+        //         price:'10',
+        //         quantity:'2',
+        //     },
         
-            {
-              productName:'tea',
-              price:'4',
-              quantity:'2',
-            } 
-            ]}
-        );
+        //     {
+        //       productName:'tea',
+        //       price:'4',
+        //       quantity:'2',
+        //     } 
+        //     ]}
+        // );
 
     }
     handleSignout = (event) => {
@@ -497,6 +497,7 @@ export default class Example extends React.Component {
         this.setState({
             order,
         })
+        //this.updateTotal();
       console.log(this.state.order)
     }
     setOrderBody=(index,quantity)=>
@@ -508,6 +509,18 @@ export default class Example extends React.Component {
       })
       this.updateTotal();
     }
+    // deleteOneProduct=(productToDeleteName)=>
+    // { let newOrderBody=this.state.order.orderBody
+    //     newOrderBody.filter(product=>
+    //         product.productName !==productToDeleteName )
+    //    this.setState({
+    //     order:{...this.state.order,orderBody:newOrderBody}
+ 
+    //    })
+    //    this.updateTotal();
+      
+
+    // }
     setProducts = (products)=> {
         this.setState({
             products,
@@ -543,6 +556,7 @@ export default class Example extends React.Component {
                 order:this.state.order,setOneOrder:this.setOneOrder,
                 rooms:this.state.rooms,setRooms:this.setRooms,
                 setOrderBody:this.setOrderBody,
+                deleteOneProduct:this.deleteOneProduct,
             }} >
         
                 <div className='AdminDashboard'>
