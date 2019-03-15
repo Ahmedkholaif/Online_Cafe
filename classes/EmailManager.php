@@ -6,7 +6,7 @@ namespace App;
 use PHPMailer\PHPMailer;
 use PHPUnit\Runner\Exception;
 
-require_once "../vendor/autoload.php";
+require __DIR__.'/../vendor/autoload.php';
 
 class EmailManager
 {

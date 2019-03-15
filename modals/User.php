@@ -173,15 +173,4 @@ class User
 
 }
 
-// TODO: Validation Utilities - Email .....
-// TODO: User Email - Class
 
-// TODO: Deploy Back-End Application
-// TODO: Test Application
-// TODO: Schema Validation
-// TODO: SLIM/FRAMEWORK
-
-// TODO: Slim/Authentication
-// TODO: Slim/Session Management
-// TODO: User Logout
-// TODO: 404 Page
