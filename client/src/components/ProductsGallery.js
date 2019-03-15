@@ -18,7 +18,7 @@ class ProductsGallery extends Component {
               <div class="searchbar">
               <form >
               <input
-                       
+                       className="rounded"
                         type="text"
                         name=""
                         placeholder="Search..."
@@ -70,7 +70,7 @@ class ProductsGallery extends Component {
                         <CardTitle >{product.productName}</CardTitle>
                         <CardText>EGP{product.price}</CardText>
                         
-                        <Button onClick={ (event)=>{  
+                        <Button className="bg-success" onClick={ (event)=>{  
                             event.target.disabled = 'disabled';
                             let newProduct={productName:product.productName,
                             price:product.price,

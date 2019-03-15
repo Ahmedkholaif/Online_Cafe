@@ -31,7 +31,7 @@ class UserProductsGallery extends Component {
                         <CardTitle >{product.productName}</CardTitle>
                         <CardText>{product.price}</CardText>
                         
-                        <Button onClick={ (event)=>{  
+                        <Button className="bg-success" onClick={ (event)=>{  
                           
                          const products = order.orderBody.map(prod=> prod.productName) ;
                          if(! products.includes(product.productName) ) {
