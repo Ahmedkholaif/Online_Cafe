@@ -48,22 +48,20 @@ class ProductsGallery extends Component {
                         <CardText>EGP{product.price}</CardText>
                         
                         <Button onClick={ (event)=>{  
-                            event.target.disabled = 'disabled';
-                            let newProduct={productName:product.productName,
-                            price:product.price,
-                            quantity:'1'
+                          const products = order.orderBody.map(prod=> prod.productName) ;
+                          if(! products.includes(product.productName) ) {
+                           const newProduct={
+                             productName:product.productName,
+                             price:product.price,
+                             quantity:'1'
                             }
-                            // console.log("newProdust"+newProdust)
-                             const newOrderBody=order.orderBody
-                             newOrderBody.push(newProduct)
-                            const newOrderTotal=parseFloat(order.orderTotal)+parseFloat(newProduct.price);
-                            console.log(newOrderTotal)
-                            setOneOrder({...order,orderBody:newOrderBody,orderTotal:newOrderTotal,
-                              orderTotal:order.orderTotal+parseFloat(product.price)
-                            })
-                           // console.log({...order,orderBody:newOrderBody,orderTotal:newOrderTotal})
-                           //updateTotal();
-                           //setOrderBody(indexOfProduct, '1')
+                            setOneOrder({...order,orderBody:[...order.orderBody,newProduct ]})
+                          }else {
+                           order.orderBody.map(prod =>
+                             prod.productName === product.productName ? {...prod,quantity:prod.quantity++} : prod 
+                             )
+                             setOneOrder({...order});
+                          }
 
                         }}
                          

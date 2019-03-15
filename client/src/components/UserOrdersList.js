@@ -28,7 +28,7 @@ class UserOrdersList extends React.Component {
             {
                 <>
                     <tr key={order.id} id={orders.indexOf(order)+1} >
-                        <td onClick={this.toggle} >  &#9660; {order.dateStamp} </td>
+                        <td onClick={this.toggle} style={{cursor:'pointer'}} >  &#9660; {order.dateStamp} </td>
                         <td> {order.orderTotal}</td>
                     </tr>
                         <tr>

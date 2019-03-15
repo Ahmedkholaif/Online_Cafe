@@ -3,7 +3,6 @@ import { Row, Col,Nav,NavLink,NavItem,TabContent,TabPane ,UncontrolledDropdown,
     Button,DropdownItem,DropdownMenu,DropdownToggle} from "reactstrap";
 import classnames from 'classnames';
 import "../css/UserHomePage.css";
-import CustomNavbar from "./Navbar";
 import CustomPagination from "./pagination";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
@@ -462,7 +461,7 @@ setRooms=(rooms)=>
                 orderBody:[],
                }
         })
-    })
+    }) 
 }
   render() {
     return ( 
@@ -479,7 +478,7 @@ setRooms=(rooms)=>
     >
       <div>
        
-        <Nav tabs>
+        <Nav tabs className="pointer" style={{cursor:'pointer'}}>
                     <NavItem>
                         <NavLink
                             className={classnames({ active: this.state.activeTab === '1' })}
@@ -497,7 +496,7 @@ setRooms=(rooms)=>
                                 this.toggle('2');
                             }}
                         >
-                            My Orders 
+                           <h3 className="c1"> My Orders </h3>  
                         </NavLink>
                     </NavItem>
                 

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
+
 .AdminLogin {
     margin: 0px auto;
     /* background-image: url("annie-spratt-746981-unsplash.jpg"); */
@@ -9,8 +11,9 @@
 
 .AdminLogin h1 {
     padding: 0px 0px 20px 0;
-    text-decoration: underline;
-    color: black;
+    color:#fff; 
+    font-family: 'Lobster', cursive;
+    font-weight: 500; line-height: 1.1;
 }
 
 .AdminLogin h1 mark{

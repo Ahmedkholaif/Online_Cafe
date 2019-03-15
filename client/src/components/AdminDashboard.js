@@ -25,6 +25,7 @@ import '../css/AdminDashboard.css';
 import {AdminContext} from './AdminContext';
 import ManualOrder from './ManualOrder';
 import ChecksView from './CkecksView'
+import moment from 'moment';
 
 export default class Example extends React.Component {
 
@@ -496,7 +497,7 @@ export default class Example extends React.Component {
     setOneOrder=(order)=>{
         this.setState({
             order,
-        })
+        } ,this.updateTotal )
         //this.updateTotal();
       console.log(this.state.order)
     }
@@ -545,6 +546,29 @@ export default class Example extends React.Component {
       });
 
     }
+
+    submitOrder =()=>{
+        this.setState({
+            order:{...this.state.order,
+                dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
+                orderStatus:'Processing'}
+        },()=>{
+            console.log(this.state.order);
+            this.setState({
+                myOrders: [this.state.order,...this.state.myOrders],
+               order:{
+                id:'',
+                userFullName :'',
+                notes:'',
+                orderTotal:'',
+                orderStatus:'', 
+                dateStamp:'',
+                roomId:'',
+                orderBody:[],
+               }
+        })
+    })
+}
     render() {
 
         return (
@@ -556,11 +580,11 @@ export default class Example extends React.Component {
                 order:this.state.order,setOneOrder:this.setOneOrder,
                 rooms:this.state.rooms,setRooms:this.setRooms,
                 setOrderBody:this.setOrderBody,
-                deleteOneProduct:this.deleteOneProduct,
+                deleteOneProduct:this.deleteOneProduct,submitOrder:this.submitOrder,
             }} >
         
                 <div className='AdminDashboard'>
-                    <Nav tabs>
+                    <Nav tabs style={{cursor:'pointer'}}>
                     <NavItem>
                         <NavLink
                             className={classnames({ active: this.state.activeTab === '1' })}

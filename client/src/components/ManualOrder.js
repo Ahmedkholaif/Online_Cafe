@@ -80,13 +80,8 @@ class ManualOrder extends Component{
       quantity:'2',
   }
   ]
-
-
     }
-
-   
     this.getSelecedUser=this.getSelecedUser.bind(this);
-
  }
 
 
@@ -126,7 +121,6 @@ render()
   <br />
  
 </Container>
-      
         
       );
 }

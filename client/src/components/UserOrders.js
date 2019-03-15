@@ -31,7 +31,7 @@ class UserOrders extends React.Component {
             { 
                 <>
                     <tr key={user.userFullName}  >
-                        <td onClick={this.toggle} >  &#9660; {user.fullName} </td>
+                        <td onClick={this.toggle} style={{cursor:'pointer'}} >  &#9660; {user.fullName} </td>
                         <td>{
                             orders.filter(order=> order.userFullName === user.fullName)
                             .reduce((acc,ord)=>(acc + ord.orderTotal ),0)

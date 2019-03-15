@@ -30,7 +30,7 @@ total:0,
 
  }
 
-     render()
+     render() 
      {   
         return (
     
@@ -78,7 +78,7 @@ total:0,
            
             <Input type="textarea" name="notes" id="exampleText"
             placeholder="Your Notes Here..."
-            className="notes mt-4" onChange={(event)=>{
+            className="notes mt-4" value={order.notes} onChange={(event)=>{
               setOneOrder({...order,notes:event.target.value})
 
               }}/> 

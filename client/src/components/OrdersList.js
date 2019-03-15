@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, Button, Table ,Row,Col,Card,CardBody,Collapse,CardImg,CardText,CardTitle ,ListGroupItem} from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import {AdminContext} from './AdminContext';
+import axios from 'axios';
 class OredersList extends React.Component {
   constructor(props) {
     super(props);
@@ -25,17 +26,21 @@ class OredersList extends React.Component {
             <>
             {
                 <>
-                    <tr key={order.id}  >
-                        <td onClick={this.toggle} >  &#9660; {order.dateStamp} </td>
+                    <tr key={order._id}  >
+                        <td onClick={this.toggle} style={{cursor:'pointer'}} >  &#9660; {order.dateStamp} </td>
                         <td>{order.userFullName}</td>
                         <td>{order.phone}</td>
                         <td>{order.roomId}</td>
                         <td>{order.orderStatus}</td>
-                        <td> <Button onClick={()=>{
+
+                        {order.orderStatus === 'Processing' && (<td> <Button onClick={()=>{
                             setOredrs(
-                                orders.map(ord=> (ord.id === order.id && ord.orderStatus === 'Processing')? {...ord,orderStatus:"Out For Delivery"}:ord)
-                            )
-                        }} >Out For Delivery  </Button> </td>
+                                orders.map(ord=> (ord._id === order._id )? {...ord,orderStatus:"Out For Delivery"}:ord)
+                            );
+                            axios
+                            .put(`/api/orders/delivered/${order._id}`)
+                            .then(res=> console.log("successfull"))
+                        }} > Out For Delivery  </Button> </td>)}
                     </tr>
                         <tr>
                         <td colSpan="6" className="text-right ">

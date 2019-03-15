@@ -5,7 +5,7 @@ import { Card, CardImg, CardText, CardBody,
 class UserProductsGallery extends Component {
 
   render()
-  {
+  { 
       return(
 
         <UserContext.Consumer>

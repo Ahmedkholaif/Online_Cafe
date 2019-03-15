@@ -11,7 +11,7 @@ var _ = require('lodash');
 
 class GuestHomePage extends Component {
 
-
+ 
 	isUserAuthenticated = (data) => {
 
 		//check in the data got from server
@@ -87,7 +87,7 @@ class GuestHomePage extends Component {
         <Row className="seperator10"></Row>
         <Row>
 					<Col xs="4"></Col>
-					<Col xs="4"> <Login /> </Col>
+					<Col xs="4"> <Login history={this.props.history} /> </Col>
           <Col xs="4"></Col>
         </Row>
       </div>

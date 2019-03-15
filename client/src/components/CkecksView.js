@@ -3,7 +3,6 @@ import { Row, Col,Input,Table ,Container,Pagination,PaginationItem,PaginationLin
 import 'bootstrap/dist/css/bootstrap.css';
 import "../css/CategoryBooksName.css";
 import CustomPagination from "./pagination";
-import CustomNavbar from "./Navbar";
 import ItemsDisplay from "./ItemsDisplay";
 import axios from "axios";
 import {AdminContext} from './AdminContext';
@@ -59,7 +58,7 @@ handelPagination = (pageNum)=>
         </Row>
         <Row id="displayedItems">
         
-        <Table className="table-striped mt-5">
+        <Table className="table-striped mt-5 col-9 ml-2">
         <thead>
             <tr>
                 <th> User Name </th>
@@ -94,32 +93,6 @@ handelPagination = (pageNum)=>
       </div>
       
       </Container>
-      <Row>
-      
-      <Pagination size="lg" aria-label="Page navigation example">
-      <PaginationItem>
-        <PaginationLink first href="1" />
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink previous href="4" />
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="1">
-          1
-        </PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="2">
-          2
-        </PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="3">
-          3
-        </PaginationLink>
-      </PaginationItem>
-      </Pagination>
-      </Row>
       </>
     
     )}

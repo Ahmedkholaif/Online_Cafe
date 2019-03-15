@@ -7,7 +7,7 @@ class OrderProducts extends Component
 {      constructor(props){
   super(props);
   this.updateTotal=this.updateTotal.bind(this);
-}
+} 
   state={
   
   
@@ -34,7 +34,7 @@ total:0,
         return (
     
        <AdminContext.Consumer>
-           {({order,rooms,setOneOrder,setOrderBody,deleteOneProduct}  )=>{ 
+           {({order,rooms,setOneOrder,setOrderBody,deleteOneProduct,submitOrder}  )=>{ 
 
         const selectedItemsList= order.orderBody;
 
@@ -55,9 +55,8 @@ total:0,
            <Col xs="3" className="p-1"> EGP {product.price * product.quantity} </Col>
            
            <Button onClick={()=>{
-             setOneOrder({...order,orderBody:[...order.orderBody.filter(prod => prod.productName !== product.productName )],
-             orderTotal:order.orderTotal-parseFloat(product.price)
-            })
+            setOneOrder({...order,orderBody:[...order.orderBody.filter(prod => prod.productName !== product.productName )]})
+            
            }} >x</Button>
            </Row>
            </div>
@@ -74,8 +73,10 @@ total:0,
             {viewAllSelectedItems}
             </div>
             <div >
-              Notes:
-            <Input type="textarea" name="text" id="exampleText" className="notes m-1" onChange={(event)=>{
+              
+            <Input type="textarea" name="text" id="exampleText"
+            placeholder="Notes" value={order.notes}
+            className="notes m-1" onChange={(event)=>{
               setOneOrder({...order,notes:event.target.value})
 
               }}/> 
@@ -96,7 +97,7 @@ total:0,
             </div>
             <hr />
             <p className="total" > EGP{order.orderTotal}</p>
-            <Button className="confirm">Confirm</Button>
+            <Button className="confirm" onClick={submitOrder} >Confirm</Button>
         </div>
        );
 

@@ -23,7 +23,7 @@ class MyOredersList extends React.Component {
             {
                 <>
                     <tr key={order.id}  >
-                        <td onClick={this.toggle} >  &#9660; {order.dateStamp} </td>
+                        <td onClick={this.toggle} style={{cursor:'pointer'}} >  &#9660; {order.dateStamp} </td>
                         <td>{order.roomId}</td>
                         <td>{order.orderTotal}</td>
                         <td>{order.orderStatus}</td>
