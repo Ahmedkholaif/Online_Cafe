@@ -111,9 +111,9 @@ render()
       
 
       
-      <Container fluid style={{ lineHeight: '32px' } } className="container">
+<Container fluid style={{ lineHeight: '32px' } } className="container">
   <Row debug>
-    <Col xs="4" className="split left" id="rItem"  > 
+    <Col xs="4" className="split left" id="rItem"   > 
          <OrderProducts /> 
     
     </Col>

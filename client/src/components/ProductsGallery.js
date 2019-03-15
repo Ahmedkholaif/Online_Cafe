@@ -2,6 +2,7 @@ import React , {Component }from 'react';
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button ,Container,Row,Col,Input} from 'reactstrap';
   import {AdminContext}from './AdminContext'
+  
 class ProductsGallery extends Component {
 
   render()
@@ -57,7 +58,9 @@ class ProductsGallery extends Component {
                              newOrderBody.push(newProduct)
                             const newOrderTotal=parseFloat(order.orderTotal)+parseFloat(newProduct.price);
                             console.log(newOrderTotal)
-                            setOneOrder({...order,orderBody:newOrderBody,orderTotal:newOrderTotal})
+                            setOneOrder({...order,orderBody:newOrderBody,orderTotal:newOrderTotal,
+                              orderTotal:order.orderTotal+parseFloat(product.price)
+                            })
                            // console.log({...order,orderBody:newOrderBody,orderTotal:newOrderTotal})
                            //updateTotal();
                            //setOrderBody(indexOfProduct, '1')

@@ -54,14 +54,11 @@ total:0,
            </Col>
            <Col xs="3" className="p-1"> EGP {product.price * product.quantity} </Col>
            
-           <Button 
-          //  onClick={()=>{
-            
-          //    const productToDeleteName=product.productName
-          //    deleteOneProduct(productToDeleteName)
-          //   }}
-           
-           >x</Button>
+           <Button onClick={()=>{
+             setOneOrder({...order,orderBody:[...order.orderBody.filter(prod => prod.productName !== product.productName )],
+             orderTotal:order.orderTotal-parseFloat(product.price)
+            })
+           }} >x</Button>
            </Row>
            </div>
            
@@ -72,7 +69,7 @@ total:0,
         
 
        return (
-        <div className="orderProducts border  mt-5 ml-0 rounded p-2">
+        <div className="orderProducts border  mt-5 ml-0 rounded p-2" >
             <div className="products ">
             {viewAllSelectedItems}
             </div>
@@ -98,7 +95,7 @@ total:0,
               </Input>
             </div>
             <hr />
-            <p className="total" > {order.orderTotal}</p>
+            <p className="total" > EGP{order.orderTotal}</p>
             <Button className="confirm">Confirm</Button>
         </div>
        );
