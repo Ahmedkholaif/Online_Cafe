@@ -34,34 +34,41 @@ total:0,
         return (
     
        <AdminContext.Consumer>
-           {({order,rooms,setOneOrder,setOrderBody}  )=>{ 
+           {({order,rooms,setOneOrder,setOrderBody,deleteOneProduct}  )=>{ 
 
         const selectedItemsList= order.orderBody;
 
         const  viewAllSelectedItems = selectedItemsList.length ?
          selectedItemsList.map((product,index) =>  
-
+         
            <div className="container bg-info mt-5 rounded" >
             <Row  className="p-1 ">
             <Col xs="3" className="p-1"> {product.productName}</Col>
            <Col xs="3" className="p-1" > 
            <Input type="number" name="points" step="1" value={product.quantity} defaultValue={1} min="1" onChange={(event)=>{
               setOrderBody(index,event.target.value)
-          
+              console.log("indexof  ="+index)
            }
            } />  
            
            </Col>
            <Col xs="3" className="p-1"> EGP {product.price * product.quantity} </Col>
            
-           <Button>x</Button>
+           <Button 
+          //  onClick={()=>{
+            
+          //    const productToDeleteName=product.productName
+          //    deleteOneProduct(productToDeleteName)
+          //   }}
+           
+           >x</Button>
            </Row>
            </div>
            
 
            
            
-           ) : console.error("no products");
+          ) : console.error("no products");
         
 
        return (

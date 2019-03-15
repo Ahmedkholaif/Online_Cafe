@@ -47,14 +47,18 @@ class ProductsGallery extends Component {
                         <CardText>EGP{product.price}</CardText>
                         
                         <Button onClick={ (event)=>{  
-                           event.target.disabled = 'disabled';
-                           let newProduct={productName:product.productName,
+                            event.target.disabled = 'disabled';
+                            let newProduct={productName:product.productName,
                             price:product.price,
                             quantity:'1'
-                           }
-                           let newOrderBody=[...order.orderBody]
-                           let indexOfProduct= newOrderBody.push(newProduct)-1 
-                           setOneOrder({...order,orderBody:newOrderBody,orderTotal:newProduct.price})
+                            }
+                            // console.log("newProdust"+newProdust)
+                             const newOrderBody=order.orderBody
+                             newOrderBody.push(newProduct)
+                            const newOrderTotal=parseFloat(order.orderTotal)+parseFloat(newProduct.price);
+                            console.log(newOrderTotal)
+                            setOneOrder({...order,orderBody:newOrderBody,orderTotal:newOrderTotal})
+                           // console.log({...order,orderBody:newOrderBody,orderTotal:newOrderTotal})
                            //updateTotal();
                            //setOrderBody(indexOfProduct, '1')
 
