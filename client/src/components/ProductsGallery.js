@@ -2,7 +2,7 @@ import React , {Component }from 'react';
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button ,Container,Row,Col,Input} from 'reactstrap';
   import {AdminContext}from './AdminContext'
-  
+  import '../css/ProductsGallary.css'
 class ProductsGallery extends Component {
 
   render()
@@ -10,12 +10,34 @@ class ProductsGallery extends Component {
       return(
 
         <AdminContext.Consumer>
-        {({order,users,products,setOneOrder,setOrderBody ,updateTotal}  )=>( 
+        {({order,users,products,setOneOrder,setOrderBody ,updateTotal,getProductsToDisplay,setSearchWord}  )=>( 
          <Container >
+            
+
               <Row   className="p-2">  
-                  Search bar
-                 
+              <div class="searchbar">
+              <form >
+              <input
+                       
+                        type="text"
+                        name=""
+                        placeholder="Search..."
+                        onChange={(event)=>{
+                          if(event.target.value==='')
+                           setSearchWord('')
+                          setSearchWord(event.target.value)
+                          console.log(event.target.value)
+  
+                        }}
+                      />
+                      
+                        <i class="fas fa-search" />
+                      
+               </form>
+                    
+                      </div>
               </Row>
+              
               <hr/>
               <Row  className="p-3" >  
               <div>
@@ -37,11 +59,12 @@ class ProductsGallery extends Component {
               </Row>
               <hr/>
               <Row className ="productsGallary" >  
-                { products.map (product =>
+             
+                { getProductsToDisplay.map (product =>
                      <Col sm="3">
                      <div className="card-deck">
                               
-                    <Card className="p-2 m-2 rounded">
+                    <Card className="p-2 m-2 rounded ">
                       <CardImg top width="100%"  src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                       <CardBody className="p-0 m-0" >
                         <CardTitle >{product.productName}</CardTitle>

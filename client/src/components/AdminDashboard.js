@@ -46,6 +46,7 @@ export default class Example extends React.Component {
             roomId:'',
             orderBody:[]
             },
+        searchWord:''    
         }
     // user = {
     //     id :'',
@@ -206,7 +207,7 @@ export default class Example extends React.Component {
                 phone:'33333333',
                 isAdmin:true,
             },{
-                id :'4',
+                id :'1',
                 fullName:'Ahmed Kholaif',
                 email:'aaaaaa',
                 password:"aaaaa",
@@ -521,6 +522,23 @@ export default class Example extends React.Component {
       
 
     // }
+    getProductsToDisplay=()=>
+    {  
+        if(this.state.searchWord !== '')
+        {
+  
+        return  this.state.products.filter(prod=>prod.productName===this.state.searchWord)
+        }
+      else
+      return this.state.products  
+         
+    }
+    setSearchWord=(searchWord)=>{
+        this.setState({
+            searchWord,
+        })
+    }
+
     setProducts = (products)=> {
         this.setState({
             products,
@@ -545,6 +563,7 @@ export default class Example extends React.Component {
       });
 
     }
+    
     render() {
 
         return (
@@ -557,6 +576,8 @@ export default class Example extends React.Component {
                 rooms:this.state.rooms,setRooms:this.setRooms,
                 setOrderBody:this.setOrderBody,
                 deleteOneProduct:this.deleteOneProduct,
+                getProductsToDisplay:this.getProductsToDisplay(),
+                setSearchWord:this.setSearchWord,
             }} >
         
                 <div className='AdminDashboard'>
