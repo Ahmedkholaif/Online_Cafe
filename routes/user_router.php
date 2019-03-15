@@ -48,7 +48,8 @@ $application->post('/api/users/login', function (Request $request, Response $res
 });
 
 // user's logout
-$application->get('/api/users/logout', function (Request $request, Response $response) {
+$application->get('/api/users/logout/[{id}]', function (Request $request, Response $response, $arguments) {
+    $userId = $arguments['id'];
 
 });
 // user's forget
@@ -63,7 +64,7 @@ $application->get('api/users/forget/[{email}]', function (Request $request, Resp
         $username = $result['fullName'];
         $usermail = $result['email'];
         $userpassword = base64_encode($result['password']);
-        $mailManager=new \App\EmailManager();
-        return $mailManager->sendMail($username,$usermail,$userpassword);
+        $mailManager = new \App\EmailManager();
+        return $mailManager->sendMail($username, $usermail, $userpassword);
     }
 });

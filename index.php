@@ -64,7 +64,7 @@ try {
 // TODO: Schema Validation
 // TODO: SLIM/FRAMEWORK
 // -----------------------------------------------
-// TODO: Validation Utilities - Email .....
+// TODO: Validation Utilities - Email.....
 // TODO: Slim/Authentication
 // TODO: Slim/Session Management
 // TODO: User Logout
