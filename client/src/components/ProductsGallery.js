@@ -9,7 +9,7 @@ class ProductsGallery extends Component {
       return(
 
         <AdminContext.Consumer>
-        {({order,users,products,setOneOrder,setOrderBody}  )=>( 
+        {({order,users,products,setOneOrder,setOrderBody ,updateTotal}  )=>( 
          <Container >
               <Row   className="p-2">  
                   Search bar
@@ -38,13 +38,13 @@ class ProductsGallery extends Component {
               <Row className ="productsGallary" >  
                 { products.map (product =>
                      <Col sm="3">
-                     <div>
+                     <div className="card-deck">
                               
-                    <Card >
+                    <Card className="p-2 m-2 rounded">
                       <CardImg top width="100%"  src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-                      <CardBody  >
+                      <CardBody className="p-0 m-0" >
                         <CardTitle >{product.productName}</CardTitle>
-                        <CardText>{product.price}</CardText>
+                        <CardText>EGP{product.price}</CardText>
                         
                         <Button onClick={ (event)=>{  
                            event.target.disabled = 'disabled';
@@ -52,7 +52,11 @@ class ProductsGallery extends Component {
                             price:product.price,
                             quantity:'1'
                            }
-                           setOneOrder({...order,orderBody:[...order.orderBody,newProduct ]})
+                           let newOrderBody=[...order.orderBody]
+                           let indexOfProduct= newOrderBody.push(newProduct)-1 
+                           setOneOrder({...order,orderBody:newOrderBody,orderTotal:newProduct.price})
+                           //updateTotal();
+                           //setOrderBody(indexOfProduct, '1')
 
                         }}
                          

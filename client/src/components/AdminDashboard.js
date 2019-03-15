@@ -497,6 +497,7 @@ export default class Example extends React.Component {
         this.setState({
             order,
         })
+        //this.updateTotal();
       console.log(this.state.order)
     }
     setOrderBody=(index,quantity)=>
@@ -543,6 +544,7 @@ export default class Example extends React.Component {
                 order:this.state.order,setOneOrder:this.setOneOrder,
                 rooms:this.state.rooms,setRooms:this.setRooms,
                 setOrderBody:this.setOrderBody,
+                updateTotal:this.updateTotal,
             }} >
         
                 <div className='AdminDashboard'>

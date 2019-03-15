@@ -41,8 +41,8 @@ total:0,
         const  viewAllSelectedItems = selectedItemsList.length ?
          selectedItemsList.map((product,index) =>  
 
-           <div className="container bg-info mt-5" >
-            <Row  className="p-1">
+           <div className="container bg-info mt-5 rounded" >
+            <Row  className="p-1 ">
             <Col xs="3" className="p-1"> {product.productName}</Col>
            <Col xs="3" className="p-1" > 
            <Input type="number" name="points" step="1" value={product.quantity} defaultValue={1} min="1" onChange={(event)=>{
@@ -65,13 +65,13 @@ total:0,
         
 
        return (
-        <div className="orderProducts border border-primary mt-5 ml-0">
+        <div className="orderProducts border  mt-5 ml-0 rounded p-2">
             <div className="products ">
             {viewAllSelectedItems}
             </div>
             <div >
               Notes:
-            <Input type="textarea" name="text" id="exampleText" className="notes" onChange={(event)=>{
+            <Input type="textarea" name="text" id="exampleText" className="notes m-1" onChange={(event)=>{
               setOneOrder({...order,notes:event.target.value})
 
               }}/> 
