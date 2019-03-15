@@ -42,7 +42,7 @@ total:0,
         const  viewAllSelectedItems = selectedItemsList.length ?
          selectedItemsList.map((product,index) =>  
 
-           <div className="container bg-info mt-5" >
+           <div className="container bg-info mt-5 rounder " >
             <Row  className="p-1">
             <Col xs="3" className="p-1"> {product.productName}</Col>
            <Col xs="3" className="p-1" > 
@@ -68,7 +68,7 @@ total:0,
         
 
        return (
-        <div className="orderProducts border border-primary mt-5 ml-0">
+        <div className="orderProducts border border-primary rounded p-2 mt-5 ml-0">
         <h2> Your Order Here </h2>
         <hr/>
         <div className="products ">
@@ -99,7 +99,7 @@ total:0,
             </div>
             <hr />
             <p className="total" > total : EGP {order.orderTotal }</p>
-            <Button className="confirm" onClick={submitOrder}>Confirm</Button>
+            <Button className="confirm bg-danger" onClick={submitOrder}>Confirm</Button>
         </div>
        );
 

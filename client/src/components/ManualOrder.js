@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col,Input,Button } from 'reactstrap';
-// import '../css/ManualOrder.css';
+//import '../css/ManualOrder.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import OrderProducts from './OrderProducts';
 import ProductsGallery from './ProductsGallery'
@@ -106,8 +106,8 @@ render()
       
 
       
-<Container fluid style={{ lineHeight: '32px' } } className="container">
-  <Row debug>
+<Container >
+  <Row className='p-2'>
     <Col xs="4" className="split left" id="rItem"   > 
          <OrderProducts /> 
     

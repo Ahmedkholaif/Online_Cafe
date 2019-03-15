@@ -5,12 +5,13 @@
   z-index: 1;
   top: 0;
   overflow-x: hidden;
-  padding-top: 20px;
+  padding-top: 100px;
 }
 
 /* Control the left side */
 .left {
 width: 30%;
+ 
   left: 0;
   background-color:   	#DCDCDC
 }

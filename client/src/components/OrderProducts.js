@@ -68,7 +68,8 @@ total:0,
         
 
        return (
-        <div className="orderProducts border  mt-5 ml-0 rounded p-2" >
+        <div className="orderProducts border border-primary rounded p-2 mt-5 ml-0">
+        <h2> Your Order Here </h2>
             <div className="products ">
             {viewAllSelectedItems}
             </div>
