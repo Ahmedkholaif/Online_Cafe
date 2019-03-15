@@ -5,6 +5,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 require('vendor/autoload.php');
 
+
+
+
 try {
     $application = new \Slim\App([
         'settings' => [

@@ -4,6 +4,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 require __DIR__ . '/../modals/User.php';
+require __DIR__ . '/../classes/EmailManager.php';
 
 
 // Get All Users
@@ -40,7 +41,7 @@ $application->delete('/api/users/[{id}]', function (Request $request, Response $
 $application->post('/api/users/login', function (Request $request, Response $response) {
     $userData = $request->getParsedBody();
     $email = $userData['email'];
-    $password = password_hash($userData['password'], PASSWORD_DEFAULT);
+    $password = base64_encode($userData['password'], PASSWORD_DEFAULT);
     $userObject = new \App\User();
     $result = $userObject->getOneUserLogin($email, $password);
     return $this->response->withJson($result);
@@ -51,5 +52,18 @@ $application->get('/api/users/logout', function (Request $request, Response $res
 
 });
 // user's forget
-
-// email Class
+$application->get('api/users/forget/[{email}]', function (Request $request, Response $response, $argument) {
+    $email = $argument = ['email'];
+    $userObject = new \App\User();
+    $result = $userObject->getOneUserForget($email);
+    if ($result != false || empty($result) || sizeof($result) < 5) {
+        return $this->response->withJson($result);
+    } else {
+        // send mail
+        $username = $result['fullName'];
+        $usermail = $result['email'];
+        $userpassword = base64_encode($result['password']);
+        $mailManager=new \App\EmailManager();
+        return $mailManager->sendMail($username,$usermail,$userpassword);
+    }
+});

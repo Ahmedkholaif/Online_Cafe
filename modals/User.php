@@ -139,6 +139,25 @@ class User
         }
     }
 
+    // get user for forget
+    public function getOneUserForget($email)
+    {
+        try {
+            if (isset($email) && !empty($email)) {
+                $filter = ['email' => $email];
+                $options = ['limit' => 1];
+                $QueryManager = new MongoQuery($filter, $options);
+                $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
+                return json_encode($responseCursor->toArray());
+            } else {
+                return false;
+            }
+        } catch (MongoException $exception) {
+            return $exception->getMessage();
+        } catch (Exception\Exception $e) {
+        }
+    }
+
     // getAllUsers
     public function getAllUser()
     {
@@ -154,9 +173,7 @@ class User
 
 }
 
-// TODO: User Password
 // TODO: Validation Utilities - Email .....
-
 // TODO: User Email - Class
 
 // TODO: Deploy Back-End Application
