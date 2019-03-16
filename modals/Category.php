@@ -33,9 +33,9 @@ class Category
         try {
             if (isset($categoryName) && !empty($categoryName)) {
                 $bulkWriteInsert = new MongoBulkWrite;
-                $inserted_id = $bulkWriteInsert->insert(["categoryName" => $categoryName]);
+                $inserted_id = $bulkWriteInsert->insert($categoryName);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
-                return var_dump($inserted_id);
+                return $inserted_id;
             } else {
                 return false;
             }
@@ -89,7 +89,7 @@ class Category
         try {
             if (isset($categoryId) && !empty($categoryId) && isset($newCategoryName) && !empty($newCategoryName)) {
                 $filter = ['_id' => $categoryId];
-                $documentUpdated = ['$set' => ['categoryName' => $newCategoryName]];
+                $documentUpdated = ['$set' => [$newCategoryName]];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
