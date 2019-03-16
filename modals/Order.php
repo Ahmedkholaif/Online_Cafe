@@ -50,7 +50,7 @@ class Order
     {
         try {
             if (isset($orderId) && !empty($orderId) && isset($orderArray) && !empty($orderArray)) {
-                $filter = ["_id" => $orderId];
+                $filter = $orderId;
                 $documentUpdated = ['$set' => $orderArray];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
@@ -70,7 +70,7 @@ class Order
     {
         try {
             if (isset($orderId) && !empty($orderId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => $orderId];
+                $filter = $orderId;
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -89,7 +89,7 @@ class Order
     {
         try {
             if (isset($orderId) && !empty($orderId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($orderId)];
+                $filter = $orderId;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
