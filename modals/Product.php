@@ -49,7 +49,7 @@ class Product
     {
         try {
             if (isset($productId) && !empty($productId) && isset($productArray) && !empty($productArray)) {
-                $filter = ["_id" => $productId];
+                $filter = $productId;
                 $documentUpdated = ['$set' => $productArray];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
@@ -66,13 +66,13 @@ class Product
     }
     
     // delete One/Multi Product
-    public function deleteOneProduct($productId, $limit)
+    public function deleteOneProduct($productId)
     {
         try {
-            if (isset($productId) && !empty($productId) && isset($limit) && !empty($limit)) {
+            if (isset($productId) && !empty($productId)) {
                 $filter = $productId;
                 $bulkWriteDeleted = new MongoBulkWrite;
-                $options = ['limit' => $limit];
+                $options = ['limit' => 1];
                 $bulkWriteDeleted->delete($filter, $options);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteDeleted);
                 return $response->isAcknowledged();
@@ -90,7 +90,7 @@ class Product
     {
         try {
             if (isset($productId) && !empty($productId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($productId)];
+                $filter = $productId;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);

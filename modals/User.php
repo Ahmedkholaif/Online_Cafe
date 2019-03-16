@@ -70,7 +70,7 @@ class User
     {
         try {
             if (isset($userId) && !empty($userId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => $userId];
+                $filter = $userId;
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -90,7 +90,7 @@ class User
     {
         try {
             if (isset($userId) && !empty($userId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($userId)];
+                $filter = $userId;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
@@ -109,7 +109,7 @@ class User
     {
         try {
             if (isset($email) && !empty($email) && isset($password) && !empty($password)) {
-                $filter = ['email' => $email, 'password' => $password];
+                $filter = [$email, $password];
                 $options = ['limit' => 1];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
@@ -128,7 +128,7 @@ class User
     {
         try {
             if (isset($email) && !empty($email)) {
-                $filter = ['email' => $email];
+                $filter = $email;
                 $options = ['limit' => 1];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);

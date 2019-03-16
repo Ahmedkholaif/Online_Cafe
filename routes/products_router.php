@@ -35,5 +35,5 @@ $application->put('/api/products/[{id}]', function (Request $request, Response $
 $application->delete('/api/products/[{id}]', function (Request $request, Response $response, $argument) {
     $productID = $argument['id'];
     $productObject = new \App\Product();
-    return $this->response->withJson($productObject->deleteOneProduct($productID, 1));
+    return $this->response->withJson($productObject->deleteOneProduct($productID));
 });

@@ -49,7 +49,7 @@ class Category
     {
         try {
             if (isset($categoryId) && !empty($categoryId)) {
-                $filter = ['_id' => new ObjectID($categoryId)];
+                $filter = $categoryId;
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => 1];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -88,7 +88,7 @@ class Category
     {
         try {
             if (isset($categoryId) && !empty($categoryId) && isset($newCategoryName) && !empty($newCategoryName)) {
-                $filter = ['_id' => $categoryId];
+                $filter = $categoryId;
                 $documentUpdated = ['$set' => [$newCategoryName]];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
@@ -108,7 +108,7 @@ class Category
     {
         try {
             if (isset($categoryId) && !empty($categoryId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($categoryId)];
+                $filter = $categoryId;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);

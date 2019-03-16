@@ -49,7 +49,7 @@ class Room
     {
         try {
             if (isset($RoomId) && !empty($RoomId)) {
-                $filter = ['_id' => new ObjectID($RoomId)];
+                $filter = $RoomId;
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => 1];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -108,7 +108,7 @@ class Room
     {
         try {
             if (isset($RoomId) && !empty($RoomId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($RoomId)];
+                $filter = $RoomId;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
