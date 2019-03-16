@@ -33,9 +33,9 @@ class Room
         try {
             if (isset($RoomName) && !empty($RoomName)) {
                 $bulkWriteInsert = new MongoBulkWrite;
-                $inserted_id = $bulkWriteInsert->insert(["RoomName" => $RoomName]);
+                $inserted_id = $bulkWriteInsert->insert($RoomName);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
-                return var_dump($inserted_id);
+                return $inserted_id;
             } else {
                 return false;
             }
@@ -69,7 +69,7 @@ class Room
 
         try {
             if (isset($RoomName) && !empty($RoomName) && isset($limit) && !empty($limit)) {
-                $filter = ['RoomName' => $RoomName];
+                $filter = $RoomName;
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -88,8 +88,8 @@ class Room
     {
         try {
             if (isset($oldRoomName) && !empty($oldRoomName) && isset($newRoomName) && !empty($newRoomName)) {
-                $filter = ['RoomName' => $oldRoomName];
-                $documentUpdated = ['$set' => ['RoomName' => $newRoomName]];
+                $filter = $oldRoomName;
+                $documentUpdated = ['$set' => $newRoomName];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
@@ -112,7 +112,7 @@ class Room
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return json_encode($responseCursor->toArray());
+                return $responseCursor->toArray();
             } else {
                 return false;
             }
@@ -128,7 +128,7 @@ class Room
         try {
             $QueryManager = new MongoQuery([]);
             $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-            return json_encode($responseCursor->toArray());
+            return $responseCursor->toArray();
         } catch (MongoException $exception) {
             return $exception->getMessage();
         } catch (Exception\Exception $e) {

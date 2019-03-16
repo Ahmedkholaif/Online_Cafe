@@ -34,3 +34,4 @@ $application->delete('/api/categories/[{id}]', function (Request $request, Respo
     $result = $categoryObject->deleteOneCategory($arguments['id']);
     return $this->response->withJson($result);
 });
+

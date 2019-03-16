@@ -69,7 +69,7 @@ class Category
 
         try {
             if (isset($categoryName) && !empty($categoryName) && isset($limit) && !empty($limit)) {
-                $filter = ['categoryName' => $categoryName];
+                $filter = $categoryName;
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -112,7 +112,7 @@ class Category
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return json_encode($responseCursor->toArray());
+                return $responseCursor->toArray();
             } else {
                 return false;
             }
@@ -128,7 +128,7 @@ class Category
         try {
             $QueryManager = new MongoQuery([]);
             $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-            return json_encode($responseCursor->toArray());
+            return $responseCursor->toArray();
         } catch (MongoException $exception) {
             return $exception->getMessage();
         } catch (Exception\Exception $e) {

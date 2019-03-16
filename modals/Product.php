@@ -33,15 +33,9 @@ class Product
         try {
             if (isset($productArray) && !empty($productArray)) {
                 $bulkWriteInsert = new MongoBulkWrite;
-                $inserted_id = $bulkWriteInsert->insert([
-                    "productName" => $productArray["productName"],
-                    "price" => $productArray["price"],
-                    "categoryName" => $productArray["categoryName"],
-                    "image" => $productArray["image"],
-                    "isAvailable" => $productArray["isAvailable"]
-                ]);
+                $inserted_id = $bulkWriteInsert->insert($productArray);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
-                return json_encode($inserted_id);
+                return $inserted_id;
             } else {
                 return false;
             }
@@ -56,13 +50,7 @@ class Product
         try {
             if (isset($productId) && !empty($productId) && isset($productArray) && !empty($productArray)) {
                 $filter = ["_id" => $productId];
-                $documentUpdated = ['$set' => [
-                    "productName" => $productArray["productName"],
-                    "price" => $productArray["price"],
-                    "categoryName" => $productArray["categoryName"],
-                    "image" => $productArray["image"],
-                    "isAvailable" => $productArray["isAvailable"]
-                ]];
+                $documentUpdated = ['$set' => $productArray];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
@@ -82,7 +70,7 @@ class Product
     {
         try {
             if (isset($productId) && !empty($productId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => $productId];
+                $filter = $productId;
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -106,7 +94,7 @@ class Product
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return json_encode($responseCursor->toArray());
+                return $responseCursor->toArray();
             } else {
                 return false;
             }
@@ -122,9 +110,10 @@ class Product
         try {
             $QueryManager = new MongoQuery([]);
             $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-            return json_encode($responseCursor->toArray());
+            return $responseCursor->toArray();
         } catch (MongoException $exception) {
             return $exception->getMessage();
+        } catch (Exception\Exception $e) {
         }
     }
 }
