@@ -20,7 +20,7 @@ class Order
 
     public function __construct()
     {
-        $this->DATABASE_PATH='mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
+        $this->DATABASE_PATH = 'mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
         coderm-shard-00-01-om0sg.gcp.mongodb.net:27017,
         coderm-shard-00-02-om0sg.gcp.mongodb.net:27017/OnlineCafeDatabase?ssl=true&replicaSet=CoderM-shard-0&authSource=admin&retryWrites=true';
         $this->DATABASE_NAME = 'OnlineCafeDatabase';
@@ -34,17 +34,9 @@ class Order
         try {
             if (isset($orderArray) && !empty($orderArray)) {
                 $bulkWriteInsert = new MongoBulkWrite;
-                $inserted_id = $bulkWriteInsert->insert([
-                    "userFullName" => $orderArray["userFullName"],
-                    "notes" => $orderArray["notes"],
-                    "orderTotal" => $orderArray["orderTotal"],
-                    "orderStatus" => $orderArray["orderStatus"],
-                    "dateStamp" => $orderArray["dateStamp"],
-                    "roomName" => $orderArray["roomName"],
-                    "orderBody" => $orderArray["orderBody"]
-                ]);
+                $inserted_id = $bulkWriteInsert->insert($orderArray);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
-                return json_encode($inserted_id);
+                return ($inserted_id);
             } else {
                 return false;
             }
@@ -58,16 +50,8 @@ class Order
     {
         try {
             if (isset($orderId) && !empty($orderId) && isset($orderArray) && !empty($orderArray)) {
-                $filter = ["_id" => $orderId];
-                $documentUpdated = ['$set' => [
-                    "userFullName" => $orderArray["userFullName"],
-                    "notes" => $orderArray["notes"],
-                    "orderTotal" => $orderArray["orderTotal"],
-                    "orderStatus" => $orderArray["orderStatus"],
-                    "dateStamp" => $orderArray["dateStamp"],
-                    "roomName" => $orderArray["roomName"],
-                    "orderBody" => $orderArray["orderBody"]
-                ]];
+                $filter = $orderId;
+                $documentUpdated = ['$set' => $orderArray];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
@@ -86,7 +70,7 @@ class Order
     {
         try {
             if (isset($orderId) && !empty($orderId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => $orderId];
+                $filter = ['_id'=>new ObjectID($orderId)];
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -105,11 +89,11 @@ class Order
     {
         try {
             if (isset($orderId) && !empty($orderId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($orderId)];
+                $filter = $orderId;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return json_encode($responseCursor->toArray());
+                return ($responseCursor->toArray());
             } else {
                 return false;
             }
@@ -125,9 +109,10 @@ class Order
         try {
             $QueryManager = new MongoQuery([]);
             $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-            return json_encode($responseCursor->toArray());
+            return $responseCursor->toArray();
         } catch (MongoException $exception) {
             return $exception->getMessage();
+        } catch (Exception\Exception $e) {
         }
     }
 }

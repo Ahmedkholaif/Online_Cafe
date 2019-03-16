@@ -19,7 +19,7 @@ class Category
 
     public function __construct()
     {
-        $this->DATABASE_PATH='mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
+        $this->DATABASE_PATH = 'mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
         coderm-shard-00-01-om0sg.gcp.mongodb.net:27017,
         coderm-shard-00-02-om0sg.gcp.mongodb.net:27017/OnlineCafeDatabase?ssl=true&replicaSet=CoderM-shard-0&authSource=admin&retryWrites=true';
         $this->DATABASE_NAME = 'OnlineCafeDatabase';
@@ -33,9 +33,9 @@ class Category
         try {
             if (isset($categoryName) && !empty($categoryName)) {
                 $bulkWriteInsert = new MongoBulkWrite;
-                $inserted_id = $bulkWriteInsert->insert(["categoryName" => $categoryName]);
+                $inserted_id = $bulkWriteInsert->insert($categoryName);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
-                return var_dump($inserted_id);
+                return $inserted_id;
             } else {
                 return false;
             }
@@ -69,7 +69,7 @@ class Category
 
         try {
             if (isset($categoryName) && !empty($categoryName) && isset($limit) && !empty($limit)) {
-                $filter = ['categoryName' => $categoryName];
+                $filter = $categoryName;
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -88,8 +88,8 @@ class Category
     {
         try {
             if (isset($categoryId) && !empty($categoryId) && isset($newCategoryName) && !empty($newCategoryName)) {
-                $filter = ['_id' => $categoryId];
-                $documentUpdated = ['$set' => ['categoryName' => $newCategoryName]];
+                $filter = $categoryId;
+                $documentUpdated = ['$set' => [$newCategoryName]];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
@@ -108,11 +108,11 @@ class Category
     {
         try {
             if (isset($categoryId) && !empty($categoryId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($categoryId)];
+                $filter = $categoryId;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return json_encode($responseCursor->toArray());
+                return $responseCursor->toArray();
             } else {
                 return false;
             }
@@ -128,7 +128,7 @@ class Category
         try {
             $QueryManager = new MongoQuery([]);
             $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-            return json_encode($responseCursor->toArray());
+            return $responseCursor->toArray();
         } catch (MongoException $exception) {
             return $exception->getMessage();
         } catch (Exception\Exception $e) {

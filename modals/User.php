@@ -33,17 +33,9 @@ class User
         try {
             if (isset($userArray) && !empty($userArray)) {
                 $bulkWriteInsert = new MongoBulkWrite;
-                $inserted_id = $bulkWriteInsert->insert([
-                    "fullName" => $userArray["fullName"],
-                    "email" => $userArray["email"],
-                    "password" => password_hash($userArray["password"],PASSWORD_DEFAULT),
-                    "image" => $userArray["image"],
-                    "defaultRoom" => $userArray["defaultRoom"],
-                    "phone" => $userArray["phone"],
-                    "isAdmin" => $userArray["isAdmin"]
-                ]);
+                $inserted_id = $bulkWriteInsert->insert($userArray);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
-                return json_encode($inserted_id);
+                return ($inserted_id);
             } else {
                 return false;
             }
@@ -57,16 +49,8 @@ class User
     {
         try {
             if (isset($userId) && !empty($userId) && isset($userArray) && !empty($userArray)) {
-                $filter = ["_id" => $userId];
-                $documentUpdated = ['$set' => [
-                    "fullName" => $userArray["fullName"],
-                    "email" => $userArray["email"],
-                    "password" => $userArray["password"],
-                    "image" => $userArray["image"],
-                    "defaultRoom" => $userArray["defaultRoom"],
-                    "phone" => $userArray["phone"],
-                    "isAdmin" => $userArray["isAdmin"]
-                ]];
+                $filter = $userId;
+                $documentUpdated = ['$set' => $userArray];
                 $options = ['multi' => $multi, 'upsert' => $multi];
                 $bulkWriteUpdated = new MongoBulkWrite;
                 $bulkWriteUpdated->update($filter, $documentUpdated, $options);
@@ -86,7 +70,7 @@ class User
     {
         try {
             if (isset($userId) && !empty($userId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => $userId];
+                $filter = ['_id' => new ObjectID($userId)];
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -106,11 +90,11 @@ class User
     {
         try {
             if (isset($userId) && !empty($userId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id' => new ObjectID($userId)];
+                $filter = $userId;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return json_encode($responseCursor->toArray());
+                return ($responseCursor->toArray());
             } else {
                 return false;
             }
@@ -125,11 +109,11 @@ class User
     {
         try {
             if (isset($email) && !empty($email) && isset($password) && !empty($password)) {
-                $filter = ['email' => $email, 'password' => $password];
+                $filter = [$email, $password];
                 $options = ['limit' => 1];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return json_encode($responseCursor->toArray());
+                return $responseCursor->toArray();
             } else {
                 return false;
             }
@@ -144,11 +128,11 @@ class User
     {
         try {
             if (isset($email) && !empty($email)) {
-                $filter = ['email' => $email];
+                $filter = $email;
                 $options = ['limit' => 1];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return json_encode($responseCursor->toArray());
+                return ($responseCursor->toArray());
             } else {
                 return false;
             }
@@ -164,7 +148,7 @@ class User
         try {
             $QueryManager = new MongoQuery([]);
             $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-            return json_encode($responseCursor->toArray());
+            return ($responseCursor->toArray());
         } catch (MongoException $exception) {
             return $exception->getMessage();
         } catch (Exception\Exception $e) {
