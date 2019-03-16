@@ -41,7 +41,7 @@ $application->delete('/api/users/[{id}]', function (Request $request, Response $
 $application->post('/api/users/login', function (Request $request, Response $response) {
     $userData = $request->getParsedBody();
     $email = $userData['email'];
-    $password = base64_encode($userData['password'], PASSWORD_DEFAULT);
+    $password = base64_encode($userData['password']);
     $userObject = new \App\User();
     $result = $userObject->getOneUserLogin($email, $password);
     return $this->response->withJson($result);

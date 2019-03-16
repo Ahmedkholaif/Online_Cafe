@@ -70,7 +70,7 @@ class User
     {
         try {
             if (isset($userId) && !empty($userId) && isset($limit) && !empty($limit)) {
-                $filter = $userId;
+                $filter = ['_id' => new ObjectID($userId)];
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);

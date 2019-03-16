@@ -49,7 +49,7 @@ class Room
     {
         try {
             if (isset($RoomId) && !empty($RoomId)) {
-                $filter = $RoomId;
+                $filter = ['_id'=>new ObjectID($RoomId)];
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => 1];
                 $bulkWriteDeleted->delete($filter, $options);

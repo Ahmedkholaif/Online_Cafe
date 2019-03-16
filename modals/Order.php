@@ -70,7 +70,7 @@ class Order
     {
         try {
             if (isset($orderId) && !empty($orderId) && isset($limit) && !empty($limit)) {
-                $filter = $orderId;
+                $filter = ['_id'=>new ObjectID($orderId)];
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);

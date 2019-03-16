@@ -19,7 +19,7 @@ class Category
 
     public function __construct()
     {
-        $this->DATABASE_PATH='mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
+        $this->DATABASE_PATH = 'mongodb://root:mernITI39@coderm-shard-00-00-om0sg.gcp.mongodb.net:27017,
         coderm-shard-00-01-om0sg.gcp.mongodb.net:27017,
         coderm-shard-00-02-om0sg.gcp.mongodb.net:27017/OnlineCafeDatabase?ssl=true&replicaSet=CoderM-shard-0&authSource=admin&retryWrites=true';
         $this->DATABASE_NAME = 'OnlineCafeDatabase';
@@ -49,7 +49,7 @@ class Category
     {
         try {
             if (isset($categoryId) && !empty($categoryId)) {
-                $filter = $categoryId;
+                $filter = ['_id' => new ObjectID($categoryId)];
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => 1];
                 $bulkWriteDeleted->delete($filter, $options);
