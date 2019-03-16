@@ -87,7 +87,7 @@ handelPagination = (pageNum)=>
         <Row className="justify-content-md-center">
             <Col>
         
-
+ 
             </Col>
         </Row>
       </div>

@@ -34,7 +34,7 @@ total:0,
         return (
     
        <AdminContext.Consumer>
-           {({order,rooms,setOneOrder,setOrderBody,deleteOneProduct,submitOrder}  )=>{ 
+           {({order,rooms,setOneOrder,setOrderBody,submitOrder}  )=>{ 
 
         const selectedItemsList= order.orderBody;
 
@@ -98,7 +98,7 @@ total:0,
             </div>
             <hr />
             <p className="total" > EGP{order.orderTotal}</p>
-            <Button className="confirm" onClick={submitOrder} >Confirm</Button>
+            <Button className="confirm" onClick={submitOrder} > Confirm </Button>
         </div>
        );
 

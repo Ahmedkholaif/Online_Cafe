@@ -13,7 +13,6 @@ class AddUser extends Component {
         users: [],
         modal: false,
         user : {
-        id :'',
         fullName:'',
         email:'',
         password:"",
@@ -131,27 +130,28 @@ class AddUser extends Component {
                     <ModalFooter>
                         <Button color="primary" onClick={()=>{
                             this.toggle();
-                            setUsers([
-                                ...users,this.state.user
-                            ]);
+                            
                             axios
-                            .post('/api/users',JSON.stringify({user : this.state.user}))
+                            .post('/api/users',this.state.user)
                             .then(response=>{
                                 console.log(response.data);
+                                setUsers([
+                                    ...users,{...this.state.user,_id:response.data.$oid}
+                                ]);
+                                this.setState({
+                                    user : {
+                                        fullName:'',
+                                        email:'',
+                                        password:"",
+                                        image:'',
+                                        defaultRoom:'',
+                                        phone:'',
+                                        isAdmin:'',
+                                    }
+                                })
                             })
                             .catch(err=>console.log(err))
-                            this.setState({
-                                user : {
-                                    id :'',
-                                    fullName:'',
-                                    email:'',
-                                    password:"",
-                                    image:'',
-                                    defaultRoom:'',
-                                    phone:'',
-                                    isAdmin:'',
-                                }
-                            })
+                           
                         
                         }}>Add
                             User</Button>{' '}

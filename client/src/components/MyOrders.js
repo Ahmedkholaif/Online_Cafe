@@ -88,7 +88,7 @@ state = {
             console.log(sortedOrders);
             return sortedOrders;
         }
-    }
+    } 
     render() {
         return (
             <UserContext.Consumer>

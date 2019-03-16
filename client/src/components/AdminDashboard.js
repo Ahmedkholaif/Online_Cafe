@@ -49,40 +49,7 @@ export default class Example extends React.Component {
             },
         searchWord:''    
         }
-    // user = {
-    //     id :'',
-    //     fullName:'',
-    //     email:'',
-    //     password:"",
-    //     image:'',
-    //     defaultRoom:'',
-    //     phone:'',
-    //     isAdmin:'',
-    // }
-
-    // product = {
-    //     id:'',
-    //     productName:'',
-    //     price:'',
-    //     categoryName:'',
-    //     isAvailable:'',
-    //     image:'',
-    // }
-
-    // order ={
-    //     id:'',
-    //     userFullName :'',
-    //     notes:'',
-    //     orderTotal:'',
-    //     orderStatus:'', 
-    //     dateStamp:'',
-    //     roomId:'',
-    //     orderBody:[{
-    //         productName:'',
-    //         price:'',
-    //         quantity:'',
-    //     }]
-    // }
+   
     // rooms=[{
     //     roomId:'',
     //     roomName:''
@@ -94,15 +61,24 @@ export default class Example extends React.Component {
 
         axios
         .get('/api/users')
-        .then(res => console.log(res))
+        .then(res =>{
+            console.log(res)
+            res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+            this.setUsers(
+                res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+                 // [...JSON.parse(res.data)]
+             )
+        })
         .catch(err => console.log(err))
         
         axios
         .get('/api/categories')
         .then(res =>{
             console.log(res);
+           
             this.setCategories(
-                [...this.state.categories,...res.data]
+               res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+                // [...JSON.parse(res.data)]
             )
         } )
         .catch(err => console.log(err))
@@ -112,337 +88,23 @@ export default class Example extends React.Component {
         .then(res =>{
             console.log(res);
             this.setProducts(
-                [...this.state.products,...res.data]
+                res.data.map(obj=>({...obj,_id:obj._id.$oid}))
             )
         } )
         .catch(err => console.log(err))
+        axios
+        .get('/api/orders')
+        .then(res=>{
+            this.setOrders(
+                res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+            )
+        })
+        // this.setCategories([]);
 
-        this.setCategories([{
-            categoryName:"test1"
-        },{
-            categoryName:"test2"
-        },{
-            categoryName:"test3"
-        }]);
-
-        this.setProducts([{
-                id:'2',
-                productName:'caffee',
-                price:'6',
-                categoryName:'hot',
-                isAvailable: true,
-                image:'link',
-        },{
-            id:'3',
-            productName:'7up',
-            price:'12',
-            categoryName:'cold',
-            isAvailable: true,
-            image:'link',
-        },{
-            id:'4',
-            productName:'cheese',
-            price:'29',
-            categoryName:'cold',
-            isAvailable: true,
-            image:'link',
-        },
-        {
-            id:'4',
-            productName:'caffee',
-            price:'6',
-            categoryName:'hot',
-            isAvailable: true,
-            image:'link',
-    },{
-        id:'5',
-        productName:'7up',
-        price:'12',
-        categoryName:'cold',
-        isAvailable: true,
-        image:'link',
-    },{
-        id:'6',
-        productName:'cheese',
-        price:'29',
-        categoryName:'cold',
-        isAvailable: true,
-        image:'link',
-    }
-       
-    
-    
-        ]);
-        this.setRooms([{
-            roomName:'123a'
-        },{
-            roomName:'456b'
-        }]);
-        this.setUsers ([
-            {
-                id :'1',
-                fullName:'Medo',
-                email:'aaaaaa',
-                password:"aaaaa",
-                image:'',
-                defaultRoom:'aaaaa',
-                phone:'33333333',
-                isAdmin:true,
-            },
-            {
-                id :'3',
-                fullName:'Ahmed',
-                email:'dddddd',
-                password:"dddd",
-                image:'dddd',
-                defaultRoom:'dddddd',
-                phone:'333445555',
-                isAdmin:false,
-            },{
-                id :'2',
-                fullName:'Ahmed Kholaif22',
-                email:'aaaaaa',
-                password:"aaaaa",
-                image:'',
-                defaultRoom:'aaaaa',
-                phone:'33333333',
-                isAdmin:true,
-            },{
-                id :'1',
-                fullName:'Ahmed Kholaif',
-                email:'aaaaaa',
-                password:"aaaaa",
-                image:'',
-                defaultRoom:'aaaaa',
-                phone:'33333333',
-                isAdmin:true,
-            }
-        ]);
-        this.setOrders ([
-            {
-                    id:'1',
-                    userFullName :'Ahmed',
-                    notes:'no notes',
-                    orderTotal:323,
-                    orderStatus:'Processing', 
-                    dateStamp: '2010-10-10',
-                    phone:'83848484',
-                    roomId:'staff',
-                    orderBody:[{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'Juice',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    }
-                
-                ]
-                },
-                {
-                    id:'2',
-                    userFullName :'Ahmed',
-                    notes:'no notes',
-                    orderTotal:323,
-                    orderStatus:'Processing', 
-                    dateStamp:'2010-10-10',
-                    phone:'32332',
-                    roomId:'staff',
-                    orderBody:[{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'Juice',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    }
-                    ]
-                },{
-                    id:'3',
-                    userFullName :'Medo',
-                    notes:'no notes',
-                    orderTotal:323,
-                    orderStatus:'Processing', 
-                    dateStamp: '2010-10-10',
-                    phone:'83848484',
-                    roomId:'staff',
-                    orderBody:[{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'Juice',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    }]
-                },
-                {
-                    id:'4',
-                    userFullName :'Ahmed Kholaif',
-                    notes:'no notes',
-                    orderTotal:323,
-                    orderStatus:'Processing', 
-                    dateStamp: '2010-10-10',
-                    phone:'83848484',
-                    roomId:'staff',
-                    orderBody:[{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'Juice',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    }]
-                },{
-                    id:'5',
-                    userFullName :'Ahmed Kholaif22',
-                    notes:'no notes',
-                    orderTotal:323,
-                    orderStatus:'Processing', 
-                    dateStamp: '2010-10-10',
-                    phone:'83848484',
-                    roomId:'staff',
-                    orderBody:[{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'Juice',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    }]
-                },{
-                    id:'6',
-                    userFullName :'Ahmed Kholaif',
-                    notes:'no notes',
-                    orderTotal:323,
-                    orderStatus:'Processing', 
-                    dateStamp: '2010-10-10',
-                    phone:'83848484',
-                    roomId:'staff',
-                    orderBody:[{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'Juice',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },
-                    {
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    },{
-                        productName:'tea',
-                        price:30,
-                        quantity:5,
-                    }]
-                }
-        ]);
-        // this.setOneOrder(
-        //     {...this.state.order,orderBody:[
-        //        ...this.state.order.orderBody,{
-        //         productName:'rice',
-        //         price:'10',
-        //         quantity:'2',
-        //     },
         
-        //     {
-        //       productName:'tea',
-        //       price:'4',
-        //       quantity:'2',
-        //     } 
-        //     ]}
-        // );
+        // this.setRooms([]);
+        // this.setUsers ([]);
+        // this.setOrders ([]);
 
     }
     handleSignout = (event) => {
@@ -461,17 +123,6 @@ export default class Example extends React.Component {
         }
     }
 
-    handlePassCategoriesProps = (categoriesProps) => {
-        this.setState({
-            categories: categoriesProps
-        });
-    }
-
-    handlePassAuthorsProps = (authorsProps) => {
-        this.setState({
-            authors: authorsProps
-        });
-    }
 
     toggle =(tab) => {
         if (this.state.activeTab !== tab) {
@@ -499,7 +150,7 @@ export default class Example extends React.Component {
         this.setState({
             order,
         } ,this.updateTotal )
-        //this.updateTotal();
+        
       console.log(this.state.order)
     }
     setOrderBody=(index,quantity)=>
@@ -511,18 +162,6 @@ export default class Example extends React.Component {
       })
       this.updateTotal();
     }
-    // deleteOneProduct=(productToDeleteName)=>
-    // { let newOrderBody=this.state.order.orderBody
-    //     newOrderBody.filter(product=>
-    //         product.productName !==productToDeleteName )
-    //    this.setState({
-    //     order:{...this.state.order,orderBody:newOrderBody}
- 
-    //    })
-    //    this.updateTotal();
-      
-
-    // }
     getProductsToDisplay=()=>
     {  
         if(this.state.searchWord !== '')
@@ -571,20 +210,27 @@ export default class Example extends React.Component {
                 dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
                 orderStatus:'Processing'}
         },()=>{
-            console.log(this.state.order);
-            this.setState({
-                myOrders: [this.state.order,...this.state.myOrders],
-               order:{
-                id:'',
-                userFullName :'',
-                notes:'',
-                orderTotal:'',
-                orderStatus:'', 
-                dateStamp:'',
-                roomId:'',
-                orderBody:[],
-               }
-        })
+            axios
+            .post('/api/orders',this.state.order)
+            .then(res=>{
+                console.log(res)
+
+                console.log(this.state.order);
+                this.setState({
+                    orders: [this.state.order,...this.state.orders],
+                   order:{
+                    id:'',
+                    userFullName :'',
+                    notes:'',
+                    orderTotal:'',
+                    orderStatus:'', 
+                    dateStamp:'',
+                    roomId:'',
+                    orderBody:[],
+                   }
+            })
+            })
+           
     })
 }
     render() {
@@ -598,7 +244,7 @@ export default class Example extends React.Component {
                 order:this.state.order,setOneOrder:this.setOneOrder,
                 rooms:this.state.rooms,setRooms:this.setRooms,
                 setOrderBody:this.setOrderBody,
-                deleteOneProduct:this.deleteOneProduct,submitOrder:this.submitOrder,
+                submitOrder:this.submitOrder,
             }} >
         
                 <div className='AdminDashboard'>
@@ -691,22 +337,7 @@ export default class Example extends React.Component {
                     <TabPane tabId="2">
                         <Col sm="12">
                         <ManualOrder/>
-                          {/* <Row>
-                                        Manual Order 
-                                <Col sm="4"> Side Bar Order</Col>
-                                <Col sm="8"> 
-                                        Products
-                                    <Row>
-                                        <Col>
-                                        Users Choose
-                                        </Col>
-                                    </Row>
-                                    <Row className="seperator10"></Row>
-                                    <Row>
-                                         <ItemsDisplay items={this.state.products} />
-                                    </Row>
-                                </Col>
-                            </Row>  */}
+                        
                         </Col>
                     </TabPane>
                     

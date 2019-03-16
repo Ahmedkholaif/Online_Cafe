@@ -146,26 +146,31 @@ class AddProduct extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={ ()=>{
-                            setProducts([
-                                ...products,this.state.product
-                            ]);
+                            
+                            
+                            
                             axios
-                            .post('/api/products',JSON.stringify({product : this.state.product}))
+                            .post('/api/products',this.state.product)
+                            
                             .then(response=>{
                                 console.log(response.data);
+                                setProducts([
+                                    ...products,{...this.state.product,_id:response.data.$oid}
+                                ]);
+                                this.setState({
+                                    modal: ! this.state.modal,
+                                    product : {
+                                        id:'',
+                                        productName:'',
+                                        price:0,
+                                        categoryName:'',
+                                        isAvailable: "",
+                                        image:'',
+                                    }
+                                });
                             })
                             .catch(err=>console.log(err))
-                            this.setState({
-                                modal: ! this.state.modal,
-                                product : {
-                                    id:'',
-                                    productName:'',
-                                    price:0,
-                                    categoryName:'',
-                                    isAvailable: "",
-                                    image:'',
-                                }
-                            });
+                           
                             
                          }} > Add Product </Button>{' '}
                         <Button color="secondary" onClick={this.toggle}>Close</Button>

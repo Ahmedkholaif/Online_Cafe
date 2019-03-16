@@ -10,7 +10,6 @@ class ProductsView extends Component {
 state = {
     modal:false,
     product : {
-        id:'',
         productName:'',
         price:'',
         categoryName:'',
@@ -108,7 +107,7 @@ state = {
                                 <option  >{this.state.inEdit.categoryName}</option>
                                 {
                                     categories.map(category =>
-                                            <option key={category.id} defaultValue={category.categoryName}>{category.categoryName}</option>
+                                            <option key={category._id} defaultValue={category.categoryName}>{category.categoryName}</option>
                                     )
                                 }
                             </Input>
@@ -128,7 +127,7 @@ state = {
                         <ModalFooter>
                             <Button color="primary" onClick={()=>{
                                         setProducts(
-                                            products.map(product => product.id === this.state.inEdit.id ?
+                                            products.map(product => product._id === this.state.inEdit._id ?
                                                     this.state.inEdit :  product 
                                         ))
                                         this.setState({
@@ -179,20 +178,25 @@ state = {
                         <tbody>
                         {
                         products.map(product => 
-                                <tr key={product.id}>
+                                <tr key={product._id}>
                                     <td><img src={product.image} alt="img" width="75" height="75" /></td>
                                     <td>{product.productName}</td>
                                     <td>{product.price}</td>
                                     <td>{product.categoryName}</td>
                                     <td><input type="checkbox"  onClick={() => {
-                                       setProducts( products.map(prod => prod.id===product.id?  {...prod,isAvailable:!prod.isAvailable}:prod ))
+                                       setProducts( products.map(prod => prod._id===product._id?  {...prod,isAvailable:!prod.isAvailable}:prod ))
 
                                     } } checked={product.isAvailable} /> </td>
                                     <td><Button color='danger' onClick={() => {
-                                        setProducts( products.filter(prod=> prod.id !== product.id ))
+                                        console.log(product._id)
+                                        
                                         axios
-                                        .delete(`/api/products/${product.productName}`)
-                                        .then(response=>console.log(response.data))
+                                        .delete(`/api/products/${product._id}`)
+                                        .then(response=>{
+                                            console.log(response.data)
+                                            setProducts( products.filter(prod=> prod._id !== product._id ))
+                                        })
+                                        .catch(err=>console.log({err}))
                                     }}>Delete</Button></td>
                                     <td><Button color='success' onClick={() => this.toggle(product)}>Edit</Button></td>
                                 </tr>    

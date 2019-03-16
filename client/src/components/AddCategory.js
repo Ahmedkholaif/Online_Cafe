@@ -20,39 +20,40 @@ class AddCategory extends React.Component {
             modal: !prevState.modal
         }));
 
-        if (this.state.categoryName === '') {
-        } else if (this.state.categoryName !== '') {
-            const token = localStorage.token;
-             if(token) {
-            const conf = {
-              headers:{
-              "x-auth":token,
-                }
-            };
+        // if (this.state.categoryName === '') {
+        // } else if (this.state.categoryName !== '') {
            
-            axios.post('/api/categories', {
-                categoryName: this.state.categoryName
-            },conf)
-            .then(response => {
-                if(response.status === 200 ) {
-                console.log(response.data);
-                const categoriesProps = this.props.categories;
-                categoriesProps.push({ id:response.data._id , catName: response.data.catName});
-                this.setState({
-                    categories: [...this.props.categories,this.state.categoryName],
-                    categoryName: '',
-                });
-                this.props.handlerFromParant(categoriesProps);
-                // this.setState({categoryName: ''});
-                } else {
-                    console.log('response error');
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        }
-    }
+            // const token = localStorage.token;
+            //  if(token) {
+            // const conf = {
+            //   headers:{
+            //   "x-auth":token,
+            //     }
+            // };
+           
+            // axios.post('/api/categories', {
+            //     categoryName: this.state.categoryName
+            // },conf)
+            // .then(response => {
+            //     if(response.status === 200 ) {
+            //     console.log(response);
+            //     const categoriesProps = this.props.categories;
+            //     categoriesProps.push({ id:response.data._id , catName: response.data.catName});
+            //     this.setState({
+    //                 categories: [...this.props.categories,this.state.categoryName],
+    //                 categoryName: '',
+    //             });
+    //             this.props.handlerFromParant(categoriesProps);
+    //             // this.setState({categoryName: ''});
+    //             } else {
+    //                 console.log('response error');
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    //     }
+    // }
     }
 
     handleOnChange = event => {
@@ -76,44 +77,29 @@ class AddCategory extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={()=>{
+           
+                        axios
+                        .post('/api/categories',{
+                            "categoryName": `${this.state.categoryName}`
+                        })
+
+                        
+                        .then(response => {
+                            if(response.status === 200 ) {
+                            console.log(response.data);
                             setCategories([
-                                ...categories,{categoryName: this.state.categoryName}
+                                ...categories,{categoryName: this.state.categoryName,_id:response.data.$oid}
                             ]);
                             this.setState({
                                 modal: !this.state.modal,
                                 categoryName:'',
                             })
-
-            //                 const token = localStorage.token;
-            //  if(token) {
-            // const conf = {
-            //   headers:{
-            //   "x-auth":token,
-            //     }
-            // };
-           
-            axios.post('/api/categories',JSON.stringify({
-                categoryName: this.state.categoryName
-            }))
-            .then(response => {
-                // if(response.status === 200 ) {
-                console.log(response.data);
-                // const categoriesProps = this.props.categories;
-                // categoriesProps.push({ id:response.data._id , catName: response.data.catName});
-                // this.setState({
-                //     categories: [...this.props.categories,this.state.categoryName],
-                //     categoryName: '',
-                // });
-                // this.props.handlerFromParant(categoriesProps);
-                // this.setState({categoryName: ''});
-                // } else {
-                    // console.log('response error');
-                // }/
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        // }
+                            
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
 
 
                         }}>Add

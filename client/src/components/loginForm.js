@@ -48,23 +48,23 @@ export default class Login extends React.Component {
 
 	
 
-		if (errors) {
-			this.setState({ errors });
+		// if (errors) {
+		// 	this.setState({ errors });
 			// this.props.history.push('/home');
-			// axios
-			// .post("/api/users/login",loginData)
-			// .then(res=>{
-			// 	console.log(res);
-			// 	if(res.status === 200){
-			// 		localStorage.setItem("token",res.headers["x-auth"]);
-			// 		console.log('succes');
-			// 		this.props.history.push('/home');
-			// 	}
-			// })
-			// .catch(errors=>{
-			// 	console.log(errors);
-			// 	// this.setState({ errors });
-			// })
+			axios
+			.post("/api/users/login",loginData)
+			.then(res=>{
+				console.log(res);
+				if(res.status === 200){
+					localStorage.setItem("token",res.headers["x-auth"]);
+					console.log('succes');
+					this.props.history.push('/home');
+				}
+			})
+			.catch(errors=>{
+				console.log(errors);
+				// this.setState({ errors });
+			})
 			
 			// this.props.submit(loginData);
 

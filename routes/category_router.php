@@ -26,7 +26,7 @@ $application->put('/api/categories/[{id}]', function (Request $request, Response
     $categoryData = $request->getParsedBody();
     $result = $categoryObject->updateOneCategory($updatedId, $categoryData, false);
     return $this->response->withJson($result);
-});
+}); 
 
 // delete category
 $application->delete('/api/categories/[{id}]', function (Request $request, Response $response, $arguments) {

@@ -10,7 +10,7 @@ class ProductsGallery extends Component {
       return(
 
         <AdminContext.Consumer>
-        {({order,users,products,setOneOrder,setOrderBody ,updateTotal,getProductsToDisplay,setSearchWord}  )=>( 
+        {({order,users,products,setOneOrder,setOrderBody ,updateTotal,setSearchWord}  )=>( 
          <Container >
             
 
@@ -60,7 +60,7 @@ class ProductsGallery extends Component {
               <hr/>
               <Row className ="productsGallary" >  
              
-                { getProductsToDisplay.map (product =>
+                { products.map (product =>
                      <Col sm="3">
                      <div className="card-deck">
                               

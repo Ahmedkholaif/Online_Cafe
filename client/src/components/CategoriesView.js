@@ -218,7 +218,7 @@ class CategoriesView extends Component {
                                                 categories.filter(cat => cat.categoryName !== category.categoryName   )
                                             )
                                             axios
-                                            .delete(`/api/categories/${category.categoryName}`)
+                                            .delete(`/api/categories/${category._id}`)
                                             .then(response=>{
                                                 console.log(response.data);
                                             })
