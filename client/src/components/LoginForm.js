@@ -99,6 +99,7 @@ class LoginForm extends Component {
                     <Button color='primary' size='lg' block type="submit">Login</Button>
                 </form><hr/><br/>
              <Link to="/forget">Forget My Password </Link>   
+             <Link to="/admin/dashboard">Admin </Link>   
             </div>
         );
     }

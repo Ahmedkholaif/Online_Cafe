@@ -21,12 +21,13 @@ class UserProductsGallery extends Component {
               </Row>
               <hr/>
               <Row className ="productsGallary" >  
-                { products.map (product =>
+                { products.filter(prod=> prod.isAvailable )
+                  .map (product =>
                      <Col sm="3">
                      <div>
                               
                     <Card >
-                      <CardImg top width="100%"  src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                      <CardImg top width="100%"  src={product.image} alt="Card image cap" />
                       <CardBody  >
                         <CardTitle >{product.productName}</CardTitle>
                         <CardText>{product.price}</CardText>
@@ -38,7 +39,8 @@ class UserProductsGallery extends Component {
                           const newProduct={
                             productName:product.productName,
                             price:product.price,
-                            quantity:'1'
+                            quantity:'1',
+                            image:product.image
                            }
                            setOneOrder({...order,orderBody:[...order.orderBody,newProduct ]})
                          }else {

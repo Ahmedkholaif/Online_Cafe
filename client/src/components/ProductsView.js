@@ -173,7 +173,7 @@ state = {
                    
                    
                     <Table>
-                        <thead>
+                        <thead className="bg-secondary rounded">
                             <tr>
                                 <th> Photo</th>
                                 <th>Product </th>

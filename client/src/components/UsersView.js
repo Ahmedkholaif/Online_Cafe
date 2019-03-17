@@ -152,7 +152,7 @@ class UsersView extends Component {
                         </ModalFooter>
                     </Modal>
                     <Table>
-                        <thead>
+                        <thead className="bg-secondary rounded">
                             <tr>
                                 <th> Photo </th>
                                 <th> Full-Name</th>
@@ -176,7 +176,7 @@ class UsersView extends Component {
                                         if(window.confirm("are You Sure..")){
                                             setUsers(users.filter(user1 => user1._id !== user._id))
                                         axios
-                                        .delete(`/api/products/${user._id}`)
+                                        .delete(`/api/users/${user._id}`)
                                         .then(response=>console.log(response.data))
                                         }
                                         

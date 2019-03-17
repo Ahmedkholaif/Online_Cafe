@@ -30,7 +30,7 @@ class OredersList extends React.Component {
                         <td onClick={this.toggle} style={{cursor:'pointer'}} >  &#9660; {order.dateStamp} </td>
                         <td>{order.userFullName}</td>
                         <td>{order.phone}</td>
-                        <td>{order.roomId}</td>
+                        <td>{order.roomName}</td>
                         <td>{order.orderStatus}</td>
 
                         {order.orderStatus === 'Processing' && (<td> <Button onClick={()=>{

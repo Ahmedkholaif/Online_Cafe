@@ -202,7 +202,7 @@ class CategoriesView extends Component {
                         </ModalFooter>
                     </Modal>
                     <Table>
-                        <thead>
+                        <thead className="bg-secondary rounded" >
                             <tr>
                                 <th>Category Name</th>
                                 <th>#</th>

@@ -62,7 +62,7 @@ class OrderProducts extends Component{
             <div>
             <Input type="select" name="rooms" 
                id="categorySelect" onClick={(event)=>{
-                  setOneOrder({...order,roomId:event.target.value})
+                  setOneOrder({...order,roomName:event.target.value})
 
                }}>
                <option>Room</option>

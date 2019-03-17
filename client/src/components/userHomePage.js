@@ -30,369 +30,39 @@ class UserHomePage extends Component {
         orderTotal:'',
         orderStatus:'', 
         dateStamp:'',
-        roomId:'',
+        roomName:'',
         orderBody:[]
     },
-      products:[{
-        id:'2',
-        productName:'caffee',
-        price:'6',
-        categoryName:'hot',
-        isAvailable: true,
-        image:'link',
-},{
-    id:'3',
-    productName:'7up',
-    price:'12',
-    categoryName:'cold',
-    isAvailable: true,
-    image:'link',
-},{
-    id:'4',
-    productName:'cheese',
-    price:'29',
-    categoryName:'cold',
-    isAvailable: true,
-    image:'link',
-}],
+      products:[],
     };
   
 
   componentDidMount() {
+    axios
+    .get(`/api/orders/${sessionStorage.userName}`)
+    .then(res=>{
+        this.setMyOrders(
+            res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+          )
+    })
+    .catch(err=>console.log(err))
 
-    this.setMyOrders(
-      [
-        {
-                id:'1',
-                userFullName :'Ahmed',
-                notes:'no notes',
-                orderTotal:323,
-                orderStatus:'Processing', 
-                dateStamp: '2019-10-10',
-                phone:'83848484',
-                roomId:'staff',
-                orderBody:[{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'Juice',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                }
-            
-            ]
-            },
-            {
-                id:'2',
-                userFullName :'Ahmed',
-                notes:'no notes',
-                orderTotal:323,
-                orderStatus:'Processing', 
-                dateStamp:'2010-10-10',
-                phone:'32332',
-                roomId:'staff',
-                orderBody:[{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'Juice',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                }
-                ]
-            },{
-                id:'3',
-                userFullName :'Medo',
-                notes:'no notes',
-                orderTotal:323,
-                orderStatus:'Processing', 
-                dateStamp: '2012-10-10',
-                phone:'83848484',
-                roomId:'staff',
-                orderBody:[{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'Juice',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                }]
-            },
-            {
-                id:'4',
-                userFullName :'Ahmed Kholaif',
-                notes:'no notes',
-                orderTotal:323,
-                orderStatus:'Processing', 
-                dateStamp: '2015-11-10',
-                phone:'83848484',
-                roomId:'staff',
-                orderBody:[{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'Juice',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                }]
-            },{
-                id:'5',
-                userFullName :'Ahmed Kholaif22',
-                notes:'no notes',
-                orderTotal:323,
-                orderStatus:'Processing', 
-                dateStamp: '2018-12-10',
-                phone:'83848484',
-                roomId:'staff',
-                orderBody:[{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'Juice',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                }]
-            },{
-                id:'6',
-                userFullName :'Ahmed Kholaif',
-                notes:'no notes',
-                orderTotal:323,
-                orderStatus:'Out For Delivery', 
-                dateStamp: '2018-10-10',
-                phone:'83848484',
-                roomId:'staff',
-                orderBody:[{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'Juice',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },
-                {
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                },{
-                    productName:'tea',
-                    price:30,
-                    quantity:5,
-                }]
-            }
-    ]
-    )
-    // const token = localStorage.token;
-    // if (token) {
-    //   const conf = {
-    //     params: {
-    //       page: `${this.state.activePage}`,
-    //       mode: `${this.state.shelf}`
-    //     },
-    //     headers: {
-    //       "x-auth": token
-    //     }
-    //   };
-
-    //   axios
-    //     .get(
-    //       `/api/users/current?page=${this.state.activePage}?mode=${
-    //       this.state.shelf
-    //       }`,
-    //       conf
-    //     )
-    //     .then(res => {
-    //       console.log(res.data);
-    //       this.setState({
-    //         books: res.data.books,
-    //         itemsCount: res.data.count
-    //       });
-    //     })
-    //     .catch(err => console.log(err));
-    // }
-  }
-
-  // test = setInterval(() => {
-  //   alert(this.state.books[0].rate)
-  // }, 5000);
-
-  // sendRequestShelf = shelf => {
-  //   const token = localStorage.token;
-  //   if (token) {
-  //     const conf = {
-  //       params: {
-  //         page: 1,
-  //         mode: `${shelf}`
-  //       },
-  //       headers: {
-  //         "x-auth": token
-  //       }
-  //     };
-  //     axios
-  //       .get(`/api/users/current`, conf)
-  //       .then(res => {
-  //         console.log(conf.params.mode, res.data.books);
-
-  //         this.setState({
-  //           books: res.data.books,
-  //           activePage: 1,
-  //           itemsCount: res.data.count
-  //         });
-  //       })
-  //       .catch(err => console.log(err));
-  //   }
-  // };
-
-  // displayAllBooks = () => {
-  //   if (this.state.shelf !== "all") {
-  //     this.setState({
-  //       shelf: "all",
-  //       activePage: 1
-  //     });
-  //     this.sendRequestShelf("all");
-  //   }
-  // };
-  // displayReadBooks = () => {
-  //   if (this.state.shelf !== "read") {
-  //     this.setState({
-  //       shelf: "read",
-  //       activePage: 1
-  //     });
-  //     this.sendRequestShelf("read");
-  //   }
-  // };
-  // displayCurrentlyReadingBooks = () => {
-  //   if (this.state.shelf !== "current") {
-  //     this.setState({
-  //       shelf: "current",
-  //       activePage: 1
-  //     });
-  //     this.sendRequestShelf("current");
-  //   }
-  // };
-  // displayToReadBooks = () => {
-  //   if (this.state.shelf !== "toRead") {
-  //     this.setState({
-  //       shelf: "toRead",
-  //       activePage: 1
-  //     });
-  //     this.sendRequestShelf("toRead");
-  //   }
-  // };
-
-  // handelPagination = pageNum => {
-  //   const token = localStorage.token;
-  //   if (token) {
-  //     const conf = {
-  //       params: {
-  //         page: `${pageNum}`,
-  //         mode: `${this.state.shelf}`
-  //       },
-  //       headers: {
-  //         "x-auth": token
-  //       }
-  //     };
-  //     axios
-  //       .get(`/api/users/current`, conf)
-  //       .then(res => {
-  //         this.setState({
-  //           books: res.data.books,
-  //           activePage: pageNum
-  //         });
-  //       })
-  //       .catch(err => console.log(err));
-  //   }
-  // };
+    axios
+    .get('/api/products')
+    .then(res=>{
+        this.setState({
+            products: res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+        })
+    })
+    .catch(err=>console.log(err))
+    axios
+    .get("/api/rooms")
+    .then(res=>{
+        this.setRooms(
+            res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+        )
+    })
+}
 
   setMyOrders = (myOrders) =>{
     this.setState({
@@ -441,27 +111,38 @@ setRooms=(rooms)=>
       })
       this.updateTotal();
     }
-    submitOrder =()=>{
-        this.setState({
-            order:{...this.state.order,userFullName:sessionStorage.userFullName,
-                dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
-                orderStatus:'Processing'}
-        },()=>{
-            console.log(this.state.order);
-            this.setState({
-                myOrders: [this.state.order,...this.state.myOrders],
-               order:{
-                id:'',
-                userFullName :'',
-                notes:'',
-                orderTotal:'',
-                orderStatus:'', 
-                dateStamp:'',
-                roomId:'',
-                orderBody:[],
-               }
-        })
-    }) 
+submitOrder =()=>{ 
+        if(this.state.order.orderBody.length > 0 && this.state.order.roomName !== '' ) {
+           
+this.setState({
+    order:{...this.state.order,userFullName:sessionStorage.userFullName,
+        dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
+        orderStatus:'Processing',phone:sessionStorage.phone }
+},()=>{
+axios
+.post('/api/orders',this.state.order)
+.then(res=>{
+    console.log(res)
+    this.setState({
+        myOrders: [{...this.state.order,_id:res.data.$oid },...this.state.orders],
+       order:{
+        id:'',
+        userFullName :'',
+        notes:'',
+        orderTotal:'',
+        orderStatus:'', 
+        dateStamp:'',
+        roomName:'',
+        orderBody:[],
+       }
+    })
+    })
+    })
+
+        }else {
+            alert("Invalid Order Data..! ")
+        }
+       
 }
   render() {
     return ( 
@@ -486,7 +167,7 @@ setRooms=(rooms)=>
                                 this.toggle('1');
                             }}
                         >
-                            Home  
+                          <h5>  Home </h5>  
                         </NavLink>
                     </NavItem>
                         <NavItem>
@@ -496,11 +177,11 @@ setRooms=(rooms)=>
                                 this.toggle('2');
                             }}
                         >
-                           <h3 className="c1"> My Orders </h3>  
+                           <h5 className="c1"> My Orders </h5>  
                         </NavLink>
                     </NavItem>
                 
-                    <NavItem className="leftMenuItem">
+                    <NavItem className="leftMenuItem float-right">
               <div class="container h-100">
                 <div class="d-flex justify-content-center h-100">
                   <div class="searchbar">

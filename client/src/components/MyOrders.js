@@ -114,7 +114,7 @@ state = {
                     </Row>
 
                     <Table className="table-striped mt-5">
-            <thead>
+            <thead className="bg-secondary rounded">
                 <tr>
                     <th> Order Date </th>
                     <td>Room </td>

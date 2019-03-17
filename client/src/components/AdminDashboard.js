@@ -38,7 +38,7 @@ export default class Example extends React.Component {
             orderStatus:"Processing", 
             dateStamp: '2010-10-10',
             phone:'',
-            roomId:'',
+            roomName:'',
             orderBody:[]
             },
         searchWord:'',
@@ -212,7 +212,7 @@ axios
         orderTotal:'',
         orderStatus:'', 
         dateStamp:'',
-        roomId:'',
+        roomName:'',
         orderBody:[],
        }
     })

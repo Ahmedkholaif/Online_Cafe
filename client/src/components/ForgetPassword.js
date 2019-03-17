@@ -1,21 +1,22 @@
 import React, {Componant} from 'react';
 import '../css/ForgetPassword.css';
-
-
+import axios from 'axios';
+import valid from 'validator';
+import {Link} from 'react-router-dom'
 class ForgetPassword extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {};
+      this.state = {
+        email:''
+      };
     }
   
-    submitSendEmail(e) {}
   
     render() {
       return (
         <div className="inner-container">
           <div className="header">
-            Write your email
           </div>
           <div className="box">
   
@@ -33,9 +34,18 @@ class ForgetPassword extends React.Component {
             <button
               type="button"
               className="login-btn"
-              onClick={this
-              .submitSendEmail
-              .bind(this)}>Send</button>
+              onClick={ (e)=>{
+                if(valid.isEmail){
+                  axios
+                .post(`/api/users/forget/${e.target.value}`)
+                .then(res=>{
+                    alert("email sent")
+                })
+                }
+                
+              }
+              }>Send</button> <hr/> <br/>
+              <Link to="/"> Back to Login </Link>
           </div>
         </div>
       );

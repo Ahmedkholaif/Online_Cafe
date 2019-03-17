@@ -79,7 +79,7 @@ handelPagination = (pageNum)=>
         <Row id="displayedItems">
         
         <Table className="table-striped mt-5 col-9 ml-2">
-        <thead>
+        <thead className="bg-secondary rounded" >
             <tr>
                 <th> User Name </th>
                 <th>  Total Amount </th>

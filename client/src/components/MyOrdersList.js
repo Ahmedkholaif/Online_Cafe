@@ -24,21 +24,25 @@ class MyOredersList extends React.Component {
                 <>
                     <tr key={order.id}  >
                         <td onClick={this.toggle} style={{cursor:'pointer'}} >  &#9660; {order.dateStamp} </td>
-                        <td>{order.roomId}</td>
+                        <td>{order.roomName}</td>
                         <td>{order.orderTotal}</td>
                         <td>{order.orderStatus}</td>
                         
-                        <td> <Button onClick={()=>{
+
+                        {order.orderStatus === 'Processing' && (
+                          <td> 
+                          <Button onClick={()=>{
                             if(order.orderStatus === 'Processing') {
                                 if(window.confirm('Are You Sure ..?'))
                                 setMyOrders(
                                     myOrders.filter(ord=> ord.id !== order.id )
                                 )
-                            } else {
-                                window.alert("You Can't Cancel")
-                            }
+                            } 
                           
                         }} > Cancel  </Button> </td>
+
+                        )} {<td> </td>} 
+                        
                     </tr>
                         <tr>
                         <td colSpan="6" className="text-right ">
@@ -52,7 +56,7 @@ class MyOredersList extends React.Component {
                             <Row>
                             <Col >
                             <Card >
-                            <CardImg top width="100%"  src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                            <CardImg top width="100%"  src={product.image} alt="Card image cap" />
                             <CardBody  >
                               <CardTitle >{product.productName}</CardTitle>
                               <CardText>{product.price}</CardText>

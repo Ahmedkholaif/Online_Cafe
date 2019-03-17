@@ -17,13 +17,6 @@ total:0,
 
 
 
-//      componentWillReceiveProps(nextProps)
-//  {
-
-//   this.setState({selectedItems:nextProps.selectedItemsList } );
-
-//  }
-
 
  updateTotal=(total)=>{
    this.setState({total}) 
@@ -86,7 +79,7 @@ total:0,
             <div>
             <Input type="select" name="rooms" 
                                 id="categorySelect" onClick={(event)=>{
-                                   setOneOrder({...order,roomId:event.target.value})
+                                   setOneOrder({...order,roomName:event.target.value})
 
                                 }}>
                                 <option>Room</option>

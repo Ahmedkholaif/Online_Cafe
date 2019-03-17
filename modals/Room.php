@@ -45,11 +45,11 @@ class Room
     }
 
     // delete Room document
-    public function deleteOneRoom($RoomId)
+    public function deleteOneRoom($roomName)
     {
         try {
-            if (isset($RoomId) && !empty($RoomId)) {
-                $filter = ['_id'=>new ObjectID($RoomId)];
+            if (isset($roomName) && !empty($roomName)) {
+                $filter = ['_id'=>new ObjectID($roomName)];
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => 1];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -103,12 +103,12 @@ class Room
         }
     }
 
-    // getOne Room by RoomID
-    public function getOneRoom($RoomId, $limit)
+    // getOne Room by roomName
+    public function getOneRoom($roomName, $limit)
     {
         try {
-            if (isset($RoomId) && !empty($RoomId) && isset($limit) && !empty($limit)) {
-                $filter = $RoomId;
+            if (isset($roomName) && !empty($roomName) && isset($limit) && !empty($limit)) {
+                $filter = $roomName;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
