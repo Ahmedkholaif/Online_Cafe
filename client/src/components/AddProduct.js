@@ -1,19 +1,11 @@
 import React, { Component } from "react";
-import { Alert, Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import {  Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import axios from 'axios'
 import {AdminContext} from './AdminContext'
 import '../css/AdminDashboard.css';
+import validator from 'validator';
 class AddProduct extends Component {
-   
 
-    // componentWillReceiveProps(nextProps) {
-    //     this.setState({
-    //         categories: nextProps.categories,
-    //         authors: nextProps.authors,
-    //     });
-    //     // console.log(nextProps.categories,nextProps.authors);
-    //     // console.log(this.state.categories,this.state.authors);
-    // }
 
     state = {
         modal: false,
@@ -132,7 +124,7 @@ class AddProduct extends Component {
                             )
                         }
                         </Input>
-                        <Input type="text" name="price"  onChange={this.handleOnChange} placeholder="Price" />
+                        <Input type="number" name="price" min='5' onChange={this.handleOnChange} placeholder="Price" />
                          <br/>
                         Available <br/>
                         <Input type="checkbox" id="isAvailable" name="isAvailable"  onChange={this.handleOnChangeBox} />
@@ -146,16 +138,20 @@ class AddProduct extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={ ()=>{
-                            
-                            
-                            
+                            if(this.state.product.categoryName === '' || !validator.isNumeric( this.state.product.price)  ||
+                            this.state.product.productName === '' || this.state.product.image === '' ||
+                            products.map(prod=> (prod.productName)).includes(this.state.product.productName)
+                            ){
+                                alert("Invalid Data ")
+                            }else {
+
                             axios
                             .post('/api/products',this.state.product)
                             
                             .then(response=>{
                                 console.log(response.data);
                                 setProducts([
-                                    ...products,{...this.state.product,_id:response.data.$oid}
+                                    ...products,{...this.state.product}
                                 ]);
                                 this.setState({
                                     modal: ! this.state.modal,
@@ -170,7 +166,7 @@ class AddProduct extends Component {
                                 });
                             })
                             .catch(err=>console.log(err))
-                           
+                            }
                             
                          }} > Add Product </Button>{' '}
                         <Button color="secondary" onClick={this.toggle}>Close</Button>

@@ -1,34 +1,10 @@
 import React, { Component } from "react";
-import { Container, Row, Col,Input,Button } from 'reactstrap';
+import { Container,Alert, Row, Col,Input,Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 // import '../css/ManualOrder.css';
 import {AdminContext}from './AdminContext'
-class OrderProducts extends Component
-{      constructor(props){
-  super(props);
-  this.updateTotal=this.updateTotal.bind(this);
-} 
-  state={
-  
-  
-total:0,
-}  
-
-
-
-//      componentWillReceiveProps(nextProps)
-//  {
-
-//   this.setState({selectedItems:nextProps.selectedItemsList } );
-
-//  }
-
-
- updateTotal=(total)=>{
-   this.setState({total}) 
-
- }
-
+class OrderProducts extends Component{
+ 
      render()
      {   
         return (
@@ -41,7 +17,7 @@ total:0,
         const  viewAllSelectedItems = selectedItemsList.length ?
          selectedItemsList.map((product,index) =>  
          
-           <div className="container bg-info mt-5 rounded" >
+           <div className="container bg-info mt-5  rounded" >
             <Row  className="p-1 ">
             <Col xs="3" className="p-1"> {product.productName}</Col>
            <Col xs="3" className="p-1" > 
@@ -55,9 +31,10 @@ total:0,
            <Col xs="3" className="p-1"> EGP {product.price * product.quantity} </Col>
            
            <Button onClick={()=>{
+            if(window.confirm("Are You Sure ..?"))
             setOneOrder({...order,orderBody:[...order.orderBody.filter(prod => prod.productName !== product.productName )]})
             
-           }} >x</Button>
+           }} > x </Button>
            </Row>
            </div>
            
@@ -77,27 +54,27 @@ total:0,
               
             <Input type="textarea" name="text" id="exampleText"
             placeholder="Notes" value={order.notes}
-            className="notes m-1" onChange={(event)=>{
+            className="notes m-1 mt-3" onChange={(event)=>{
               setOneOrder({...order,notes:event.target.value})
 
               }}/> 
             </div> 
             <div>
             <Input type="select" name="rooms" 
-                                id="categorySelect" onClick={(event)=>{
-                                   setOneOrder({...order,roomId:event.target.value})
+               id="categorySelect" onClick={(event)=>{
+                  setOneOrder({...order,roomId:event.target.value})
 
-                                }}>
-                                <option>Room</option>
-                                {
-                                    rooms.map(room =>
-                                            <option key={room.roomName} defaultValue={room.roomName}>{room.roomName}</option>
-                                    )
-                                }
+               }}>
+               <option>Room</option>
+               {
+                  rooms.map(room =>
+                           <option key={room.roomName} defaultValue={room.roomName}>{room.roomName}</option>
+                  )
+               }
               </Input>
             </div>
             <hr />
-            <p className="total" > EGP{order.orderTotal}</p>
+            <p className="total" >Total : EGP {order.orderTotal} </p>
             <Button className="confirm" onClick={submitOrder} > Confirm </Button>
         </div>
        );

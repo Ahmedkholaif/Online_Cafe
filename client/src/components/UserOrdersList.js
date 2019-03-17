@@ -43,7 +43,7 @@ class UserOrdersList extends React.Component {
                             <Row>
                             <Col  >
                             <Card >
-                            <CardImg top width="100%"  src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image " />
+                            <CardImg top width="100%"  src={product.image} alt="Card image " />
                             <CardBody  >
                               <CardTitle >{product.productName}</CardTitle>
                               <CardText>{product.price}</CardText>

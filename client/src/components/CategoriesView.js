@@ -182,7 +182,9 @@ class CategoriesView extends Component {
                                         cat.categoryName = this.state.category.categoryName;
                                         setCategories([...categories]);
                                         axios
-                                        .put(`/api/categories/${cat.categoryName}`)
+                                        .put(`/api/categories/${cat._id}`,{
+                                            "categoryName":this.state.categoryName
+                                        })
                                         .then(response=>{
                                             console.log(response);
                                         })

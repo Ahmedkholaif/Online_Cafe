@@ -5,13 +5,13 @@ import axios from "axios";
 import { Redirect } from 'react-router-dom'
 import { Alert, Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Table } from "reactstrap";
 import {AdminContext} from './AdminContext';
+import valid from 'validator';
 class UsersView extends Component {
 
     state = { 
         users: [],
         modal: false,
         user : {
-        id :'',
         fullName:'',
         email:'',
         password:"",
@@ -128,10 +128,21 @@ class UsersView extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={() => {
+                            if(valid.isEmail(this.state.user.email) && this.state.user.password.length>6 )
+                            {
                                 setUsers(users.map(user => user.id === this.state.inEdit.id ? this.state.user : user ))
                                 this.setState({
                                     modal:false,
                                 })
+                                axios
+                                .put(`/api/users/${this.state.inEdit._id}`,this.state.user)
+                                .then(res=>console.log(res))
+                                .catch(err=>console.log(err))
+                            }   else{
+                                alert("Invalid Data ..")
+                            }
+
+                                
                             }}>Edit User</Button>{' '}
                             <Button color="secondary" onClick={()=>{
                                 this.setState({
@@ -162,10 +173,13 @@ class UsersView extends Component {
                                     <td>{user.defaultRoom}</td>
                                     <td>{user.phone}</td>
                                     <td><Button color='danger' onClick={() => {
-                                        setUsers(users.filter(user1 => user1.id !== user.id))
+                                        if(window.confirm("are You Sure..")){
+                                            setUsers(users.filter(user1 => user1._id !== user._id))
                                         axios
-                                        .delete(`/api/products/${user.email}`)
+                                        .delete(`/api/products/${user._id}`)
                                         .then(response=>console.log(response.data))
+                                        }
+                                        
                                     }}>Delete</Button></td>
                                     <td><Button color='success' onClick={() => this.toggle(user)}>Edit</Button></td>
                                 </tr>

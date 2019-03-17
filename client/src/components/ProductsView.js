@@ -126,22 +126,31 @@ state = {
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={()=>{
+                                        this.setState({
+                                            modal: ! this.state.modal,
+                                        })
                                         setProducts(
                                             products.map(product => product._id === this.state.inEdit._id ?
                                                     this.state.inEdit :  product 
                                         ))
-                                        this.setState({
-                                            modal: ! this.state.modal,
-                                            inEdit:{},
-                                            product:{
-                                                id:'',
-                                                productName:'',
-                                                price:0,
-                                                categoryName:'',
-                                                isAvailable: "",
-                                                image:'',
-                                            }
-                                        });
+                                        axios
+                                        .put(`/api/product/${this.state.inEdit._id}`,this.state.inEdit)
+                                        .then(res=>{
+                                            console.log(res);
+                                            this.setState({
+                                                
+                                                inEdit:{},
+                                                product:{
+                                                    id:'',
+                                                    productName:'',
+                                                    price:0,
+                                                    categoryName:'',
+                                                    isAvailable: "",
+                                                    image:'',
+                                                }
+                                            });
+                                        })
+                                        
                                 
                             }}> Edit Product </Button>{' '}
                             <Button color="secondary" onClick={() => {
@@ -184,19 +193,29 @@ state = {
                                     <td>{product.price}</td>
                                     <td>{product.categoryName}</td>
                                     <td><input type="checkbox"  onClick={() => {
-                                       setProducts( products.map(prod => prod._id===product._id?  {...prod,isAvailable:!prod.isAvailable}:prod ))
+                                        if(window.confirm("Change Availability.. ?"))
+                                        {
+                                            setProducts( products.map(prod => prod._id===product._id?  {...prod,isAvailable:!prod.isAvailable}:prod ))
+                                            axios
+                                            .put(`/api/products/available/${product._id}`)
+                                            .then(res=>console.log(res))
+                                            .catch(err=>console.log(err))
+                                        }
 
                                     } } checked={product.isAvailable} /> </td>
                                     <td><Button color='danger' onClick={() => {
                                         console.log(product._id)
-                                        
-                                        axios
-                                        .delete(`/api/products/${product._id}`)
-                                        .then(response=>{
-                                            console.log(response.data)
-                                            setProducts( products.filter(prod=> prod._id !== product._id ))
-                                        })
-                                        .catch(err=>console.log({err}))
+                                        if(window.confirm("Are You Sure..")) {
+                                            axios
+                                            .delete(`/api/products/${product._id}`)
+                                            .then(response=>{
+                                                console.log(response.data)
+                                                setProducts( products.filter(prod=> prod._id !== product._id ))
+                                            })
+                                            .catch(err=>console.log({err}))
+
+                                        }
+                                       
                                     }}>Delete</Button></td>
                                     <td><Button color='success' onClick={() => this.toggle(product)}>Edit</Button></td>
                                 </tr>    

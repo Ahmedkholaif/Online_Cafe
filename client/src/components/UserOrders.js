@@ -24,22 +24,22 @@ class UserOrders extends React.Component {
 
   }
 
-  filterAndSortOrders=(orders)=> {
+  filterAndSortOrders=(orders,dateFrom,dateTo)=> {
 
     let sortedOrders = _.orderBy(orders, (order) => {
         return moment(order.dateStamp)
       }, ['desc']);
-    if(this.state.dateFrom !=='' && this.state.dateTo !== '') {
+    if(dateFrom !=='' && dateTo !== '') {
         console.log('two');
         return sortedOrders.filter(order=>
-            moment(order.dateStamp).isBetween(this.state.dateFrom, this.state.dateTo));
-    }else if (this.state.dateFrom !== '') {
+            moment(order.dateStamp).isBetween(dateFrom, dateTo));
+    }else if (dateFrom !== '') {
         console.log('from');
 
         return sortedOrders.filter(order=>
-            moment(order.dateStamp).isBetween(this.state.dateFrom, moment()))
+            moment(order.dateStamp).isBetween(dateFrom, moment()))
 
-    }else if (this.state.dateTo !== ''){
+    }else if (dateTo !== ''){
         console.log('to');
 
         return sortedOrders.filter(order=>
@@ -54,11 +54,13 @@ class UserOrders extends React.Component {
 }
   
   render() {
-      const user = this.props.user ;
+    const user = this.props.user ;
+    const dateFrom = this.props.dateFrom ;
+    const dateTo = this.props.dateTo ;
     return (
         <AdminContext.Consumer>
         {({users,orders})=>{
-           const filterdOrders = this.filterAndSortOrders(orders);
+           const filterdOrders = this.filterAndSortOrders(orders,dateFrom,dateTo);
         return  (
             <>
             { 
@@ -66,7 +68,7 @@ class UserOrders extends React.Component {
                     <tr key={user.userFullName}  >
                         <td onClick={this.toggle} style={{cursor:'pointer'}} >  &#9660; {user.fullName} </td>
                         <td>{
-                            orders.filter(order=> order.userFullName === user.fullName)
+                          filterdOrders.filter(order=> order.userFullName === user.fullName)
                             .reduce((acc,ord)=>(acc + ord.orderTotal ),0)
                         }</td>
                     </tr>
@@ -77,7 +79,7 @@ class UserOrders extends React.Component {
                     <CardBody>
                         <Row>
                         <UserOrdersView 
-                        orders={ orders.filter(order=> order.userFullName === user.fullName) } 
+                        orders={ filterdOrders.filter(order=> order.userFullName === user.fullName) } 
                          />
             </Row>
        

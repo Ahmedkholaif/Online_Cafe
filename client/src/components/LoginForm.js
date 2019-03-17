@@ -5,6 +5,7 @@ import '../css/LoginForm.css'
 import axios from 'axios';
 import validator from 'validator';
 // import './assets/css/fonts.css';
+import {Link} from'react-router-dom';
 class LoginForm extends Component {
     constructor(props) {
         super(props);
@@ -46,7 +47,7 @@ class LoginForm extends Component {
 
         if(this.validateForm()) {
             axios
-            .post("/api/users/login", {userData} )
+            .post("/api/users/login",userData )
         .then(res => {
             console.log(res);
             if(res.status === 200){
@@ -58,6 +59,7 @@ class LoginForm extends Component {
                 }else if (res.data) {
                     sessionStorage.userFullName=res.data.fullName;
                     sessionStorage.useremail=res.data.email;
+                    sessionStorage.phone=res.data.phone;
                     this.props.history.push('/admin/dashboard');
                 }else {
                     this.setState({
@@ -95,7 +97,8 @@ class LoginForm extends Component {
                         <span className="text-danger"> {this.state.error} </span>
                       )}{" "}
                     <Button color='primary' size='lg' block type="submit">Login</Button>
-                </form>
+                </form><hr/><br/>
+             <Link to="/forget">Forget My Password </Link>   
             </div>
         );
     }

@@ -77,8 +77,11 @@ class AddCategory extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={()=>{
-           
-                        axios
+                            if(categories.includes(this.state.categoryName) || this.state.categoryName === '' )
+                            {
+                                alert('Invalid Or DupliCate Data..!')
+                            }else {
+                                axios
                         .post('/api/categories',{
                             "categoryName": `${this.state.categoryName}`
                         })
@@ -101,6 +104,7 @@ class AddCategory extends React.Component {
                             console.log(error);
                         });
 
+                            }
 
                         }}>Add
                             Category</Button>{' '}

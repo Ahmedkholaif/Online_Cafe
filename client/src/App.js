@@ -4,7 +4,7 @@ import AdminDashboard from './components/AdminDashboard'
 import GuestHomePage from './components/GuestHomePage'
 import HomePage from './components/userHomePage'
 import {UserContext} from './components/UserContext';
-import MyOrders from './components/MyOrders.js';
+import Forget from './components/ForgetPassword';
 
 import './App.css'
 
@@ -17,7 +17,7 @@ class App extends Component {
                     <Route path="/admin/dashboard" exact component={AdminDashboard}/>
                     <Route path='/' exact component={GuestHomePage}/>
                     <Route path='/Home' exact component={HomePage}/>
-                   <Route path='/myorders' exact component={MyOrders}/>
+                   <Route path='/forget' exact component={Forget}/>
             </Switch>
             </BrowserRouter>
         );

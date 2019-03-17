@@ -1,17 +1,12 @@
 import React from 'react';
 import { TabContent, TabPane, Button, Nav, NavItem, NavLink, Col,Row } from 'reactstrap';
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem
   } from "reactstrap";
 
-import ItemsDisplay from './ItemsDisplay';
 import classnames from 'classnames';
 import CategoriesView from '../components/CategoriesView'
 import UsersView from './UsersView'
@@ -21,7 +16,6 @@ import axios from 'axios';
 import { Redirect , Link} from 'react-router-dom'
 import '../css/LoginForm.css';
 import '../css/AdminDashboard.css';
-// import "../css/UserHomePage.css";
 import {AdminContext} from './AdminContext';
 import ManualOrder from './ManualOrder';
 import ChecksView from './CkecksView'
@@ -47,18 +41,22 @@ export default class Example extends React.Component {
             roomId:'',
             orderBody:[]
             },
-        searchWord:''    
+        searchWord:'',
+        error:'',    
         }
    
-    // rooms=[{
-    //     roomId:'',
-    //     roomName:''
-    // }]
 
 
     componentDidMount () {
         //fetch all data from back end 
-
+        axios
+        .get('/api/rooms')
+        .then(res=>{
+            this.setState({
+                rooms: res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+            })
+        })
+        .catch(err=>console.log(err))
         axios
         .get('/api/users')
         .then(res =>{
@@ -66,7 +64,6 @@ export default class Example extends React.Component {
             res.data.map(obj=>({...obj,_id:obj._id.$oid}))
             this.setUsers(
                 res.data.map(obj=>({...obj,_id:obj._id.$oid}))
-                 // [...JSON.parse(res.data)]
              )
         })
         .catch(err => console.log(err))
@@ -99,31 +96,20 @@ export default class Example extends React.Component {
                 res.data.map(obj=>({...obj,_id:obj._id.$oid}))
             )
         })
-        // this.setCategories([]);
-
-        
-        // this.setRooms([]);
-        // this.setUsers ([]);
-        // this.setOrders ([]);
-
     }
     handleSignout = (event) => {
         event.preventDefault();
-        if (localStorage.token) {
-            const conf = {
-                headers: { 'x-auth': localStorage.token }
-            };
-            axios.delete('/api/signout', conf)
-                .then(response => {
-                    localStorage.clear();
-                    window.location.href = '/';
-                }).catch(error => {
-                    console.log(error);
-                });
-        }
+       
+        sessionStorage.clear();
+        axios.delete('/api/signout')
+            .then(response => {
+                localStorage.clear();
+                window.location.href = '/';
+            }).catch(error => {
+                console.log(error);
+            });
+        
     }
-
-
     toggle =(tab) => {
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -205,37 +191,45 @@ export default class Example extends React.Component {
     }
 
     submitOrder =()=>{
-        this.setState({
-            order:{...this.state.order,
-                dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
-                orderStatus:'Processing'}
-        },()=>{
-            axios
-            .post('/api/orders',this.state.order)
-            .then(res=>{
-                console.log(res)
-
-                console.log(this.state.order);
-                this.setState({
-                    orders: [this.state.order,...this.state.orders],
-                   order:{
-                    id:'',
-                    userFullName :'',
-                    notes:'',
-                    orderTotal:'',
-                    orderStatus:'', 
-                    dateStamp:'',
-                    roomId:'',
-                    orderBody:[],
-                   }
-            })
-            })
-           
+        if(this.state.order.orderBody.length > 0 && this.state.order.userFullName !== '' ) {
+            const phone = this.state.users.filter(usr=> usr.fullName === this.state.order.userFullName)
+            .phone;
+this.setState({
+order:{...this.state.order,
+    dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
+    orderStatus:'Processing',phone }
+},()=>{
+axios
+.post('/api/orders',this.state.order)
+.then(res=>{
+    console.log(res)
+    this.setState({
+        orders: [{...this.state.order,_id:res.data.$oid },...this.state.orders],
+       order:{
+        id:'',
+        userFullName :'',
+        notes:'',
+        orderTotal:'',
+        orderStatus:'', 
+        dateStamp:'',
+        roomId:'',
+        orderBody:[],
+       }
     })
+    })
+    })
+
+
+        }else {
+            alert("Invalid Order Data..! ")
+        }
+       
 }
     render() {
 
         return (
+
+            sessionStorage.isAdmin ?
             < AdminContext.Provider value = 
             {{ categories :this.state.categories ,setCategories :this.setCategories,
                 products : this.state.products , setProducts:this.setProducts,
@@ -246,7 +240,9 @@ export default class Example extends React.Component {
                 setOrderBody:this.setOrderBody,
                 submitOrder:this.submitOrder,
             }} >
-        
+            {console.log(sessionStorage)}
+                
+                    
                 <div className='AdminDashboard'>
                     <Nav tabs style={{cursor:'pointer'}}>
                     <NavItem>
@@ -256,7 +252,7 @@ export default class Example extends React.Component {
                                 this.toggle('1');
                             }}
                         >
-                            Home  
+                           <h5> Home </h5>   
                         </NavLink>
                     </NavItem>
                         <NavItem>
@@ -266,7 +262,7 @@ export default class Example extends React.Component {
                                 this.toggle('2');
                             }}
                         >
-                            Manual Order 
+                           <h5>  Manual Order </h5> 
                         </NavLink>
                     </NavItem>
                         <NavItem>
@@ -276,7 +272,7 @@ export default class Example extends React.Component {
                                     this.toggle('3');
                                 }}
                             >
-                                Categories
+                              <h5>  Categories </h5>
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -285,7 +281,7 @@ export default class Example extends React.Component {
                                 onClick={() => {
                                     this.toggle('4');
                                 }} >
-                                Products
+                              <h5>   Products </h5>
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -295,7 +291,7 @@ export default class Example extends React.Component {
                                     this.toggle('5');
                                 }}
                             >
-                                Users
+                               <h5> Users </h5>
 
                             </NavLink>
                         </NavItem>
@@ -306,12 +302,12 @@ export default class Example extends React.Component {
                                     this.toggle('6');
                                 }}
                             >
-                                Checks
+                               <h5> Checks </h5>
                             </NavLink>
                         </NavItem>
                         <UncontrolledDropdown nav inNavbar className="leftMenuItem">
                         <DropdownToggle nav caret>
-                          User
+                          Admin
                         </DropdownToggle>
                         <DropdownMenu right>
                           <DropdownItem>Edit Profile</DropdownItem>
@@ -363,10 +359,10 @@ export default class Example extends React.Component {
                     </TabPane>
                     </TabContent>
                 </div>
-       
+    
                 </AdminContext.Provider>
+                
+                : <Redirect to={{ pathname: '/', state: { from: this.props.location } }} />
             );
     }
 }
-
-// stylesheet

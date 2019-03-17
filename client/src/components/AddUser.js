@@ -3,6 +3,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from "react
 import axios from "axios";
 import { Redirect } from 'react-router-dom'
 import {AdminContext} from './AdminContext';
+import valid from 'validator';
 class AddUser extends Component {
     constructor(props) {
         super(props);
@@ -129,7 +130,12 @@ class AddUser extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={()=>{
-                            this.toggle();
+                           if( !valid.isEmail(this.state.user.email) || this.state.user.fullName === '' ||
+                            this.state.user.password.length < 6 || this.state.user.image === ''
+                           ){
+                            alert ("Invalid User Data..!")
+                           }else {
+                                 this.toggle();
                             
                             axios
                             .post('/api/users',this.state.user)
@@ -151,7 +157,7 @@ class AddUser extends Component {
                                 })
                             })
                             .catch(err=>console.log(err))
-                           
+                        }
                         
                         }}>Add
                             User</Button>{' '}

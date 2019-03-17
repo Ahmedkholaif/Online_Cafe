@@ -39,8 +39,20 @@ class OredersList extends React.Component {
                             );
                             axios
                             .put(`/api/orders/delivered/${order._id}`)
-                            .then(res=> console.log("successfull"))
-                        }} > Out For Delivery  </Button> </td>)}
+                            .then(res=> {
+                              console.log("successfull")
+                              setTimeout(()=>{
+                                axios
+                                .put(`/api/orders/out/${order._id}`)
+                                .then(res=>{
+                                  setOredrs(
+                                    orders.map(ord=> (ord._id === order._id )? {...ord,orderStatus:"Deliverd"}:ord)
+                                );
+                                })
+                              },5*60*1000);
+                            })
+                            .catch(err=>console.log(err))
+                        }} > Out For Delivery  </Button> </td>)} {<td> </td>} 
                     </tr>
                         <tr>
                         <td colSpan="6" className="text-right ">
@@ -54,11 +66,11 @@ class OredersList extends React.Component {
                             <Row>
                             <Col >
                             <Card >
-                            <CardImg top width="100%"  src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                            <CardImg top width="100%"  src={product.image} alt="Card image cap" />
                             <CardBody  >
                               <CardTitle >{product.productName}</CardTitle>
-                              <CardText>{product.price}</CardText>
-                              <CardText>{product.quantity}</CardText>
+                              <CardText>price: {product.price}</CardText>
+                              <CardText>quantity: {product.quantity}</CardText>
                             </CardBody>
                             </Card>  
                             </Col>
@@ -69,7 +81,7 @@ class OredersList extends React.Component {
             }
     
             </Row>
-        Order Total :{order.orderTotal} 
+        Order Total :EGP {order.orderTotal} 
         </CardBody>
         </Card>
         </Collapse>
