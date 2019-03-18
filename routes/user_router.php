@@ -58,7 +58,7 @@ $application->get('/api/users/logout/[{id}]', function (Request $request, Respon
     $sessionManager->kill($userId);
 });
 // user's forget
-$application->get('api/users/forget/[{email}]', function (Request $request, Response $response, $argument) {
+$application->get('/api/users/forget/[{email}]', function (Request $request, Response $response, $argument) {
     $email = $argument = ['email'];
     $userObject = new \App\User();
     $result = $userObject->getOneUserForget($email);

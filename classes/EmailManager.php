@@ -18,7 +18,7 @@ class EmailManager
             $mail->SMTPAuth = true;
             // change these information
             $mail->Username = 'zizoahmed980@gmail.com';
-            $mail->Password = 'tempPassword';
+            $mail->Password = '011421264482014zizo';
             $mail->SMTPSecure = "ssl";
             $mail->Port = 456;
 
