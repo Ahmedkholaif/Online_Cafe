@@ -61,8 +61,6 @@ try {
 
 
 // -----------------------------------------------
-// TODO: /api/products/available/_id
-// TODO: /api/products/userFullName
 // TODO: User Password Hash
 // -----------------------------------------------
 // TODO: Schema Validation

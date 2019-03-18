@@ -2,13 +2,22 @@
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-require __DIR__.'/../modals/Product.php';
+
+require __DIR__ . '/../modals/Product.php';
 
 
 // Get All products
 $application->get('/api/products', function (Request $request, Response $response, $arguement) {
     $productObject = new \App\Product();
     $products = $productObject->getAllProduct();
+    return $this->response->withJson($products);
+});
+
+// Get products username
+$application->get('/api/products/[{username}]', function (Request $request, Response $response, $arguement) {
+    $productObject = new \App\Product();
+    $userName = $arguement['username'];
+    $products = $productObject->getOneProduct($userName, 1000);
     return $this->response->withJson($products);
 });
 
@@ -37,7 +46,6 @@ $application->delete('/api/products/[{id}]', function (Request $request, Respons
     $productObject = new \App\Product();
     return $this->response->withJson($productObject->deleteOneProduct($productID));
 });
-
 
 
 // product available
