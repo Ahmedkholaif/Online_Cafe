@@ -3,6 +3,7 @@ import '../css/ForgetPassword.css';
 import axios from 'axios';
 import valid from 'validator';
 import {Link} from 'react-router-dom'
+import {Container,FormGroup,Button,Input} from 'reactstrap';
 class ForgetPassword extends React.Component {
 
     constructor(props) {
@@ -15,25 +16,20 @@ class ForgetPassword extends React.Component {
   
     render() {
       return (
-        <div className="inner-container">
-          <div className="header">
-          </div>
-          <div className="box">
-  
-            <div className="input-group">
-              <label htmlFor="username">Email</label>
-              <input
+        <Container className="col-4 mt-5 text-center">
+         
+            <FormGroup >
+              <Input
                 type="email"
                 name="email"
-                className="login-input"
+                className="text-center"
                 placeholder="Email"/>
-            </div>
-  
-      
-  
-            <button
-              type="button"
-              className="login-btn"
+            </FormGroup>
+            
+            <Button
+            color="secondary"
+              type="submit"
+            size="lg"
               onClick={ (e)=>{
                 if(valid.isEmail){
                   axios
@@ -44,10 +40,10 @@ class ForgetPassword extends React.Component {
                 }
                 
               }
-              }>Send</button> <hr/> <br/>
+              }>Send</Button> <hr/> <br/>
               <Link to="/"> Back to Login </Link>
-          </div>
-        </div>
+          
+          </Container>
       );
     }
   

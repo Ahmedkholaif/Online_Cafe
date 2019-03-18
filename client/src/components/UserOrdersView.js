@@ -61,13 +61,12 @@ state = {
         const orders = this.props.orders ;
         return (
           <>
-                    <Container >
-                    <Table className="table-striped mt-5">
-            <thead className="bg-secondary rounded">
+                    <Container className="col-9 m-auto">
+                    <Table className="table-striped col-9 m-auto">
+            <thead className="bg-secondary rounded ">
                 <tr>
                     <th> Order Date </th>
                     <th>  Amount  </th>
-                    <th>##</th>
                 </tr>
             </thead>
             <tbody>

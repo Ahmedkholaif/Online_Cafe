@@ -4,6 +4,8 @@ import {  Table,Container ,Row,Col} from "reactstrap";
 
 import {AdminContext} from './AdminContext';
 import OrdersList from './OrdersList';
+import _ from 'lodash'
+import moment from 'moment'
 class OrdersView extends Component {
 
 state = {
@@ -26,6 +28,7 @@ state = {
 
             {
                  ({ orders ,setOrders,categories }) => (
+                    
                     <Container >
                     <Table className="table-striped mt-5">
             <thead className="bg-secondary rounded">
@@ -41,7 +44,11 @@ state = {
             <tbody>
 
                 {
-                    Object.keys(orders).map((key, index) =>
+                    Object.keys(
+                        _.orderBy(orders, (order) => {
+                            return moment(order.dateStamp)
+                          }, ['desc'])
+                    ).map((key, index) =>
                     <OrdersList
                      key={index} 
                      order={orders[key]}

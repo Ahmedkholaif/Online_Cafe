@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, Button, Table ,Row,Col,Card,CardBody,Collapse,CardImg,CardText,CardTitle ,ListGroupItem} from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
+import Axios from 'axios';
 class MyOredersList extends React.Component {
   constructor(props) {
     super(props);
@@ -27,16 +28,21 @@ class MyOredersList extends React.Component {
                         <td>{order.roomName}</td>
                         <td>{order.orderTotal}</td>
                         <td>{order.orderStatus}</td>
-                        
-
                         {order.orderStatus === 'Processing' && (
                           <td> 
                           <Button onClick={()=>{
                             if(order.orderStatus === 'Processing') {
-                                if(window.confirm('Are You Sure ..?'))
-                                setMyOrders(
-                                    myOrders.filter(ord=> ord.id !== order.id )
+                                if(window.confirm('Are You Sure ..?')) {
+                                  setMyOrders(
+                                    myOrders.filter(ord=> ord._id !== order._id )
                                 )
+                                Axios
+                                .delete(`/api/orders/${order._id}`)
+                                .then(res=>console.log(res))
+                                .catch(err=>console.log(err))
+                                
+                                }
+                                
                             } 
                           
                         }} > Cancel  </Button> </td>
@@ -45,7 +51,7 @@ class MyOredersList extends React.Component {
                         
                     </tr>
                         <tr>
-                        <td colSpan="6" className="text-right ">
+                        <td colSpan="6" className="text-center ">
                 <Collapse isOpen={this.props.isOpen}>
                 <Card>
                     <CardBody>

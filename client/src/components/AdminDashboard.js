@@ -7,6 +7,7 @@ import {
     DropdownItem
   } from "reactstrap";
 
+import 'bootstrap/dist/css/bootstrap.css';
 import classnames from 'classnames';
 import CategoriesView from '../components/CategoriesView'
 import UsersView from './UsersView'
@@ -14,12 +15,13 @@ import ProductsView from './ProductsView'
 import OrdersView from './OrdersView';
 import axios from 'axios';
 import { Redirect , Link} from 'react-router-dom'
-import '../css/LoginForm.css';
-import '../css/AdminDashboard.css';
+// import '../css/LoginForm.css';
+// import '../css/AdminDashboard.css';
 import {AdminContext} from './AdminContext';
 import ManualOrder from './ManualOrder';
 import ChecksView from './CkecksView'
 import moment from 'moment';
+import _ from 'lodash';
 
 export default class Example extends React.Component {
 
@@ -64,7 +66,8 @@ export default class Example extends React.Component {
             res.data.map(obj=>({...obj,_id:obj._id.$oid}))
             this.setUsers(
                 res.data.map(obj=>({...obj,_id:obj._id.$oid}))
-             )
+                .filter(user=> user.isAdmin !== true)
+            )
         })
         .catch(err => console.log(err))
         
@@ -75,7 +78,6 @@ export default class Example extends React.Component {
            
             this.setCategories(
                res.data.map(obj=>({...obj,_id:obj._id.$oid}))
-                // [...JSON.parse(res.data)]
             )
         } )
         .catch(err => console.log(err))
@@ -92,6 +94,11 @@ export default class Example extends React.Component {
         axios
         .get('/api/orders')
         .then(res=>{
+            console.log(
+                _.orderBy(res.data.map(obj=>({...obj,_id:obj._id.$oid})), (order) => {
+                    return moment(order.dateStamp)
+                  }, ['desc'])
+            )
             this.setOrders(
                 res.data.map(obj=>({...obj,_id:obj._id.$oid}))
             )
@@ -181,8 +188,6 @@ export default class Example extends React.Component {
        const orderTotal=this.state.order.orderBody.reduce(
            (acc,prod)=> (acc + (prod.quantity*prod.price) ),0
         );
-        console.log(orderTotal);
-        console.log(this.state.order);
       this.setState({
     
         order:{...this.state.order,orderTotal}
@@ -192,16 +197,16 @@ export default class Example extends React.Component {
 
     submitOrder =()=>{
         if(this.state.order.orderBody.length > 0 && this.state.order.userFullName !== '' ) {
-            const phone = this.state.users.filter(usr=> usr.fullName === this.state.order.userFullName)
+            const phone = this.state.users.filter(usr=> usr.fullName === this.state.order.userFullName)[0]
             .phone;
-this.setState({
-order:{...this.state.order,
-    dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
-    orderStatus:'Processing',phone }
-},()=>{
-axios
-.post('/api/orders',this.state.order)
-.then(res=>{
+    this.setState({
+    order:{...this.state.order,
+        dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
+        orderStatus:'Processing',phone }
+    },()=>{
+    axios
+    .post('/api/orders',this.state.order)
+    .then(res=>{
     console.log(res)
     this.setState({
         orders: [{...this.state.order,_id:res.data.$oid },...this.state.orders],
@@ -218,17 +223,12 @@ axios
     })
     })
     })
-
-
         }else {
             alert("Invalid Order Data..! ")
         }
-       
 }
     render() {
-
         return (
-
             sessionStorage.isAdmin ?
             < AdminContext.Provider value = 
             {{ categories :this.state.categories ,setCategories :this.setCategories,
@@ -241,8 +241,6 @@ axios
                 submitOrder:this.submitOrder,
             }} >
             {console.log(sessionStorage)}
-                
-                    
                 <div className='AdminDashboard'>
                     <Nav tabs style={{cursor:'pointer'}}>
                     <NavItem>
@@ -305,7 +303,28 @@ axios
                                <h5> Checks </h5>
                             </NavLink>
                         </NavItem>
-                        <UncontrolledDropdown nav inNavbar className="leftMenuItem">
+                        <NavItem className="leftMenuItem float-right">
+              <div class="container h-100">
+                <div class="d-flex justify-content-center h-100">
+                  <div class="searchbar">
+                    <form action="/api/users/current/search" method="post">
+                      <input
+                        class="search_input"
+                        type="text"
+                        name=""
+                        placeholder="Search..."
+                      />
+                      <button type="submit" class="search_icon">
+                        <i class="fas fa-search" />
+                      </button>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </NavItem>
+            <NavItem>
+                        <UncontrolledDropdown nav inNavbar className="ml-5 float-right">
                         <DropdownToggle nav caret>
                           Admin
                         </DropdownToggle>
@@ -315,14 +334,18 @@ axios
                           <DropdownItem>Account setting</DropdownItem>
                         </DropdownMenu>
                       </UncontrolledDropdown>
-                      <NavItem className="leftMenuItem">
-                        <Button color='danger' type="submit">
-                          <Link to="/" replace>
-                            Sign out
-                          </Link>
-                        </Button>
                       </NavItem>
-                        
+                      <NavItem className="float-right ">
+                      <Link to="/" replace>  
+                      <Button color='danger' type="submit" onClick={()=>{
+                            sessionStorage.clear();
+                        }}>
+                          
+                            Sign out
+                        </Button>
+                        </Link>
+
+                        </NavItem>
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
@@ -359,9 +382,7 @@ axios
                     </TabPane>
                     </TabContent>
                 </div>
-    
                 </AdminContext.Provider>
-                
                 : <Redirect to={{ pathname: '/', state: { from: this.props.location } }} />
             );
     }
