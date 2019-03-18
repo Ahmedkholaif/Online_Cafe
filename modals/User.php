@@ -110,7 +110,7 @@ class User
     {
         try {
             if (isset($email) && !empty($email) && isset($password) && !empty($password)) {
-                $filter = [$email, $password];
+                $filter = ["email" => $email, "password" => $password];
                 $options = ['limit' => 1];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
