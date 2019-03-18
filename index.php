@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface;
@@ -61,13 +63,9 @@ try {
 
 
 // -----------------------------------------------
-// TODO: User Password Hash
-// -----------------------------------------------
-// TODO: Schema Validation
 // TODO: Validation Utilities - Email.....
 // TODO: Slim/Authentication
 // TODO: Slim/Session Management
-// TODO: Session Managment
 // TODO: Logout
 // -----------------------------------------------
 

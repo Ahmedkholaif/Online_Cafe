@@ -5,7 +5,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 require __DIR__ . '/../modals/User.php';
 require __DIR__ . '/../classes/EmailManager.php';
-
+require __DIR__ . '/../classes/SessionManager.php';
 
 // Get All Users
 $application->get('/api/users', function ($request, $response) {
@@ -44,13 +44,18 @@ $application->post('/api/users/login', function (Request $request, Response $res
     $password = $userData['password'];
     $userObject = new \App\User();
     $result = $userObject->getOneUserLogin($email, $password);
+    if ($result != false && isset($result)) {
+        $sessionManager = new \App\SessionManager();
+        $sessionManager->set($result['_id'], $result);
+    }
     return $this->response->withJson($result);
 });
 
 // user's logout
 $application->get('/api/users/logout/[{id}]', function (Request $request, Response $response, $arguments) {
     $userId = $arguments['id'];
-
+    $sessionManager = new \App\SessionManager();
+    $sessionManager->kill($userId);
 });
 // user's forget
 $application->get('api/users/forget/[{email}]', function (Request $request, Response $response, $argument) {
