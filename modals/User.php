@@ -32,6 +32,7 @@ class User
     {
         try {
             if (isset($userArray) && !empty($userArray)) {
+                $userArray['password'] = base64_encode($userArray['password']);
                 $bulkWriteInsert = new MongoBulkWrite;
                 $inserted_id = $bulkWriteInsert->insert($userArray);
                 $response = $this->connectionManager->executeBulkWrite($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $bulkWriteInsert);
@@ -109,7 +110,7 @@ class User
     {
         try {
             if (isset($email) && !empty($email) && isset($password) && !empty($password)) {
-                $filter = [$email, $password];
+                $filter = ["email" => $email, "password" => $password];
                 $options = ['limit' => 1];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);

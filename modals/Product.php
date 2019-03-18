@@ -87,11 +87,11 @@ class Product
     }
 
     // get One  Product
-    public function getOneProduct($productId, $limit)
+    public function getOneProduct($productName, $limit)
     {
         try {
-            if (isset($productId) && !empty($productId) && isset($limit) && !empty($limit)) {
-                $filter = $productId;
+            if (isset($productName) && !empty($productName) && isset($limit) && !empty($limit)) {
+                $filter = $productName;
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);

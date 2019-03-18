@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface;
@@ -58,17 +60,12 @@ try {
     echo $exception->getMessage();
 }
 
-// -----------------------------------------------
-// TODO: Deploy Back-End Application
-// TODO: Test Application
-// TODO: Schema Validation
-// TODO: SLIM/FRAMEWORK
+
+
 // -----------------------------------------------
 // TODO: Validation Utilities - Email.....
 // TODO: Slim/Authentication
 // TODO: Slim/Session Management
-// TODO: User Logout
+// TODO: Logout
 // -----------------------------------------------
-// TODO: FIX BUGS
-//
 
