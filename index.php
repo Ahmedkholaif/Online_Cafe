@@ -58,17 +58,18 @@ try {
     echo $exception->getMessage();
 }
 
+
+
 // -----------------------------------------------
-// TODO: Deploy Back-End Application
-// TODO: Test Application
+// TODO: /api/products/available/_id
+// TODO: /api/products/userFullName
+// TODO: User Password Hash
+// -----------------------------------------------
 // TODO: Schema Validation
-// TODO: SLIM/FRAMEWORK
-// -----------------------------------------------
 // TODO: Validation Utilities - Email.....
 // TODO: Slim/Authentication
 // TODO: Slim/Session Management
-// TODO: User Logout
+// TODO: Session Managment
+// TODO: Logout
 // -----------------------------------------------
-// TODO: FIX BUGS
-//
 

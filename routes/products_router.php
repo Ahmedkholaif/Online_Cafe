@@ -37,3 +37,13 @@ $application->delete('/api/products/[{id}]', function (Request $request, Respons
     $productObject = new \App\Product();
     return $this->response->withJson($productObject->deleteOneProduct($productID));
 });
+
+
+
+// product available
+$application->put('/api/products/available/[{id}]', function (Request $request, Response $response, $argument) {
+    $productId = $argument['id'];
+    $productObject = new \App\Product();
+    $productAvailable = $request->getParsedBody();
+    return $this->response->withJson($productObject->updateOneProduct($productId, $productAvailable, false));
+});
