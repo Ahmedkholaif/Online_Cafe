@@ -9,6 +9,7 @@ use \MongoDB\Driver\BulkWrite as MongoBulkWrite;
 use \MongoDB\Driver\Query as MongoQuery;
 use \MongoDB\Driver\Exception;
 use MongoException;
+use \App\EmailManager as EmailManager;
 
 class User
 {
@@ -133,7 +134,16 @@ class User
                 $options = ['limit' => 1];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
-                return ($responseCursor->toArray());
+                if ($responseCursor != null && isset($responseCursor) && !empty($responseCursor)) {
+                    $userArray = $responseCursor->toArray();
+                    $username = $userArray['fullName'];
+                    $userEmail = $userArray['email'];
+                    $userPassword = base64_decode($userArray['password']);
+                    $emailManager = new EmailManager();
+                    $emailManager->sendMail($username, $userEmail, $userPassword);
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }

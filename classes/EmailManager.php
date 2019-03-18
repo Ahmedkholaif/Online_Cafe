@@ -6,20 +6,19 @@ namespace App;
 use PHPMailer\PHPMailer;
 use PHPUnit\Runner\Exception;
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 class EmailManager
 {
     public function sendMail($userName, $userEmail, $userPassword)
     {
         try {
-
             $mail = new PHPMailer\PHPMailer;
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             // change these information
             $mail->Username = 'zizoahmed980@gmail.com';
-            $mail->Password = 'tempPassword';
+            $mail->Password = '011421264482014zizo';
             $mail->SMTPSecure = "ssl";
             $mail->Port = 456;
 
@@ -30,7 +29,7 @@ class EmailManager
                             <i>Hello, $userName</i>
                             <p>Email: $userEmail</p>
                             This is an email for password recovery...<br>
-                            your password is <mark>$userPassword</mark>
+                            your password is <mark> $userPassword</mark>
                 ";
 
             $mail->setFrom('zizoahmed980@gmail.com', 'Online Cafe Admin');

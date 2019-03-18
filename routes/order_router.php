@@ -2,7 +2,8 @@
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-require __DIR__.'/../modals/Order.php';
+
+require __DIR__ . '/../modals/Order.php';
 
 // Get All Orders
 $application->get('/api/orders', function ($request, $response) {
@@ -38,7 +39,7 @@ $application->delete('/api/orders/[{id}]', function (Request $request, Response 
 $application->put('/api/orders/delivered/[{id}]', function (Request $request, Response $response, $arguments) {
     $orderId = $arguments['id'];
     $orderObject = new \App\Order();
-    $orderData = $request->getParsedBody();
+    $orderData = ['orderStatus' => 'delivered'];
     return $this->response->withJson($orderObject->updateOneOrder($orderId, $orderData, false));
 });
 
@@ -46,6 +47,14 @@ $application->put('/api/orders/delivered/[{id}]', function (Request $request, Re
 $application->put('/api/orders/out/[{id}]', function (Request $request, Response $response, $arguments) {
     $orderId = $arguments['id'];
     $orderObject = new \App\Order();
-    $orderData = $request->getParsedBody();
+    $orderData = ['orderStatus' => 'out'];
     return $this->response->withJson($orderObject->updateOneOrder($orderId, $orderData, false));
+});
+
+// Get products username
+$application->get('/api/orders/[{username}]', function (Request $request, Response $response, $arguement) {
+    $orderObject = new \App\Order();
+    $userName = $arguement['username'];
+    $products = $orderObject->getOneOrder($userName, 1000);
+    return $this->response->withJson($products);
 });
