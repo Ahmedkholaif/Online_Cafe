@@ -70,7 +70,7 @@ class Order
     {
         try {
             if (isset($orderId) && !empty($orderId) && isset($limit) && !empty($limit)) {
-                $filter = ['_id'=>new ObjectID($orderId)];
+                $filter = ['_id' => new ObjectID($orderId)];
                 $bulkWriteDeleted = new MongoBulkWrite;
                 $options = ['limit' => $limit];
                 $bulkWriteDeleted->delete($filter, $options);
@@ -85,11 +85,11 @@ class Order
     }
 
     // getOne Order
-    public function getOneOrder($orderId, $limit)
+    public function getOneOrder($orderUserName, $limit)
     {
         try {
-            if (isset($orderId) && !empty($orderId) && isset($limit) && !empty($limit)) {
-                $filter = $orderId;
+            if (isset($orderUserName) && !empty($orderUserName) && isset($limit) && !empty($limit)) {
+                $filter = ['userFullName' => $orderUserName];
                 $options = ['limit' => $limit];
                 $QueryManager = new MongoQuery($filter, $options);
                 $responseCursor = $this->connectionManager->executeQuery($this->DATABASE_NAME . '.' . $this->COLLECTION_NAME, $QueryManager);
