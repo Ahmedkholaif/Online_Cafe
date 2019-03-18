@@ -21,13 +21,7 @@ state = {
             collapse: !this.state.collapse,
         }); 
     }
-    // toggle =(product) =>{
-    //     this.setState(prevState => ({
-    //         collapse: !prevState.collapse,
-    //         product,
-    //         inEdit: product,
-    //     }));
-    // }
+  
 
     toggle=(order)=> {
         this.setState({ collapse: this.state.collapse === order ? null : order });
@@ -38,28 +32,6 @@ state = {
 
     }
 
-
-    // handleOnChange = (event) => {
-
-    //     this.setState({
-    //        inEdit: {...this.state.inEdit, [event.target.name] : event.target.value } 
-    //     })
-    //     console.log(this.state.inEdit)
-    // }
-
-    // handleOnChangeBox = (event) => {
-    //     this.setState({
-    //         inEdit: {...this.state.inEdit, [event.target.name] : event.target.checked } 
-    //     });
-    //     console.log(this.state.inEdit)
-    // }
-
-    // handleselectedFile = event => {
-    //     this.setState({
-    //         selectedFile: event.target.files[0],
-    //         loaded: 0
-    //     });
-    // };
 
     filterAndSortOrders=(orders)=> {
 
@@ -80,7 +52,7 @@ state = {
             console.log('to');
 
             return sortedOrders.filter(order=>
-                moment(order.dateStamp).isBetween(moment('2010-01-01'),this.state.dateTo))
+                moment(order.dateStamp).isBetween(moment('2010-01-01').format("YYYY-MM-DD"),this.state.dateTo))
         }
         else {
             console.log('none');

@@ -52,11 +52,13 @@ class LoginForm extends Component {
             if(res.status === 200){
                 
                 if(res.data[0].isAdmin === true) {
-                    sessionStorage.isAdmin =res.data.isAdmin ;
+                    sessionStorage.isAdmin =res.data[0].isAdmin ;
+                    sessionStorage.userId=res.data[0]._id.$oid;
                     this.props.history.push('/admin/dashboard');
 
                 }else if (res.data.length === 1) {
                     sessionStorage.userFullName=res.data[0].fullName;
+                    sessionStorage.userId=res.data[0]._id.$oid;
                     sessionStorage.useremail=res.data[0].email;
                     sessionStorage.phone=res.data[0].phone;
                     this.props.history.push('/home');
@@ -99,8 +101,7 @@ class LoginForm extends Component {
                       <hr/>
                     <Button color='primary' size='lg' block type="submit">Login</Button>
                 </form><hr/><br/>
-             <Link to="/forget">Forget My Password </Link> <br/> <hr/>  
-             <Link to="/admin/dashboard">Admin </Link>   
+             <Link to="/forget">Forget My Password </Link>  
             </div>
         );
     }

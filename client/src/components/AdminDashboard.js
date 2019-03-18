@@ -164,7 +164,6 @@ export default class Example extends React.Component {
         }
       else
       return this.state.products  
-         
     }
     setSearchWord=(searchWord)=>{
         this.setState({
@@ -229,7 +228,7 @@ export default class Example extends React.Component {
 }
     render() {
         return (
-            sessionStorage.isAdmin ?
+            (sessionStorage.isAdmin === 'true') ?
             < AdminContext.Provider value = 
             {{ categories :this.state.categories ,setCategories :this.setCategories,
                 products : this.state.products , setProducts:this.setProducts,
@@ -307,7 +306,7 @@ export default class Example extends React.Component {
               <div class="container h-100">
                 <div class="d-flex justify-content-center h-100">
                   <div class="searchbar">
-                    <form action="/api/users/current/search" method="post">
+                    <form action="" method="post">
                       <input
                         class="search_input"
                         type="text"
@@ -338,13 +337,17 @@ export default class Example extends React.Component {
                       <NavItem className="float-right ">
                       <Link to="/" replace>  
                       <Button color='danger' type="submit" onClick={()=>{
-                            sessionStorage.clear();
+                            axios
+                            .get(`/api/users/logou/${sessionStorage.id}`)
+                            .then(res=>{
+                                console.log(res);
+                                sessionStorage.clear();
+                            })
+                            .catch(err=>console.log(err))
                         }}>
-                          
-                            Sign out
+                            Sign Out
                         </Button>
                         </Link>
-
                         </NavItem>
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>

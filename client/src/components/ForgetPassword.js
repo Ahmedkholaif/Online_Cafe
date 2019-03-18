@@ -23,6 +23,12 @@ class ForgetPassword extends React.Component {
                 type="email"
                 name="email"
                 className="text-center"
+                onChange={(e)=>{
+                  console.log(e.target.value)
+                  this.setState({
+                    email:e.target.value
+                  })
+                }}
                 placeholder="Email"/>
             </FormGroup>
             
@@ -31,12 +37,25 @@ class ForgetPassword extends React.Component {
               type="submit"
             size="lg"
               onClick={ (e)=>{
-                if(valid.isEmail){
+                if(valid.isEmail(this.state.email)){
                   axios
-                .post(`/api/users/forget/${e.target.value}`)
+                .get(`/api/users/forget/${this.state.email}`)
                 .then(res=>{
+                  console.log(this.state.email)
+                  console.log(res);
+                  if(res.status === 200)
                     alert("email sent")
+                  else {
+                    alert("Sorry Try Agian")
+                  }
                 })
+                .catch(err=>{
+                  console.log(err)
+                  alert("Sorry Try Again..")})
+                
+
+                }else {
+                  alert('Invalid Email..!')
                 }
                 
               }

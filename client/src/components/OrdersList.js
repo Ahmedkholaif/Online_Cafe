@@ -38,12 +38,12 @@ class OredersList extends React.Component {
                                 orders.map(ord=> (ord._id === order._id )? {...ord,orderStatus:"Out For Delivery"}:ord)
                             );
                             axios
-                            .put(`/api/orders/delivered/${order._id}`)
+                            .put(`/api/orders/out/${order._id}`)
                             .then(res=> {
                               console.log("successfull")
                               setTimeout(()=>{
                                 axios
-                                .put(`/api/orders/out/${order._id}`)
+                                .put(`/api/orders/delivered/${order._id}`)
                                 .then(res=>{
                                   setOredrs(
                                     orders.map(ord=> (ord._id === order._id )? {...ord,orderStatus:"Deliverd"}:ord)

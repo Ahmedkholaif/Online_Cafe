@@ -9,7 +9,10 @@ import _ from 'lodash';
 class UserOrders extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.state={
+      dateTo:'',
+      dateFrom:'',
+    }
     this.toggle = this.toggle.bind(this);
     this.state = {collapse: false};
   }
@@ -23,7 +26,12 @@ class UserOrders extends React.Component {
     this.props.toggle(this.props.user);
 
   }
-
+componentWillRecieveProps(nextProps){
+  this.setState({
+    dateFrom:nextProps.dateFrom ,
+    dateTo:nextProps.dateTo,
+  })
+}
   filterAndSortOrders=(orders,dateFrom,dateTo)=> {
 
     let sortedOrders = _.orderBy(orders, (order) => {
@@ -43,7 +51,7 @@ class UserOrders extends React.Component {
         console.log('to');
 
         return sortedOrders.filter(order=>
-            moment(order.dateStamp).isBetween(moment('2010-01-01'),this.state.dateTo))
+            moment(order.dateStamp).isBetween(moment('2010-01-01').format('YYYY-MM-DD'),this.state.dateTo))
     }
     else {
         console.log('none');
@@ -55,8 +63,8 @@ class UserOrders extends React.Component {
   
   render() {
     const user = this.props.user ;
-    const dateFrom = this.props.dateFrom ;
-    const dateTo = this.props.dateTo ;
+    const dateFrom = this.state.dateFrom ;
+    const dateTo = this.state.dateTo ;
     return (
         <AdminContext.Consumer>
         {({users,orders})=>{

@@ -39,8 +39,8 @@ class UserHomePage extends Component {
   componentDidMount() {
     axios
     .get(
-      // `/api/orders/${sessionStorage.userFullName}`
-      '/api/orders'
+      `/api/orders/${sessionStorage.userFullName}`
+      // '/api/orders'
       )
     .then(res=>{
         this.setMyOrders(
@@ -149,7 +149,7 @@ this.setState({
 }
   render() {
     return ( 
-    // localStorage.token ? (
+      (sessionStorage.userFullName && sessionStorage.phone) ? 
       
     <UserContext.Provider
     value ={{
@@ -188,7 +188,7 @@ this.setState({
               <div class="container h-100">
                 <div class="d-flex justify-content-center h-100">
                   <div class="searchbar">
-                    <form action="/api/users/current/search" method="post">
+                    <form action="" method="post">
                       <input
                         class="search_input"
                         type="text"
@@ -218,7 +218,13 @@ this.setState({
 
             <Link to="/" replace>  
             <Button id="signOut" type="submit" onClick={()=>{
-                sessionStorage.clear();
+                axios
+                .get(`/api/users/logout/${sessionStorage.id}`)
+                .then(res=>{
+                  console.log(res);
+                  sessionStorage.clear();
+
+                })
               }}>
                   Sign out
                 </Button>
@@ -251,12 +257,10 @@ this.setState({
                     
            </div>         
       </UserContext.Provider>
-
-    // ) : (
-    //     <Redirect to={{ pathname: "/", state: { from: this.props.location } }} />
-    //   );
+     :  <Redirect to={{ pathname: "/", state: { from: this.props.location } }} /> 
   
-    )}
+    );
+  }
 }
 
 export default UserHomePage;

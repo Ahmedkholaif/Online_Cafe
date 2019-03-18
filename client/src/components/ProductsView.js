@@ -197,8 +197,12 @@ state = {
                                         {
                                             setProducts( products.map(prod => prod._id===product._id?  {...prod,isAvailable:!prod.isAvailable}:prod ))
                                             axios
-                                            .put(`/api/products/available/${product._id}`)
-                                            .then(res=>console.log(res))
+                                            .put(`/api/products/available/${product._id}`,{
+                                                "isAvailable": !product.isAvailable
+                                            })
+                                            .then(res=>{
+                                                
+                                                console.log(res)})
                                             .catch(err=>console.log(err))
                                         }
 
