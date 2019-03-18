@@ -138,8 +138,7 @@ this.setState({
         dateStamp:'',
         roomName:'',
         orderBody:[],
-       }
-    })
+       }})
     })
     })
 
