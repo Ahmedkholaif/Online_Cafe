@@ -97,22 +97,20 @@ state = {
             { 
                  ({ myOrders  }) => (
                     <Container >
-                    <Row>
+                    <Row className="mt-5 p-1">
 
-                    From<Input className="col-2 " onChange={(event)=>{
+                    From<Input className="col-3 ml-3 " onChange={(event)=>{
                         this.setState({
                             dateFrom:event.target.value
                         })
                         console.log(event.target.value);
-                      }} type="date" /> To  <Input placeholder="To" className="col-2 " type="date" onChange={(event)=>{
+                      }} type="date" /> To  <Input placeholder="To" className="col-3 ml-3" type="date" onChange={(event)=>{
                           this.setState({
                               dateTo:event.target.value
                             }) 
 
                       }} />
-
                     </Row>
-
                     <Table className="table-striped mt-5">
             <thead className="bg-secondary rounded">
                 <tr>

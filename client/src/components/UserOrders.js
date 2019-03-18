@@ -65,7 +65,7 @@ class UserOrders extends React.Component {
             <>
             { 
                 <>
-                    <tr key={user.userFullName}  >
+                    <tr key={user.userFullName} className="col-6 m-auto"  >
                         <td onClick={this.toggle} style={{cursor:'pointer'}} >  &#9660; {user.fullName} </td>
                         <td>{
                           filterdOrders.filter(order=> order.userFullName === user.fullName)
@@ -73,7 +73,7 @@ class UserOrders extends React.Component {
                         }</td>
                     </tr>
                                     <tr>
-                        <td colSpan="6" className="text-right ">
+                        <td colSpan="6" className="text-center ">
                 <Collapse isOpen={this.props.isOpen}>
                 <Card>
                     <CardBody>

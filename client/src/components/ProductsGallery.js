@@ -32,7 +32,7 @@ class ProductsGallery extends Component {
             </div>
               </Row>
               <hr/>
-              <Row className ="productsGallary" >  
+              <Row className ="productsGallary bg-light border-primary" >  
              
                 { products.filter(prod=> prod.isAvailable )
                   .map (product =>

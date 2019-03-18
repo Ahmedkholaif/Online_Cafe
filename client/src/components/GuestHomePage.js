@@ -86,9 +86,9 @@ class GuestHomePage extends Component {
        
         <Row className="seperator10"></Row>
         <Row>
-					<Col xs="4"></Col>
-					<Col xs="4"> <Login history={this.props.history} /> </Col>
-          <Col xs="4"></Col>
+					<Col xs="3"></Col>
+					<Col xs="6"> <Login history={this.props.history} /> </Col>
+          <Col xs="3"></Col>
         </Row>
       </div>
     );

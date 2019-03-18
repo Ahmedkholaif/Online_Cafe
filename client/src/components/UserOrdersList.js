@@ -32,7 +32,7 @@ class UserOrdersList extends React.Component {
                         <td> {order.orderTotal}</td>
                     </tr>
                         <tr>
-                        <td colSpan="6" className="text-right ">
+                        <td colSpan="6" className="text-center ">
                 <Collapse isOpen={this.props.isOpen}>
                 <Card>
                     <CardBody>

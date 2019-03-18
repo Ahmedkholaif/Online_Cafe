@@ -20,8 +20,6 @@ $application->post('/api/products', function (Request $request, Response $respon
     $result = $productObject->insertOneProduct($productData);
     return $this->response->withJson($result);
 });
-
-
 // update product
 $application->put('/api/products/[{id}]', function (Request $request, Response $response, $argument) {
     $productId = $argument['id'];
@@ -29,8 +27,6 @@ $application->put('/api/products/[{id}]', function (Request $request, Response $
     $productData = $request->getParsedBody();
     return $this->response->withJson($productObject->updateOneProduct($productId, $productData, false));
 });
-
-
 // delete product
 $application->delete('/api/products/[{id}]', function (Request $request, Response $response, $argument) {
     $productID = $argument['id'];

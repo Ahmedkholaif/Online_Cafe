@@ -24,7 +24,6 @@ class UserHomePage extends Component {
       myOrders: [],
       rooms:[],
       order: {
-        id:'',
         userFullName :'',
         notes:'',
         orderTotal:'',
@@ -39,10 +38,15 @@ class UserHomePage extends Component {
 
   componentDidMount() {
     axios
-    .get(`/api/orders/${sessionStorage.userName}`)
+    .get(
+      // `/api/orders/${sessionStorage.userFullName}`
+      '/api/orders'
+      )
     .then(res=>{
         this.setMyOrders(
-            res.data.map(obj=>({...obj,_id:obj._id.$oid}))
+
+            res.data.filter(order=>order.userFullName === sessionStorage.userFullName)
+            .map(obj=>({...obj,_id:obj._id.$oid}))
           )
     })
     .catch(err=>console.log(err))
@@ -119,14 +123,14 @@ this.setState({
         dateStamp: moment().format(" YYYY-MM-DD  hh:mm "),
         orderStatus:'Processing',phone:sessionStorage.phone }
 },()=>{
-axios
+
+  axios
 .post('/api/orders',this.state.order)
 .then(res=>{
     console.log(res)
     this.setState({
-        myOrders: [{...this.state.order,_id:res.data.$oid },...this.state.orders],
+        myOrders: [{...this.state.order,_id:res.data.$oid },...this.state.myOrders],
        order:{
-        id:'',
         userFullName :'',
         notes:'',
         orderTotal:'',
@@ -212,11 +216,14 @@ axios
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem className="leftMenuItem">
-              <Button id="signOut" type="submit">
-                <Link to="/" replace>
+
+            <Link to="/" replace>  
+            <Button id="signOut" type="submit" onClick={()=>{
+                sessionStorage.clear();
+              }}>
                   Sign out
+                </Button>
                 </Link>
-              </Button>
             </NavItem>
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>

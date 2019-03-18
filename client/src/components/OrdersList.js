@@ -55,7 +55,7 @@ class OredersList extends React.Component {
                         }} > Out For Delivery  </Button> </td>)} {<td> </td>} 
                     </tr>
                         <tr>
-                        <td colSpan="6" className="text-right ">
+                        <td colSpan="6" className="text-center ">
                 <Collapse isOpen={this.props.isOpen}>
                 <Card>
                     <CardBody>

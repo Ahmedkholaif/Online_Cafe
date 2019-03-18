@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Container, Row, Col} from 'reactstrap';
-//import '../css/ManualOrder.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import OrderProducts from './OrderProducts';
 import ProductsGallery from './ProductsGallery'
@@ -17,23 +16,15 @@ class ManualOrder extends Component{
 render()
 {
     return (
-  
-<Container >
-  <Row className='p-2'>
-    <Col xs="4" className="split left" id="rItem"   > 
+<Row className="ml-0 col-12">
+    <Col xs="4" className="ml-0"  > 
       <OrderProducts /> 
     </Col>
-    <Col xs="8" className="split right" id="lItem" >
+    <Col xs="8" className="mr-0"  >
     <ProductsGallery/>
     </Col>
-  </Row>
-  <br />
- 
-</Container>
-        
-      );
-}
-
+    </Row>
+);}
 }
 
 

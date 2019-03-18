@@ -1,9 +1,12 @@
 
-    {
-        "root": "build/",
-        "proxies": {
-          "/api/": {
-            "origin": "https://boiling-meadow-31492.herokuapp.com/api/"
-          }
-        }
-      }
+{
+  "root": "build/",
+  "routes": {
+    "/**": "index.html"
+  },
+  "proxies": {
+    "/api/": {
+      "origin": "https://boiling-meadow-31492.herokuapp.com/api/"
+    }
+  }
+}

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col,Input,Table ,Container,Pagination,PaginationItem,PaginationLink} from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.css';
-import "../css/CategoryBooksName.css";
 import CustomPagination from "./pagination";
 import axios from "axios";
 import {AdminContext} from './AdminContext';
@@ -16,11 +15,7 @@ class ChecksView extends Component {
       dateTo:'',
     };
 
-   
-  
-
-
-handelPagination = (pageNum)=>
+    handelPagination = (pageNum)=>
 {
       this.setState({
        
@@ -40,18 +35,15 @@ handelPagination = (pageNum)=>
     }
   }
   render() {
-
-   
     return (
-
       <AdminContext.Consumer>
       {({users,orders})=>(
 <>
-        <Container className="col-12 p-2">
+        <Container className="col-12 p-5">
       <div>
         <h2> Ckecks Page </h2>
         <Row> 
-        <Input className="col-2 "  type="select" onChange={(event)=>{
+        <Input className="col-3 ml-3"  type="select" onChange={(event)=>{
           this.setState({
             user: event.target.value
           })
@@ -63,12 +55,12 @@ handelPagination = (pageNum)=>
             ))
           }
           </Input>
-          From<Input className="col-2 " onChange={(event)=>{
+          From<Input className="col-3 ml-3 " onChange={(event)=>{
               this.setState({
                   dateFrom:event.target.value
               })
               console.log(event.target.value);
-            }} type="date" /> To  <Input placeholder="To" className="col-2 " type="date" onChange={(event)=>{
+            }} type="date" /> To  <Input placeholder="To" className="col-3 ml-3" type="date" onChange={(event)=>{
                 this.setState({
                     dateTo:event.target.value
                   }) 
@@ -76,18 +68,16 @@ handelPagination = (pageNum)=>
             }} />
 
         </Row>
-        <Row id="displayedItems">
+        <Row >
         
-        <Table className="table-striped mt-5 col-9 ml-2">
+        <Table className="table-striped mt-5 text-center m-auto">
         <thead className="bg-secondary rounded" >
             <tr>
                 <th> User Name </th>
                 <th>  Total Amount </th>
-                
             </tr>
         </thead>
         <tbody>
-
             {
                 Object.keys(this.filterUsers(users)).map((key, index) =>
                 <UserOrders key={index} 
